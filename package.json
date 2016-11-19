@@ -1,0 +1,20 @@
+{
+  "name": "easypick",
+  "version": "1.0.0",
+  "description": "Finding classes should be easier than taking them.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.mit.edu:hansonj/final-proj-Team-Walimu.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.14.0",
+    "mongoose": "^4.6.8",
+    "q": "^1.4.1"
+  }
+}
