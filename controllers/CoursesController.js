@@ -27,7 +27,6 @@ var CoursesController = function() {
           course: course
         });
     }).catch(function(err) {
-      console.log(err)
       return utils.errorRes(res, err);
     });
 
