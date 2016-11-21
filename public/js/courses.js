@@ -18,6 +18,7 @@ $(function(){
         }if ($('#cihw-input').prop('checked', true)) {
             tags.push({name: 'cihw'})
         }
+        //alert("hey");
         $.get('/courses',
             {
                 course_numbers: $('#course-number-select').valueOf(),
@@ -26,6 +27,7 @@ $(function(){
                 tags: tags
             },
             function(res){
+                //alert(res);
                 console.log(res);
             }
         )

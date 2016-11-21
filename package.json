@@ -2,7 +2,7 @@
   "name": "easypick",
   "version": "1.0.0",
   "description": "Finding classes should be easier than taking them.",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,7 +13,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.15.2",
+    "cookie-parser": "^1.4.3",
     "express": "^4.14.0",
+    "express-session": "^1.14.2",
+    "express4": "0.0.1",
+    "hbs": "^4.0.1",
     "mongoose": "^4.6.8",
     "q": "^1.4.1"
   }
