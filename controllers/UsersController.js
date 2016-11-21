@@ -45,6 +45,37 @@ var UsersController = function() {
     });
   }
 
+
+  that.get_profile = function get_profile(req, res) {
+    user_id = req.params.id;
+    Users.get_profile(user_id)
+      .then(function(msg){
+        if (!msg) {
+          utils.errorRes(res, 'User profile does not exist, or you do not have access to it.')
+        } else {
+          utils.successRes(res, {profile: msg});
+        }
+      })
+      .catch(function(err){
+          console.log(err);
+          return false;
+      })
+      .done();
+  };
+
+  that.post_review = function(req, res) {
+      var review_form = req.form.review;
+      var offering_id = req.form.offering_id;
+      var msg = Users.post_review(offering_id, review_form);
+      if(!msg) {
+        utils.errorRes(res, 'Could not add class.')
+      } else {
+        utils.successRes(res, msg);
+      }
+  };
+
+
+
   Object.freeze(that);
   return that;
 }

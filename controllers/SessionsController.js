@@ -2,6 +2,7 @@
  * Contains methods for handling user sessions
  */
 var User = require("../models/user.js");
+var utils = require("../utils.js");
 
 var SessionsController = function() {
   var that = Object.create(SessionsController.prototype);

@@ -10,9 +10,10 @@ router.post('/', function(req, res) {
 });
 
 router.get('/:id', function(req, res) {
-  res.json({
-    success: true,
-    user: req.session.user
-  })
-})
+  UsersController.get_profile(req, res);
+});
+
+//router.post('/:id/review', function(req, res) {
+//    UsersController.post_review(...);
+//});
 module.exports = router;

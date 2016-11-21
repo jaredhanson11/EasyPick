@@ -1,0 +1,19 @@
+First name:
+{{ profile.first_name }}
+<br>
+Last name:
+{{ profile.last_name }}
+<br>
+Major:
+{{ profile.major1 }}
+<br>
+Minor:
+{{ profile.minor }}
+<br>
+Graduation Year:
+{{ profile.graduation_year}}
+<br>
+Courses:
+{{#each profile.course_reviews}}
+  {{> review_thumbnail review=this }}
+{{/each}}
