@@ -39,6 +39,7 @@ var routes = require('./routes/routes');
 app.use('/', routes);
 var users = require('./routes/users');
 app.use('/users', users);
+app.use(express.static('public'));
 
 // handle bad routes
 app.use(function(req, res, next) {

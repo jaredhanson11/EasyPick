@@ -7,5 +7,6 @@ offeringSchema = mongoose.Schema ({
     course: {type: mongoose.Schema.ObjectId, ref: 'Course'}
 });
 
+
 module.exports = mongoose.model('Offering', offeringSchema);
 
