@@ -39,7 +39,7 @@ templates['review_thumbnail'] = template({"compiler":[7,">= 4.0.0"],"main":funct
   return "<div class='review_thumbnail' id='"
     + alias2(alias1(((stack1 = (depth0 != null ? depth0.review : depth0)) != null ? stack1._id : stack1), depth0))
     + "'>\n    <h3>"
-    + alias2(alias1(((stack1 = ((stack1 = (depth0 != null ? depth0.review : depth0)) != null ? stack1.course : stack1)) != null ? stack1.course_number : stack1), depth0))
+    + alias2(alias1(((stack1 = ((stack1 = (depth0 != null ? depth0.review : depth0)) != null ? stack1.course : stack1)) != null ? stack1.course_numbers : stack1), depth0))
     + ": "
     + alias2(alias1(((stack1 = ((stack1 = (depth0 != null ? depth0.review : depth0)) != null ? stack1.course : stack1)) != null ? stack1.name : stack1), depth0))
     + "</h3>\n    <p>Overall: "

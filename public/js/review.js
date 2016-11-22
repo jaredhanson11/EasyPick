@@ -5,20 +5,22 @@ $(function(){
         $('.review-form').html(html);
         $('.btn#find-course').click(function(){
             var course_num = $("#course-num").val();
-            $.get('/courses?course_num='+course_num, function(resp){
+            $.get('/courses/'+course_num, function(resp){
                 if (!resp.success){
                     course_id = undefined;
+                    alert('that course number in invalid');
                 } else{
                     course_id = resp.course._id;
+                    alert('successfully found course');
                 }
             });
         })
         $('.btn#submit-review').click(function(){
-            //if (!course_id){
-            //    alert("Try a new class number.");
-            //} else {
+            if (!course_id){
+                alert("Try a new class number.");
+            } else {
                 var review_form = {
-                    //course: course_id,
+                    course: course_id,
                     term: $('input#term').val(),
                     year: $('input#year').val(),
                     class_hrs: $('input#class_hrs').val(),
@@ -36,7 +38,7 @@ $(function(){
                         window.location.href = '/profile';
                     }
                 })
-            //}
+            }
         });
     }
     populateNavbar();
