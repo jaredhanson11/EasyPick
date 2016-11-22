@@ -1,5 +1,7 @@
 /** event handler for signup button */
 $(function() {
+  Handlebars.partials = Handlebars.templates;
+
   /** event handler for signup button */
   $("#form-signup").click(function(e) {
     e.preventDefault();
@@ -11,7 +13,7 @@ $(function() {
           function(res, textStatus, jqXHR) {
             console.log(res);
             if(res.success) {
-              window.location = "/users/" + res.userid;
+              window.location = "/profile";
             } else {
               alert("signup failed");
             }
@@ -29,10 +31,14 @@ $(function() {
           },
           function(res, textStatus, jqXHR) {
             if (res.success) {
-              window.location = "/users/" + res.userid;
+              console.log(res);
+              window.location = "/profile";
             } else {
               alert("login failed");
             }
           });
   });
+
 });
+
+

@@ -20,3 +20,8 @@ var getUrlParameter = function getUrlParameter(key) {
 
   return undefined;
 };
+
+var populateNavbar = function() {
+    var navbar_html = Handlebars.templates['nav']();
+    $('.navigation').html(navbar_html);
+};

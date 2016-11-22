@@ -1,0 +1,16 @@
+<h1>Welcome Back, {{ profile.first_name }} {{ profile.last_name }}</h1>
+<h2>User info:</h2>
+<h3>Email:<p>{{ profile.email }}</p></h3><br>
+<h3>First Name:</h3><input type="text" id="first_name" value="{{ profile.first_name}}"><br>
+<h3>Last Name:</h3><input type="text" id="last_name" value="{{ profile.last_name}}"><br>
+<h3>Major:</h3><input type="text" id="major1" value="{{ profile.major1 }}"><br>
+<h3>Minor:</h3><input type="text" id="minor" value="{{ profile.minor}}"><br>
+<h3>Graduation Year:</h3><input type="text" id="graduation_year" value="{{ profile.graduation_year}}"><br>
+<button id="edit-user" class="btn btn-default">Submit Changes</button>
+
+<h2>Courses/Reviews:<h2>
+<a href="/profile/review" id="add-review" class="btn btn-default">Add/Review Course:</a>
+{{#each profile.course_reviews}}
+  {{> review_thumbnail review=this }}
+{{/each}}
+
