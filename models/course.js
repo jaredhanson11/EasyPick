@@ -16,14 +16,13 @@ courseSchema.statics.getCourseInformation = function(numbers, req, res) {
 	this.find({course_numbers: { $in: numbers} }).exec(function(err, courses){
 		if (err) {
 			res.json({
-    		success: false,
+    			success: false,
   			}).end();
 		}
 		else {
-			var info = courses.map(function(course) {return [course.course_numbers, course.name, course.units, 3];});
 			res.json({
 				success: true,
-				courseInfo: info
+				courses: courses
 			}).end();
 		}
 	});

@@ -1,7 +1,7 @@
-var GetCourseRecommendations = function(callback) {
+var getCourseRecommendations = function(callback) {
 	$.get("/recommendations/courses", function(res) {
 		if (res.success) {
-			callback(res.courseInfo);
+			callback(res.courses);
 		}
 	})
 }
@@ -9,14 +9,14 @@ var GetCourseRecommendations = function(callback) {
 var populateRecommendations = function(recs) {
 	var output = "<tr>\n<th>Course #</th>\n<th>Course Name</th>\n<th>Units</th>\n<th>Ratings</th>\n</tr>\n";
 	var addRecommendation = function(rec) {
-		output += "<tr>\n<td>" + rec[0] + "</td>\n<td>" + rec[1] + "</td>\n<td>" + rec[2] + "</td>\n<td>" + rec[3] + "</td>\n</tr>\n";
+		output += "<tr>\n<td>" + rec.course_numbers + "</td>\n<td>" + rec.name + "</td>\n<td>" + rec.units + "</td>\n<td>3</td>\n</tr>\n";
 	}
 	each(recs, addRecommendation);
 	$("#recommendations").html(output);
 }
 
 var updateRecommendations = function() {
-	GetCourseRecommendations(populateRecommendations);
+	getCourseRecommendations(populateRecommendations);
 }
 
 var onLoad = function() {
