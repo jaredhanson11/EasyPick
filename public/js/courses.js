@@ -5,31 +5,18 @@
  * Handles form submission for search page
  */
 
-$(function(){
-    $('#search-submit').click(function(){
+$(function () {
+    $('#search-form').submit(function (e) {
+        e.preventDefault();
 
-        var tags = [];
-        if ($('#hass-input').prop('checked', true)) {
-            tags.push({name: 'hass'})
-
-        }if ($('#cih-input').prop('checked', true)) {
-            tags.push({name: 'cih'})
-
-        }if ($('#cihw-input').prop('checked', true)) {
-            tags.push({name: 'cihw'})
-        }
-        //alert("hey");
-        $.get('/courses',
+        $.post('/courses/search',
             {
-                course_numbers: $('#course-number-select').valueOf(),
-                department: $('#department-select').valueOf(),
-                units: $('#units-select').valueOf(),
-                tags: tags
+                course_numbers: $('#course-number-select').val(),
+                units: $('#units-select').val()
             },
-            function(res){
-                //alert(res);
+            function (res, textStatus, jqXHR) {
                 console.log(res);
             }
-        )
+        );
     });
 });
