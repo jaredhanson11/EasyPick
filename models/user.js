@@ -38,8 +38,7 @@ userSchema.methods.authenticate = function(pass) {
  * @return {JSON or Boolean} json user object, or false if user_id doesn't exist
  */
 userSchema.statics.get_profile = function(user_id) {
-     return this.findById(user_id)
-         .populate('course_reviews.course')
+    return this.findById(user_id)
          .execQ();
 };
 
@@ -49,8 +48,16 @@ userSchema.statics.edit_profile = function(user_id, modified){
 };
 
 userSchema.statics.post_review = function(review_form, cb){
-  var new_review = Review(review_form);
-  return new_review.save();
+  var new_review = new Review(review_form);
+  var that = this;
+  return new_review.save(function(err, result){
+      if (err){
+          console.log(err);
+          return false;
+      }
+      console.log(review_form.reviewer, result._id);
+      return result;
+  });
 };
 
 userSchema.plugin(deepPopulate);

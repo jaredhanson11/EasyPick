@@ -30,10 +30,10 @@ $(function(){
                 $.post('/users/review', review_form, function(resp){
                     if(!resp.success){
                         alert('Failed to post review, have you alredy tried to reveiw this class?');
-                        window.href = '/profile';
+                        window.location.href = '/profile';
                     } else {
                         alert('Successfully posted review');
-                        window.href = '/profile';
+                        window.location.href = '/profile';
                     }
                 })
             //}

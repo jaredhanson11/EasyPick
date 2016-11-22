@@ -3,6 +3,7 @@
  */
 var utils = require('../utils.js');
 var Users = require("../models/user.js");
+var Reviews = require('../models/review.js');
 
 var UsersController = function() {
   var that = Object.create(UsersController.prototype);
@@ -53,10 +54,15 @@ var UsersController = function() {
         if (!msg) {
           utils.errorRes(res, 'User profile does not exist, or you do not have access to it.')
         } else {
-            res.json({
-                success: true,
-                msg: {profile: msg}
-            });
+            Reviews.get_reviews(user_id)
+                .then(function(reviews){
+                    msg.course_reviews = reviews;
+                    console.log(reviews);
+                    res.json({
+                        success: true,
+                        msg: {profile: msg}
+                    });
+                }).done();
         }
       })
       .catch(function(err){
@@ -85,7 +91,12 @@ var UsersController = function() {
       var review_form = req.body;
       review_form.reviewer = req.session.user._id;
       console.log(review_form);
-      Users.post_review(review_form)
+      if (!Users.post_review(review_form)){
+          utils.errorRes(res, "Coudln't post review");
+      } else{
+          utils.successRes(res, "Success"); 
+      };
+
   };
 
 
