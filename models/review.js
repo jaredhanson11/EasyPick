@@ -1,4 +1,3 @@
-var express = require('express'); //Do I need this import statement
 var mongoose = require('mongoose');
 
 reviewSchema = mongoose.Schema ({

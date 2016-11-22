@@ -1,0 +1,64 @@
+<!-- Authored by Famien Koko -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>EasyPick</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.runtime.min.js"></script>
+    <link rel="stylesheet" href="stylesheets/style.css">
+</head>
+<body>
+<div class="navigation"></div>
+<div class="container">
+    <div class="col-sm-8">
+        <form id="search-form">
+            <div class="form-group">
+                <label for="course-number-select">Course Number</label>
+                <select id="course-number-select">
+                    <option value="6">6</option>
+                    <option value="9">9</option>
+                    <option value="12">12</option>
+                    <option value="18">18</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="units-select">Units</label>
+                <select id="units-select">
+                    <option value="12">12</option>
+                    <option value="18">18</option>
+                    <option value="9">9</option>
+                    <option value="6">6</option>
+                </select></div>
+            <div class="form-group">
+                <label for="department-select">Department</label>
+                <select id="department-select">
+                    <option value="6">[6]</option>
+                    <option value="[18]">[18]</option>
+                </select>
+                <p class="help-block">Example block-level help text here.</p>
+            </div>
+            <label for="hass-input"> Filters</label>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" id = "hass-input"> HASS
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" id = 'cih-input'> CI-H
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" id='cihw-input'> CI-HW
+                </label>
+            </div>
+            <button type="submit" class="btn btn-default" id="search-submit">Submit</button>
+        </form>
+    </div>
+</div>
+
+</body>
+<script src="/js/search.js"></script>

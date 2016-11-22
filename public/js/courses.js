@@ -1,22 +1,13 @@
-/**
- * Created by Famien Koko on 11/20/2016.
- */
-/**
- * Handles form submission for search page
- */
+$(function() {
+  Handlebars.partials = Handlebars.templates;
+  var insertSelector = '#main-div';
 
-$(function () {
-    $('#search-form').submit(function (e) {
-        e.preventDefault();
-
-        $.post('/courses/search',
-            {
-                course_numbers: $('#course-number-select').val(),
-                units: $('#units-select').val()
-            },
-            function (res, textStatus, jqXHR) {
-                console.log(res);
-            }
-        );
-    });
+  var course_number = getUrlParameter('course_number');
+  /** gets course info and populates course page */
+  $.get("/courses/" + course_number,
+        function(res, textStatus, jqXHR) {
+          var html = Handlebars.templates.course(res.course);
+          $(insertSelector).html(html);
+        }
+  );
 });
