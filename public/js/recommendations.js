@@ -7,23 +7,13 @@ var GetCourseRecommendations = function(callback) {
 	//return ['6.170', '6.828', '14.11', '21G.402'];
 }
 
-var GetCourseInfo = function(courseNumber) {
-	var info = [];
-	switch (courseNumber) {
-		case '6.170':
-			info = ['Software Studio', 12, 3];
-			break;
-		case '6.828':
-			info = ['Operating Systems', 12, 3];
-			break;
-		case '14.11':
-			info = ['Economics of Crime', 12, 3];
-			break;
-		case '21G.402':
-			info = ['German II', 12, 3];
-			break;
-	}
-	return info;
+var GetCourseInfo = function(courseNumber, callback) {
+	$.get("/courses/" + courseNumber, function(res) {
+		if (res.success) {
+			info = [res.course.name, res.course.units, 3];
+			callback(info);
+		}
+	})
 }
 
 var populateRecommendations = function(recs) {
