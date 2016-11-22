@@ -13,7 +13,7 @@ $(function() {
           function(res, textStatus, jqXHR) {
             console.log(res);
             if(res.success) {
-              window.location = "/profile?userid=" + res.userid;
+              window.location = "/profile";
             } else {
               alert("signup failed");
             }
@@ -32,7 +32,7 @@ $(function() {
           function(res, textStatus, jqXHR) {
             if (res.success) {
               console.log(res);
-              window.location = "/profile?userid=" + res.userid;
+              window.location = "/profile";
             } else {
               alert("login failed");
             }
