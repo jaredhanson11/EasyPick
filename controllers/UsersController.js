@@ -47,31 +47,45 @@ var UsersController = function() {
 
 
   that.get_profile = function get_profile(req, res) {
-    user_id = req.params.id;
+    var user_id = req.session.user._id;
     Users.get_profile(user_id)
       .then(function(msg){
         if (!msg) {
           utils.errorRes(res, 'User profile does not exist, or you do not have access to it.')
         } else {
-          utils.successRes(res, {profile: msg});
+            res.json({
+                success: true,
+                msg: {profile: msg}
+            });
         }
       })
       .catch(function(err){
           console.log(err);
-          return false;
+          utils.errorRes(res, err);
       })
       .done();
   };
 
+  that.edit_profile = function(req, res) {
+    var user_id = req.session.user._id;
+    var changed_info = req.body;
+    Users.edit_profile(user_id, changed_info)
+      .then(function(edited_profile){
+            res.json({
+                success: true,
+                msg: {profile: edited_profile}
+            });
+      }).catch(function(err){
+          console.log(err);
+          utils.errorRes(res, err);
+      }).done();
+  };
+
   that.post_review = function(req, res) {
-      var review_form = req.form.review;
-      var offering_id = req.form.offering_id;
-      var msg = Users.post_review(offering_id, review_form);
-      if(!msg) {
-        utils.errorRes(res, 'Could not add class.')
-      } else {
-        utils.successRes(res, msg);
-      }
+      var review_form = req.body;
+      review_form.reviewer = req.session.user._id;
+      console.log(review_form);
+      Users.post_review(review_form)
   };
 
 

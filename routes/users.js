@@ -9,11 +9,15 @@ router.post('/', function(req, res) {
   UsersController.signup(req, res);
 });
 
-router.get('/:id', function(req, res) {
+router.get('/', function(req, res) {
   UsersController.get_profile(req, res);
 });
 
-//router.post('/:id/review', function(req, res) {
-//    UsersController.post_review(...);
-//});
+router.put('/', function(req, res){
+    UsersController.edit_profile(req, res);
+})
+
+router.post('/review', function(req, res) {
+    UsersController.post_review(req, res);
+});
 module.exports = router;

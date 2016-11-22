@@ -6,7 +6,6 @@ var deepPopulate = require('mongoose-deep-populate')(mongoose);
 // Other models users depends on
 var Review = require('./review.js');
 var Comment = require('./comment.js');
-var Offering = require('./offering.js');
 var Course = require('./course.js');
 
 userSchema = mongoose.Schema ({
@@ -38,39 +37,20 @@ userSchema.methods.authenticate = function(pass) {
  * @param {} user
  * @return {JSON or Boolean} json user object, or false if user_id doesn't exist
  */
-userSchema.statics.get_profile = function(user_id, cb) {
+userSchema.statics.get_profile = function(user_id) {
      return this.findById(user_id)
-         .deepPopulate('course_reviews.offering.course')
+         .populate('course_reviews.course')
          .execQ();
 };
 
-userSchema.method.post_review = function(offering_id, review_form){
-  var userid = this._id;
-  var new_review = Review({
-    offering: offering_id,
-    reviewer: review_form.userid,
-    class_hrs: review_form.class_hrs,
-    outside_hrs: review_form.outside_hrs,
-    content_difficulty: review_form.content_diff,
-    grading_difficulty: review_form.grading_diff,
-    overall_satisfaction: review_form.overall_satisfaction
-  });
-  new_review.save(function(err){
-      if (err) {
-          console.log(err);
-          return false;
-      } else {
-          return new_review.deepPopulate('offering.course')
-              .exec(function(err, review) {
-                  if (err) {
-                      console.log(err);
-                      return false;
-                  } else {
-                      return review;
-                  }
-              })
-      }
-  })
+userSchema.statics.edit_profile = function(user_id, modified){
+    return this.findOneAndUpdate({'_id': user_id}, modified)
+        .execQ();
+};
+
+userSchema.statics.post_review = function(review_form, cb){
+  var new_review = Review(review_form);
+  return new_review.save();
 };
 
 userSchema.plugin(deepPopulate);
