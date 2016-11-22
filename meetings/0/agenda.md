@@ -3,10 +3,10 @@
 ## MVP discussion
 Discuss current plan for MVP and progress so far.
 - What we plan to include
-  Users can review classes, see class pages with basic info, do basic search.
+  * Users can review classes, see class pages with basic info, do basic search.
 
 - What we left out
-  Getting course evaluations data, wishlist, more complex algorithms for suggestions,, login with certificates, add more complex search features.
+  * Getting course evaluations data, wishlist, more complex algorithms for suggestions,, login with certificates, add more complex search features.
 
 - Progress so far
 

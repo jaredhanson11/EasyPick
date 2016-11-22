@@ -39,6 +39,8 @@ var routes = require('./routes/routes');
 app.use('/', routes);
 var users = require('./routes/users');
 app.use('/users', users);
+var courses = require('./routes/courses');
+app.use('/courses', courses);
 app.use(express.static('public'));
 
 // handle bad routes
