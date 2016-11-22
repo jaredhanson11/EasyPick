@@ -1,8 +1,5 @@
 /**
- * Created by Famien Koko on 11/22/2016.
- */
-/**
- * Created by Famien Koko on 11/20/2016.
+ * Created by Famien Koko updated 11/22/2016.
  */
 /**
  * Handles form submission for search page
