@@ -46,6 +46,7 @@ var CoursesController = function () {
                 else
                     return res.json({
                         success: true,
+                        //console.log('course');
                         course: course
                     });
             }).catch(function(err) {

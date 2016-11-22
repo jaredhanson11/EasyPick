@@ -4,7 +4,7 @@
   "description": "Finding classes should be easier than taking them.",
   "main": "app.js",
   "scripts": {
-    "start": "handlebars templates/*.handlebars -f public/js/templates.js",
+    "start": "handlebars templates/courses_table_item.handlebars templates/courses_table_items.handlebars templates/course.handlebars -f public/js/templates.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,6 +19,7 @@
     "express": "^4.14.0",
     "express-session": "^1.14.2",
     "express4": "0.0.1",
+    "handlebars": "^4.0.6",
     "hbs": "^4.0.1",
     "mongoose": "^4.6.8",
     "q": "^1.4.1"
