@@ -2,7 +2,9 @@ var express = require('express'); //Do I need this import statement
 var mongoose = require('mongoose');
 
 reviewSchema = mongoose.Schema ({
-    offering: {type: mongoose.Schema.ObjectId, ref: 'Offering'},
+    course: {type: mongoose.Schema.ObjectId, ref: 'Course'},
+    term: {type: String}, //Fall, Spring, Summer, IAP
+    year: {type: Number},
     reviewer: {type: mongoose.Schema.ObjectId, ref: 'User'},
     class_hrs: {type: Number, min: 0},
     outside_hrs: {type: Number, min: 0},
