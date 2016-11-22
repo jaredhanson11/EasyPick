@@ -31,7 +31,7 @@ $(function(){
                 };
                 $.post('/users/review', review_form, function(resp){
                     if(!resp.success){
-                        alert('Failed to post review, have you alredy tried to reveiw this class?');
+                        alert('Failed to post review, have you alredy tried to review this class?');
                         window.location.href = '/profile';
                     } else {
                         alert('Successfully posted review');

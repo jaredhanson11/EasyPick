@@ -49,27 +49,26 @@ var UsersController = function() {
 
   that.get_profile = function get_profile(req, res) {
     var user_id = req.session.user._id;
+    var ret = {};
     Users.get_profile(user_id)
       .then(function(msg){
         if (!msg) {
           utils.errorRes(res, 'User profile does not exist, or you do not have access to it.')
         } else {
-            Reviews.get_reviews(user_id)
-                .then(function(reviews){
-                    msg.course_reviews = reviews;
-                    console.log(reviews);
-                    res.json({
-                        success: true,
-                        msg: {profile: msg}
-                    });
-                }).done();
+            ret = msg;
+            return Reviews.get_reviews(user_id);
         }
-      })
-      .catch(function(err){
+      }).then(function(reviews){
+          ret.course_reviews = reviews;
+          console.log(reviews);
+          res.json({
+              success: true,
+              msg: {profile: ret}
+          });
+    }).catch(function(err){
           console.log(err);
           utils.errorRes(res, err);
-      })
-      .done();
+    }).done();
   };
 
   that.edit_profile = function(req, res) {
