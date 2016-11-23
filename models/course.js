@@ -13,4 +13,20 @@ courseSchema = mongoose.Schema({
 
 // TODO: add a check to guarantee course numbers are unique.
 
+courseSchema.statics.getCourseInformation = function(numbers, req, res) {
+	this.find({course_numbers: { $in: numbers} }).exec(function(err, courses){
+		if (err) {
+			res.json({
+    			success: false,
+  			}).end();
+		}
+		else {
+			res.json({
+				success: true,
+				courses: courses
+			}).end();
+		}
+	});
+}
+
 module.exports = mongoose.model('Course', courseSchema);

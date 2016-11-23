@@ -4,6 +4,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var path = require('path');
 var hbs = require('hbs');
+var logger = require('morgan');
 
 // database set up
 var mongoose = require('mongoose');
@@ -16,9 +17,10 @@ db.once('open', function (callback) {
 
 var app = express();
 
+app.use(logger('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(session({ secret : '6170', resave : true, saveUninitialized : true }));
 
@@ -41,6 +43,9 @@ var users = require('./routes/users');
 app.use('/users', users);
 var courses = require('./routes/courses');
 app.use('/courses', courses);
+var recommendations = require('./routes/recommendations');
+app.use('/recommendations', recommendations);
+app.use(express.static('public'));
 
 // handle bad routes
 app.use(function(req, res, next) {

@@ -3,3 +3,4 @@ node_modules/
 packages.json
 scripts.js
 populate.js
+local_package.json
