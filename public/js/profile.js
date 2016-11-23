@@ -1,4 +1,6 @@
 $(function() {
+    checkLogin();
+
     var populate_profile = function(){
         $.get('/users', function(resp) {
             if (resp.success) {

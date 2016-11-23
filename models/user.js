@@ -67,7 +67,7 @@ userSchema.statics.post_review = function(review_form, cb){
  * @return {boolean}      true is email is valid, false otherwise.
  */
 var validateEmail = function (email) {
-  var re = /\S+{@mit\.edu}$/;
+  var re = /\S+@mit\.edu$/;
   return re.test(email);
 }
 

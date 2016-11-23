@@ -6,13 +6,14 @@
  */
 
 $(function () {
+    checkLogin();
+
     Handlebars.partials = Handlebars.templates;
     var insertSelector = '#results-div';
 
     // get courses tables using these selectors
     var courseTableSelector = '#courses-table';
     var courseInsertSelector = '#courses-table tr:last';
-
 
     $('#search-form').submit(function (e) {
         e.preventDefault();
@@ -27,8 +28,9 @@ $(function () {
                 $(courseTableSelector).find('tr:gt(0)').remove();
                 var html = Handlebars.templates.courses_table_items(res);
                 $(courseInsertSelector).after(html);
-
             }
         );
     });
+
+    populateNavbar();
 });

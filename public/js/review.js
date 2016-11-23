@@ -1,4 +1,6 @@
 $(function(){
+    checkLogin();
+
     var course_id = false;
     var populate_review = function() {
         var html = Handlebars.templates['review_form']();
