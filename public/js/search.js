@@ -13,15 +13,36 @@ $(function () {
     var courseTableSelector = '#courses-table';
     var courseInsertSelector = '#courses-table tr:last';
 
+    $.post('/courses/search',
+        {},// search with empty params to get all classes
+        function (res, textStatus, jqXHR) {
+            $.each(res.courses, function (i, course) {
+                $('#course-number-select').append($('<option>').text(course.course_numbers).attr('value', course.course_numbers))
+            });
+        }
+    );
 
     $('#search-form').submit(function (e) {
         e.preventDefault();
 
-        var course_numbers = [];
-        if ($('#course-number-select').val()) course_numbers = $('#course-number-select').val();
+        var tags = [];//values of null will match any record on the API
+
+        $.each($('input:checked'), function (key, value) {
+            tags.push(value['value']);
+        });
+
+        if (tags == []) tags = 'null';
+
+        var course_numbers = $('#course-number-select').val();
+
+        var total_units = $('#units-select').val();
+
+
         $.post('/courses/search',
             {
-                course_numbers: course_numbers
+                course_numbers: course_numbers,
+                tags: tags,
+                total_units: total_units
             },
             function (res, textStatus, jqXHR) {
                 $(courseTableSelector).find('tr:gt(0)').remove();
@@ -30,5 +51,7 @@ $(function () {
 
             }
         );
+
+
     });
 });

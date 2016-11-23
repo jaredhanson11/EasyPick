@@ -13,15 +13,21 @@ var CoursesController = function () {
 
     /**
      * searches courses with matching query paramters
-     * @param {Object} req with params.query being what query we search with
+     * @param {Object} req with req.body being what query we search with
      * @param {Object} res
      *
      * @return {Object} courses list of courses matching query parameters
      */
     that.search = function (req, res) {
-        Courses.find(req.body)
-            .populate('tags')
+        var query = {};
+        Object.keys(req.body).map(function (key, index) {
+            if (req.body[key] != 'null')//don't include 'null' values in query (match any"
+                query[key] = req.body[key];
+        });
+
+        Courses.find(query)
             .exec(function (err, results) {
+                console.log("err", err);
                 if (err) res.json({"err": true, 'message': err});
 
                 else {
@@ -35,9 +41,9 @@ var CoursesController = function () {
      * @param  {Object} req the course number must be in req.params.course_number
      * @param  {Object} res the response
      */
-    that.getCourseInfo = function(req, res) {
-        Courses.findOne({ course_numbers: req.params.course_number })
-            .then(function(course) {
+    that.getCourseInfo = function (req, res) {
+        Courses.findOne({course_numbers: req.params.course_number})
+            .then(function (course) {
                 if (!course)
                     return res.json({
                         success: false,
@@ -49,7 +55,7 @@ var CoursesController = function () {
                         //console.log('course');
                         course: course
                     });
-            }).catch(function(err) {
+            }).catch(function (err) {
             return utils.errorRes(res, err);
         });
 

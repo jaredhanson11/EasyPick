@@ -9,6 +9,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.runtime.min.js"></script>
     <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/search.css">
     <script src="/js/templates.js"></script>
 
 </head>
@@ -21,48 +22,37 @@
                 <div class="form-group">
                     <label for="course-number-select">Course Number</label>
                     <select id="course-number-select">
-                        <option value=""></option>
-                        <option value="6.00">6.00</option>
-                        <option value="6.0001">6.0001</option>
-                        <option value="6.0002">6.0002</option>
-                        <option value="6.002">6.002</option>
-                        <option value="6.003">6.003</option>
-                        <option value="6.004">6.004</option>
-                        <option value="6.005">6.005</option>
-                        <option value="6.006">6.006</option>
-                        <option value="18">18</option>
+                        <option value="null">All Classes</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="units-select">Units</label>
                     <select id="units-select">
+                        <option value="null">Any</option>
                         <option value="12">12</option>
                         <option value="18">18</option>
                         <option value="9">9</option>
                         <option value="6">6</option>
                     </select></div>
-                <div class="form-group">
-                    <label for="department-select">Department</label>
-                    <select id="department-select">
-                        <option value="6">6</option>
-                        <option value="18">18</option>
-                    </select>
-                    <p class="help-block">Example block-level help text here.</p>
-                </div>
                 <label for="hass-input"> Filters</label>
                 <div class="checkbox">
                     <label>
-                        <input type="checkbox" id="hass-input"> HASS
+                        <input type="checkbox" id="hass-input" value="HASS"> HASS
                     </label>
                 </div>
                 <div class="checkbox">
                     <label>
-                        <input type="checkbox" id='cih-input'> CI-H
+                        <input type="checkbox" id="rest-input" value="REST"> REST
                     </label>
                 </div>
                 <div class="checkbox">
                     <label>
-                        <input type="checkbox" id='cihw-input'> CI-HW
+                        <input type="checkbox" id='cih-input' value="CI-H"> CI-H
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" id='cihw-input' value="CI-HW"> CI-HW
                     </label>
                 </div>
                 <button type="submit" class="btn btn-default" id="search-submit">Submit</button>
