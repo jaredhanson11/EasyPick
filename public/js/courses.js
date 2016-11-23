@@ -1,4 +1,6 @@
 $(function() {
+  checkLogin();
+
   Handlebars.partials = Handlebars.templates;
   var insertSelector = '#main-div';
 
