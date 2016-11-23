@@ -21,11 +21,4 @@ router.post('/review', function(req, res) {
     UsersController.post_review(req, res);
 });
 
-router.get('/:id', function(req, res) {
-  res.json({
-    success: true,
-    user: req.session.user
-  })
-});
-
 module.exports = router;

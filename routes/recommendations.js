@@ -5,7 +5,7 @@ var Courses = require("../models/course.js");
 
 var defaultRecs = ['6.170', '6.828', '6.006', '6.837'];
 
-router.get('/courses', function(req, res) {
+router.get('/courses', utils.auth, function(req, res) {
 	Courses.getCourseInformation(defaultRecs, req, res);
 });
 
