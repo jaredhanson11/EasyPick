@@ -19,11 +19,15 @@ $(function () {
     $.post('/courses/search',
         {},// search with empty params to get all classes
         function (res, textStatus, jqXHR) {
-            $.each(res.courses, function (i, course) {
+            $.each(res.content, function (i, course) {
                 $('#course-number-select').append($('<option>').text(course.course_numbers).attr('value', course.course_numbers))
             });
         }
-    );
+    ).fail(function(xmlhttp) {
+        var res = JSON.parse(xmlhttp.responseText);
+        var html = Handlebars.templates.error_box(res);
+        $(error_box).html(html);
+    });
 
     //Get Navbar
     populateNavbar();
@@ -50,11 +54,16 @@ $(function () {
             },
             function (res, textStatus, jqXHR) {
                 $(courseTableSelector).find('tr:gt(0)').remove();
-                var html = Handlebars.templates.courses_table_items(res);
+                var html = Handlebars.templates.courses_table_items({courses: res.content});
                 $(courseInsertSelector).after(html);
-
             }
-        );
+        ).fail(function(xmlhttp) {
+            var res = JSON.parse(xmlhttp.responseText);
+            var html = Handlebars.templates.error_box(res);
+            $(error_box).html(html);
+        });
 
     });
+
+    populateNavbar();
 });

@@ -21,6 +21,17 @@ var getUrlParameter = function getUrlParameter(key) {
   return undefined;
 };
 
+
+var checkLogin = function() {
+  // TODO: change this
+  // quick fix to check logged in
+  $.get('/users', function(resp) {
+
+  }).fail(function(xmlhttp) {
+    if (xmlhttp.status === 401)
+        window.location = "/";
+  });
+}
 /**
  * adds a navbar to the page
  */

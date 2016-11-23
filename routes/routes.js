@@ -4,7 +4,7 @@ var router = express.Router();
 var SessionsController = require('../controllers/SessionsController');
 
 /** post route for /login. logins in a user */
-router.post('/login', utils.auth, function(req, res, next) {
+router.post('/login', function(req, res, next) {
   SessionsController.login(req, res);
 });
 

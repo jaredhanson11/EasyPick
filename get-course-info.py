@@ -29,7 +29,6 @@ class MyHTMLParser(HTMLParser):
       current_field = 'title'
       if current_course:
         write_course()
-	pass
     if clazz == 'courseblockdesc':
       current_field = 'description'
     if clazz == 'courseblockhours':
@@ -41,19 +40,14 @@ class MyHTMLParser(HTMLParser):
 
     if current_field == 'title':
       tks = data.split(' ')
-      #print [tks[0]]
       current_course['course_numbers'] = [tks[0]]
       current_course['name'] = ' '.join(tks[1:])
     if current_field == 'units':
     	if (len(data) > 0):
-	    #print data
 	    units_list_all = data.split('-')
-	    #print units_list_all
 	    if (len(units_list_all[0]) == 1):
-	    	#print units_list_all
 	    	
 		if (len(units_list_all[2]) >=7):
-			#units_list = data.split('-')[0:3]
 			current_course['units'] = data[0:5]
 			total_units =  reduce( lambda a, b: int(a) + int(b), units_list_all[0:2] + [units_list_all[2][0:1]])
 
@@ -63,7 +57,6 @@ class MyHTMLParser(HTMLParser):
 				current_course['tags'] = [units_list_all[2][9:]]
     	    else:
 	    	current_course['units'] = data
-	#print  data.split('-')
     elif current_field:
       current_course[current_field] = current_course.get(current_field, '') + data
 
