@@ -21,8 +21,8 @@ var CoursesController = function () {
      */
     that.search = function (req, res) {
         var query = {};
-        Object.keys(req.body).map(function (key, index) {
-            if (req.body[key] != 'null')//don't include 'null' values in query (match any"
+        Object.keys(req.body).forEach(function (key, index) {
+            if (req.body[key] != 'any')//don't include 'null' values in query (match any"
                 query[key] = req.body[key];
         });
 

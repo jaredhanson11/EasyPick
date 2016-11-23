@@ -25,18 +25,15 @@ $(function () {
     $('#search-form').submit(function (e) {
         e.preventDefault();
 
-        var tags = [];//values of null will match any record on the API
-
-        $.each($('input:checked'), function (key, value) {
-            tags.push(value['value']);
+        var tags = $.map($('input:checked'), function (value, i) {
+            return value['value'];
         });
-
-        if (tags == []) tags = 'null';
+        
+        if (tags == []) tags = 'any';
 
         var course_numbers = $('#course-number-select').val();
 
         var total_units = $('#units-select').val();
-
 
         $.post('/courses/search',
             {
@@ -51,7 +48,6 @@ $(function () {
 
             }
         );
-
 
     });
 });
