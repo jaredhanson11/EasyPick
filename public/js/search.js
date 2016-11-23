@@ -40,7 +40,7 @@ $(function () {
             return value['value'];
         });
 
-        if (tags == []) tags = 'any';
+        if (tags == []) tags = 'any';//Query parameters with 'any' will match all records for that field in the database api
 
         var course_numbers = $('#course-number-select').val();
 
