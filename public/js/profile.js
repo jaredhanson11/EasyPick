@@ -23,7 +23,6 @@ $(function() {
                         dataType: 'json',
                         success: function(data) {
                         //or refresh
-                            console.log(data);
                             alert('Successfully updated profile!');
                             populate_profile();
                         }

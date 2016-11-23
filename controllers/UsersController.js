@@ -51,7 +51,6 @@ var UsersController = function() {
         }
       }).then(function(reviews){
           ret.course_reviews = reviews;
-          console.log(reviews);
           res.json({
               success: true,
               msg: {profile: ret}
@@ -80,7 +79,7 @@ var UsersController = function() {
   that.post_review = function(req, res) {
       var review_form = req.body;
       review_form.reviewer = req.session.user._id;
-      console.log(review_form);
+      console.log('POST /review: review_form:' + review_form);
       if (!Users.post_review(review_form)){
           utils.errorRes(res, "Coudln't post review");
       } else{

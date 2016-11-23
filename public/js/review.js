@@ -9,9 +9,10 @@ $(function(){
             var course_num = $("#course-num").val();
             $.get('/courses/'+course_num, function(resp){
                 course_id = resp.content._id;
-                alert('successfully found course');
+                $('#selected-course').html("<b>Course Selected:</b> " + resp.content.name);
             }).fail(function(xmlhttp) {
                 course_id = undefined;
+                $('#selected-course').html("<b>Course Selected:</b> None");
                 alert('course number not valid');
             });
         })
