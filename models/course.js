@@ -6,8 +6,9 @@ courseSchema = mongoose.Schema({
     department: [{type: Number}],
     description: {type: String},
     units: {type: String},
+    total_units: {type: Number},
     prereqs: [{type: String}],
-    tags: [{type: mongoose.Schema.ObjectId, ref: 'Tag'}]
+    tags: [{type: String}]
 });
 
 // TODO: add a check to guarantee course numbers are unique.

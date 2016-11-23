@@ -14,39 +14,44 @@ var CoursesController = function () {
 
     /**
      * searches courses with matching query paramters
-     * @param {Object} req with params.query being what query we search with
+     * @param {Object} req with req.body being what query we search with
      * @param {Object} res
      *
      * @return {Object} courses list of courses matching query parameters
      */
     that.search = function (req, res) {
-        Courses.find(req.body)
-            .populate('tags')
-            .exec(function (err, results) {
-                if (err) res.json({"err": true, 'message': err});
+        var query = {};
+        Object.keys(req.body).forEach(function (key, index) {
+            if (req.body[key] != 'any')//don't include 'null' values in query (match any"
+                query[key] = req.body[key];
+        });
+
+        Courses.find(query)
+            .exec(function (err, courses) {
+                if (err) utils.errorRes(res, err);
 
                 else {
-                    res.json({"success": true, 'courses': results});
+                    return utils.sendSuccessResponse(res, courses)
                 }
             });
     };
 
     /**
-    * get course info for a course number
-    * @param  {Object} req the course number must be in req.params.course_number
-    * @param  {Object} res the response
-    */
-    that.getCourseInfo = function(req, res) {
-        Courses.findOne({ course_numbers: req.params.course_number })
-            .then(function(course) {
+     * get course info for a course number
+     * @param  {Object} req the course number must be in req.params.course_number
+     * @param  {Object} res the response
+     */
+    that.getCourseInfo = function (req, res) {
+        Courses.findOne({course_numbers: req.params.course_number})
+            .then(function (course) {
                 if (!course)
                     return utils.sendErrorResponse(res, 404, "Course not found");
                 else
                     return utils.sendSuccessResponse(res, course)
-            }).catch(function(err) {
-                    return utils.errorRes(res, err);
-            });
-    }
+            }).catch(function (err) {
+            return utils.errorRes(res, err);
+        });
+    };
 
     Object.freeze(that);
     return that;

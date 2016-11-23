@@ -15,21 +15,54 @@ $(function () {
     var courseTableSelector = '#courses-table';
     var courseInsertSelector = '#courses-table tr:last';
 
+    //Populate dropdown with courses
+    $.post('/courses/search',
+        {},// search with empty params to get all classes
+        function (res, textStatus, jqXHR) {
+            $.each(res.content, function (i, course) {
+                $('#course-number-select').append($('<option>').text(course.course_numbers).attr('value', course.course_numbers))
+            });
+        }
+    ).fail(function(xmlhttp) {
+        var res = JSON.parse(xmlhttp.responseText);
+        var html = Handlebars.templates.error_box(res);
+        $(error_box).html(html);
+    });
+
+    //Get Navbar
+    populateNavbar();
+
+    //Search button
     $('#search-form').submit(function (e) {
         e.preventDefault();
 
-        var course_numbers = [];
-        if ($('#course-number-select').val()) course_numbers = $('#course-number-select').val();
+        var tags = $.map($('input:checked'), function (value, i) {
+            return value['value'];
+        });
+
+        if (tags == []) tags = 'any';//Query parameters with 'any' will match all records for that field in the database api
+
+        var course_numbers = $('#course-number-select').val();
+
+        var total_units = $('#units-select').val();
+
         $.post('/courses/search',
             {
-                course_numbers: course_numbers
+                course_numbers: course_numbers,
+                tags: tags,
+                total_units: total_units
             },
             function (res, textStatus, jqXHR) {
                 $(courseTableSelector).find('tr:gt(0)').remove();
-                var html = Handlebars.templates.courses_table_items(res);
+                var html = Handlebars.templates.courses_table_items({courses: res.content});
                 $(courseInsertSelector).after(html);
             }
-        );
+        ).fail(function(xmlhttp) {
+            var res = JSON.parse(xmlhttp.responseText);
+            var html = Handlebars.templates.error_box(res);
+            $(error_box).html(html);
+        });
+
     });
 
     populateNavbar();

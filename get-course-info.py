@@ -42,6 +42,21 @@ class MyHTMLParser(HTMLParser):
       tks = data.split(' ')
       current_course['course_numbers'] = [tks[0]]
       current_course['name'] = ' '.join(tks[1:])
+    if current_field == 'units':
+    	if (len(data) > 0):
+	    units_list_all = data.split('-')
+	    if (len(units_list_all[0]) == 1):
+	    	
+		if (len(units_list_all[2]) >=7):
+			current_course['units'] = data[0:5]
+			total_units =  reduce( lambda a, b: int(a) + int(b), units_list_all[0:2] + [units_list_all[2][0:1]])
+
+			if isinstance(total_units, int):
+				current_course['total_units'] = total_units
+			if (len(units_list_all[2]) > 7):
+				current_course['tags'] = [units_list_all[2][9:]]
+    	    else:
+	    	current_course['units'] = data
     elif current_field:
       current_course[current_field] = current_course.get(current_field, '') + data
 
