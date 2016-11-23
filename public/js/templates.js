@@ -1,7 +1,30 @@
 (function() {
   var template = Handlebars.template, templates = Handlebars.templates = Handlebars.templates || {};
+templates['course'] = template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
+
+  return "<h1>"
+    + alias4(((helper = (helper = helpers.course_numbers || (depth0 != null ? depth0.course_numbers : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"course_numbers","hash":{},"data":data}) : helper)))
+    + " "
+    + alias4(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"name","hash":{},"data":data}) : helper)))
+    + "</h1>\n<p><b>Units:</b> "
+    + alias4(((helper = (helper = helpers.units || (depth0 != null ? depth0.units : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"units","hash":{},"data":data}) : helper)))
+    + "</p>\n<p>"
+    + alias4(((helper = (helper = helpers.description || (depth0 != null ? depth0.description : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"description","hash":{},"data":data}) : helper)))
+    + "</p>";
+},"useData":true});
+templates['error_box'] = template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    var helper;
+
+  return "<div class=\"alert alert-danger\" id=\"error\">\n  <strong>Error:</strong> "
+    + container.escapeExpression(((helper = (helper = helpers.error || (depth0 != null ? depth0.error : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : {},{"name":"error","hash":{},"data":data}) : helper)))
+    + "\n</div>";
+},"useData":true});
+templates['login_form'] = template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    return "<h1>EasyPick</h1>\n<div id=\"error\"></div>\n<form id=\"login-form\">\n  <div class=\"form-group\">\n    <label for=\"email-input\">MIT email</label>\n    <input type=\"text\" class=\"form-control\" id=\"email\"\n    name=\"email\" placeholder=\"\">\n    <label for=\"password-input\">Password</label>\n    <input type=\"password\" class=\"form-control\" id=\"password\"\n    name=\"password\" placeholder=\"\">\n  </div>\n  <button type=\"submit\" class=\"btn btn-primary\">Login</button>\n  <button class=\"btn btn-primary\" id=\"form-signup\">Sign up</button>\n</form>";
+},"useData":true});
 templates['nav'] = template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    return "<nav class=\"navbar navbar-default\">\n  <div class=\"container\">\n    <div class=\"navbar-header\">\n      <a class=\"navbar-brand\" href='/'>EasyPick</a>\n    </div>\n    <ul class=\"nav navbar-nav\">\n      <li id='search'><a href='#search'>Search</a></li>\n      <li id='recommendation'><a href='#recs'>Rec's</a></li>\n    </ul>\n  </div>\n</nav>\n";
+    return "<nav class=\"navbar navbar-default navbar-fixed-top\">\n  <div class=\"container-fluid\">\n    <div class=\"navbar-header\">\n      <a class=\"navbar-brand\" href='/'>EasyPick</a>\n    </div>\n    <ul class=\"nav navbar-nav\">\n      <li id='search'><a href='#search'>\n        <span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span>\n      </a></li>\n      <li id='home'><a href='#'>\n        <span class=\"glyphicon glyphicon-home\" aria-hidden=\"true\"></span>\n      </a></li>\n      <li id='recommendations'><a href='#profile'>\n        <span class=\"glyphicon glyphicon-thumbs-up\" aria-hidden=\"true\"></span>\n      </a></li>\n    </ul>\n  </div>\n</nav>\n";
 },"useData":true});
 templates['profile'] = template({"1":function(container,depth0,helpers,partials,data) {
     var stack1;
