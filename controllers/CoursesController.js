@@ -5,6 +5,7 @@
  */
 
 var Courses = require('../models/course.js');
+var Reviews = require('../models/review.js');
 var Tags = require('../models/tag.js');
 var utils = require('../utils.js');
 var mongoose = require('mongoose-q')(require('mongoose'));
@@ -52,6 +53,21 @@ var CoursesController = function () {
             return utils.errorRes(res, err);
         });
     };
+
+    that.getCourseStats = function(req, res) {
+        Courses.findOne({ course_numbers: req.params.course_number })
+            .then(function(course) {
+                if (!course)
+                    return utils.sendErrorResponse(res, 404, "Course not found");
+                else
+                    return Reviews.getStatsForCourse(course._id);
+            }).then(function(stats) {
+                    return utils.sendSuccessResponse(res, stats);
+            }).catch(function(err) {
+                    return utils.sendErrorResponse(res, 500, "Unknown server error");
+            });
+    }
+
 
     Object.freeze(that);
     return that;

@@ -17,4 +17,9 @@ router.get('/:course_number', utils.auth, function(req, res) {
   CoursesController.getCourseInfo(req, res);
 });
 
+/** get route for /courses/:course_number. display the course page */
+router.get('/:course_number/stats', utils.auth, function(req, res) {
+  CoursesController.getCourseStats(req, res);
+});
+
 module.exports = router;
