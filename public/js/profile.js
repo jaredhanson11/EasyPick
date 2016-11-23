@@ -1,4 +1,5 @@
 $(function() {
+    Handlebars.partials = Handlebars.templates;
     checkLogin();
 
     var populate_profile = function(){
