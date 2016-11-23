@@ -27,11 +27,11 @@ var CoursesController = function () {
         });
 
         Courses.find(query)
-            .exec(function (err, results) {
-                if (err) res.json({"err": true, 'message': err});
+            .exec(function (err, courses) {
+                if (err) utils.errorRes(res, err);
 
                 else {
-                    res.json({"success": true, 'courses': results});
+                    return utils.sendSuccessResponse(res, courses)
                 }
             });
     };
@@ -48,9 +48,9 @@ var CoursesController = function () {
                     return utils.sendErrorResponse(res, 404, "Course not found");
                 else
                     return utils.sendSuccessResponse(res, course)
-            }).catch(function(err) {
-                    return utils.errorRes(res, err);
-            });
+            }).catch(function (err) {
+            return utils.errorRes(res, err);
+        });
     };
 
     Object.freeze(that);

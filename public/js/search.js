@@ -6,6 +6,8 @@
  */
 
 $(function () {
+    checkLogin();
+
     Handlebars.partials = Handlebars.templates;
     var insertSelector = '#results-div';
 
@@ -13,6 +15,7 @@ $(function () {
     var courseTableSelector = '#courses-table';
     var courseInsertSelector = '#courses-table tr:last';
 
+    //Populate dropdown with courses
     $.post('/courses/search',
         {},// search with empty params to get all classes
         function (res, textStatus, jqXHR) {
@@ -22,13 +25,17 @@ $(function () {
         }
     );
 
+    //Get Navbar
+    populateNavbar();
+
+    //Search button
     $('#search-form').submit(function (e) {
         e.preventDefault();
 
         var tags = $.map($('input:checked'), function (value, i) {
             return value['value'];
         });
-        
+
         if (tags == []) tags = 'any';
 
         var course_numbers = $('#course-number-select').val();
