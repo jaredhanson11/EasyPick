@@ -1,4 +1,22 @@
-<div class='review_thumbnail' id='{{review._id}}'>
-    <h3>{{review.course.course_numbers}}: {{review.course.name}}</h3>
-    <p>Overall: {{review.overall_satisfaction}}/7</p>
-</div>
+<tr class='review_thumbnail' id='{{review._id}}'>
+    <th>{{review.course.course_numbers}}: {{review.course.name}}</th>
+</tr>
+<tr>
+    <td>Taken: {{review.term}} {{review.year}}</td>
+</tr>
+<tr>
+    <td>Overall: {{review.overall_satisfaction}}/7</td>
+</tr>
+<tr>
+    <td>Class Time: {{review.class_hrs}}/7</td>
+</tr>
+<tr>
+    <td>Outside Time: {{review.outside_hrs}}/7</td>
+</tr>
+<tr>
+    <td>Grading Difficulty: {{review.grading_difficulty}}/7</td>
+</tr>
+<tr>
+    <td>Content Difficulty: {{review.content_difficulty}}/7</td>
+</tr>
+

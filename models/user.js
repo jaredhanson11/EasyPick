@@ -55,7 +55,6 @@ userSchema.statics.post_review = function(review_form, cb){
           console.log(err);
           return false;
       }
-      console.log(review_form.reviewer, result._id);
       return result;
   });
 };

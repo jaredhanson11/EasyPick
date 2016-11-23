@@ -8,13 +8,12 @@ $(function(){
         $('.btn#find-course').click(function(){
             var course_num = $("#course-num").val();
             $.get('/courses/'+course_num, function(resp){
-                if (!resp.success){
-                    course_id = undefined;
-                    alert('that course number in invalid');
-                } else{
-                    course_id = resp.course._id;
-                    alert('successfully found course');
-                }
+                course_id = resp.content._id;
+                $('#selected-course').html("<b>Course Selected:</b> " + resp.content.name);
+            }).fail(function(xmlhttp) {
+                course_id = undefined;
+                $('#selected-course').html("<b>Course Selected:</b> None");
+                alert('course number not valid');
             });
         })
         $('.btn#submit-review').click(function(){
