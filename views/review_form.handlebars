@@ -1,28 +1,42 @@
 <h1>Course Review Form</h1>
-<h3>Course #</h3>
-<input type="text" id="course-num"><br>
+<table>
+<tr>
+  <th>Course # Search: </th>
+  <td><input type="text" id="course-num"></td>
+</tr>
+</table>
 <button id="find-course" class="btn btn-default">Find Course</button>
 <br><br>
+<div id="selected-course"><b>Course Selected:</b> None</div>
 <h5>Please answer some questions about the taking the class.</h5>
-Spring/Fall/Summer/IAP?
-<input type="text" id="term">
-<br>
-Year?
-<input type="text" id="year">
-<br>
-Class hours? (1-7)
-<input type="text" id="class_hrs">
-<br>
-Outside hours? (1-7)
-<input type="text" id="outside_hrs">
-<br>
-Content difficulty? (1-7)
-<input type="text" id="content_difficulty">
-<br>
-Grading difficulty? (1-7)
-<input type="text" id="grading_difficulty">
-<br>
-Overall satisfaction? (1-7)
-<input type="text" id="overall_satisfaction">
-<br>
+<table>
+<tr>
+  <td>Spring/Fall/Summer/IAP?</td>
+  <td><input type="text" id="term"></td>
+</tr>
+<tr>
+  <td>Year?</td>
+  <td><input type="text" id="year"></td>
+</tr>
+<tr>
+  <td>Class Hours?</td>
+  <td><input type="text" id="class_hrs"></td>
+</tr>
+<tr>
+  <td>Outside Hours?</td>
+  <td><input type="text" id="outside_hrs"></td>
+</tr>
+<tr>
+  <td>Content Difficulty?</td>
+  <td><input type="text" id="content_difficulty"></td>
+</tr>
+<tr>
+  <td>Grading Difficulty?</td>
+  <td><input type="text" id="grading_difficulty"></td>
+</tr>
+<tr>
+  <td>Overall Satisfaction?</td>
+  <td><input type="text" id="overall_satisfaction"></td>
+</tr>
+</table>
 <button id="submit-review" class="btn btn-default">Review Course</button>
