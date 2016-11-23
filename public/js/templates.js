@@ -30,6 +30,30 @@ templates['profile'] = template({"1":function(container,depth0,helpers,partials,
     + ((stack1 = helpers.each.call(depth0 != null ? depth0 : {},((stack1 = (depth0 != null ? depth0.profile : depth0)) != null ? stack1.course_reviews : stack1),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "\n";
 },"usePartial":true,"useData":true});
+templates['recommendation_item'] = template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
+
+  return "<tr>\n  <td>"
+    + alias4(((helper = (helper = helpers.course_numbers || (depth0 != null ? depth0.course_numbers : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"course_numbers","hash":{},"data":data}) : helper)))
+    + "</td>\n  <td>"
+    + alias4(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"name","hash":{},"data":data}) : helper)))
+    + "</td>\n  <td>"
+    + alias4(((helper = (helper = helpers.units || (depth0 != null ? depth0.units : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"units","hash":{},"data":data}) : helper)))
+    + "</td>\n  <td>"
+    + alias4(((helper = (helper = helpers.ratings || (depth0 != null ? depth0.ratings : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"ratings","hash":{},"data":data}) : helper)))
+    + "</td>\n</tr>";
+},"useData":true});
+templates['recommendations'] = template({"1":function(container,depth0,helpers,partials,data) {
+    var stack1;
+
+  return ((stack1 = container.invokePartial(partials.recommendation_item,depth0,{"name":"recommendation_item","data":data,"indent":"  ","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "");
+},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    var stack1;
+
+  return "<tr>\n  <th>Course #</th>\n  <th>Course Name</th>\n  <th>Units</th>\n  <th>Ratings</th>\n</tr>\n"
+    + ((stack1 = container.invokePartial(partials.review_form,depth0,{"name":"review_form","data":data,"helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
+    + ((stack1 = helpers.each.call(depth0 != null ? depth0 : {},(depth0 != null ? depth0.recommendations : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "");
+},"usePartial":true,"useData":true});
 templates['review_form'] = template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     return "<h1>Course Review Form</h1>\n<h3>Course #</h3>\n<input type=\"text\" id=\"course-num\"><br>\n<button id=\"find-course\" class=\"btn btn-default\">Find Course</button>\n<br><br>\n<h5>Please answer some questions about the taking the class.</h5>\nSpring/Fall/Summer/IAP?\n<input type=\"text\" id=\"term\">\n<br>\nYear?\n<input type=\"text\" id=\"year\">\n<br>\nClass hours? (1-7)\n<input type=\"text\" id=\"class_hrs\">\n<br>\nOutside hours? (1-7)\n<input type=\"text\" id=\"outside_hrs\">\n<br>\nContent difficulty? (1-7)\n<input type=\"text\" id=\"content_difficulty\">\n<br>\nGrading difficulty? (1-7)\n<input type=\"text\" id=\"grading_difficulty\">\n<br>\nOverall satisfaction? (1-7)\n<input type=\"text\" id=\"overall_satisfaction\">\n<br>\n<button id=\"submit-review\" class=\"btn btn-default\">Review Course</button>\n";
 },"useData":true});

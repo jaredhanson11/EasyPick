@@ -93,7 +93,7 @@ var UsersController = function() {
       if (!Users.post_review(review_form)){
           utils.errorRes(res, "Coudln't post review");
       } else{
-          utils.successRes(res, "Success"); 
+          utils.successRes(res, "Success");
       };
 
   };
