@@ -1,33 +1,55 @@
 /**
- * Contains methods for handling actions related to courses
+ * Contains methods for handling courses actions
+ *
+ * Created by Famien and Lara
  */
+
+var Courses = require('../models/course.js');
+var Tags = require('../models/tag.js');
 var utils = require('../utils.js');
-var Courses = require("../models/course.js");
 var mongoose = require('mongoose-q')(require('mongoose'));
 
-var CoursesController = function() {
-  var that = Object.create(CoursesController.prototype);
+var CoursesController = function () {
+    var that = Object.create(CoursesController.prototype);
 
-  /**
-   * get course info for a course number
-   * @param  {Object} req the course number must be in req.params.course_number
-   * @param  {Object} res the response
-   */
-  that.getCourseInfo = function(req, res) {
-    Courses.findOne({ course_numbers: req.params.course_number })
-    .then(function(course) {
-      if (!course)
-        return utils.sendErrorResponse(res, 404, "Course not found");
-      else
-        return utils.sendSuccessResponse(res, course)
-    }).catch(function(err) {
-      return utils.errorRes(res, err);
-    });
+    /**
+     * searches courses with matching query paramters
+     * @param {Object} req with params.query being what query we search with
+     * @param {Object} res
+     *
+     * @return {Object} courses list of courses matching query parameters
+     */
+    that.search = function (req, res) {
+        Courses.find(req.body)
+            .populate('tags')
+            .exec(function (err, results) {
+                if (err) res.json({"err": true, 'message': err});
 
-  }
+                else {
+                    res.json({"success": true, 'courses': results});
+                }
+            });
+    };
 
-  Object.freeze(that);
-  return that;
-}
+    /**
+    * get course info for a course number
+    * @param  {Object} req the course number must be in req.params.course_number
+    * @param  {Object} res the response
+    */
+    that.getCourseInfo = function(req, res) {
+        Courses.findOne({ course_numbers: req.params.course_number })
+            .then(function(course) {
+                if (!course)
+                    return utils.sendErrorResponse(res, 404, "Course not found");
+                else
+                    return utils.sendSuccessResponse(res, course)
+            }).catch(function(err) {
+                    return utils.errorRes(res, err);
+            });
+    }
+
+    Object.freeze(that);
+    return that;
+};
 
 module.exports = CoursesController();

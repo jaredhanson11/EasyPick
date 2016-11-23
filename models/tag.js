@@ -11,4 +11,4 @@ tagSchema = mongoose.Schema ({
     courses: [{type: mongoose.Schema.ObjectId, ref: 'Course'}]
 });
 
-module.exports = mongoose.model('Tag', offeringSchema);
+module.exports = mongoose.model('Tag', tagSchema);

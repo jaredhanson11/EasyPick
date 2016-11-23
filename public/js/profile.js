@@ -16,7 +16,7 @@ $(function() {
                     $.ajax({
                         url: '/users',
                         type: 'PUT',
-                        data: JSON.stringify(updatedData),
+                        data: updatedData,
                         dataType: 'json',
                         success: function(data) {
                         //or refresh
