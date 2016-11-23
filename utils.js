@@ -15,18 +15,11 @@ var Utils = function() {
   that.auth = function(req, res, next) {
     if(req.session.user)
       next();
-    else
-      res.json({
-        success: false,
-        messsage: "user is not logged in"
-      });
+    else {
+      return that.sendErrorResponse(res, 401, "User is not logged in");
+    }
   }
 
-  /**
-   * issues a success response
-   * @param  {Obejct} res the response
-   * @param  {String} msg a message to send with the response
-   */
   that.successRes = function(res, msg) {
     res.status(200).json({
       success: true,
@@ -36,7 +29,7 @@ var Utils = function() {
 
   /**
    * issues a error response
-   * @param  {Obejct} res the response
+   * @param  {Object} res the response
    * @param  {Object} err the error
    */
   that.errorRes = function(res, err) {
@@ -44,6 +37,32 @@ var Utils = function() {
     res.status(errcode).json({
       success: false,
       err: err
+    }).end();
+  };
+
+  /**
+   * sends an error response with success: false.
+   * @param  {Object} res       the response
+   * @param  {Int}    errorCode the error
+   * @param  {String} error     the error message
+   */
+  that.sendErrorResponse = function(res, errorCode, error) {
+    console.log(errorCode);
+    res.status(errorCode).json({
+      success: false,
+      error: error
+    }).end();
+  };
+
+  /**
+   * sends a success response
+   * @param  {Object} res       the response
+   * @param  {Object} content   any contents sent in the server reply
+   */
+  that.sendSuccessResponse = function(res, content) {
+    res.status(200).json({
+      success: true,
+      content: content
     }).end();
   };
 

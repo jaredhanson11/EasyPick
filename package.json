@@ -4,7 +4,7 @@
   "description": "Finding classes should be easier than taking them.",
   "main": "app.js",
   "scripts": {
-    "start": "handlebars templates/*.handlebars -f public/js/templates.js",
+    "start": "handlebars views/*.handlebars -f public/js/templates.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

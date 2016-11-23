@@ -9,7 +9,7 @@ router.post('/', function(req, res) {
   UsersController.signup(req, res);
 });
 
-router.get('/', function(req, res) {
+router.get('/', utils.auth, function(req, res) {
   UsersController.get_profile(req, res);
 });
 

@@ -17,34 +17,25 @@ var UsersController = function() {
   that.signup = function(req, res) {
     // check if user forgot to add a field
     if (!(req.body.email && req.body.password))
-      return res.json({
-            success: false,
-            error: "Missing field!"
-          });
+      return utils.sendErrorResponse(res, 400, "Missing field");
 
     Users.create({
       email: req.body.email,
       password: req.body.password
-    }, function(err, user) {
-      if (err) {
-        // if email is already taken, warn user
-        if (err.code === 11000)
-          return res.json({
-            success: false,
-            error: "Username is taken."
-          });
-        else
-          return utils.errorRes(res, err);
-      }
-      else {
-        req.session.user = user;
-        return res.json({
-          success: true,
-          userid: user._id
-        });
-      }
+    }).then(function(user) {
+      req.session.user = user;
+      return utils.sendSuccessResponse(res, { userid: user._id });
+    }).catch(function(err) {
+      // if email is already in use, warn user
+      console.log(err);
+      if (err.code === 11000)
+        return utils.sendErrorResponse(res, 400, "Email is in use");
+      else if (err.name === "ValidationError")
+        return utils.sendErrorResponse(res, 400, err.message);
+      else
+        return utils.sendErrorResponse(res, 500, err.message);
     });
-  }
+  };
 
 
   that.get_profile = function get_profile(req, res) {

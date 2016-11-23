@@ -17,15 +17,9 @@ var CoursesController = function() {
     Courses.findOne({ course_numbers: req.params.course_number })
     .then(function(course) {
       if (!course)
-        return res.json({
-          success: false,
-          error: "course not found"
-        });
+        return utils.sendErrorResponse(res, 404, "Course not found");
       else
-        return res.json({
-          success: true,
-          course: course
-        });
+        return utils.sendSuccessResponse(res, course)
     }).catch(function(err) {
       return utils.errorRes(res, err);
     });
