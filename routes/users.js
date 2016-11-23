@@ -9,7 +9,7 @@ router.post('/', function(req, res) {
   UsersController.signup(req, res);
 });
 
-router.get('/', function(req, res) {
+router.get('/', utils.auth, function(req, res) {
   UsersController.get_profile(req, res);
 });
 
@@ -19,13 +19,6 @@ router.put('/', function(req, res){
 
 router.post('/review', function(req, res) {
     UsersController.post_review(req, res);
-});
-
-router.get('/:id', function(req, res) {
-  res.json({
-    success: true,
-    user: req.session.user
-  })
 });
 
 module.exports = router;

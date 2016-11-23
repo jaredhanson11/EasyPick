@@ -16,21 +16,17 @@ var SessionsController = function() {
    * @param  {Object}   res  the response
    */
   that.login = function(req, res) {
-    User.findOne({ email: req.body.email }, function(err, user) {
-      if (err) return utils.errorRes(res, err);
-
+    User.findOne({
+      email: req.body.email
+    }).then(function(user) {
       if (user && user.authenticate(req.body.password)) {
         req.session.user = user;
-        return res.json({
-          success: true,
-          userid: user._id
-        });
+        return utils.sendSuccessResponse(res, { userid: user._id });
       } else {
-        return res.json({
-          success: false,
-          message: "Incorrect email or password!"
-        });
+        return utils.sendErrorResponse(res, 401, "Incorrect email or password!");
       }
+    }).catch(function(err) {
+      return utils.sendErrorResponse(res, 500, err.message);
     });
   }
 

@@ -7,6 +7,7 @@
 var Courses = require('../models/course.js');
 var Tags = require('../models/tag.js');
 var utils = require('../utils.js');
+var mongoose = require('mongoose-q')(require('mongoose'));
 
 var CoursesController = function () {
     var that = Object.create(CoursesController.prototype);
@@ -31,29 +32,21 @@ var CoursesController = function () {
     };
 
     /**
-     * get course info for a course number
-     * @param  {Object} req the course number must be in req.params.course_number
-     * @param  {Object} res the response
-     */
+    * get course info for a course number
+    * @param  {Object} req the course number must be in req.params.course_number
+    * @param  {Object} res the response
+    */
     that.getCourseInfo = function(req, res) {
         Courses.findOne({ course_numbers: req.params.course_number })
             .then(function(course) {
                 if (!course)
-                    return res.json({
-                        success: false,
-                        error: "course not found"
-                    });
+                    return utils.sendErrorResponse(res, 404, "Course not found");
                 else
-                    return res.json({
-                        success: true,
-                        //console.log('course');
-                        course: course
-                    });
+                    return utils.sendSuccessResponse(res, course)
             }).catch(function(err) {
-            return utils.errorRes(res, err);
-        });
-
-    };
+                    return utils.errorRes(res, err);
+            });
+    }
 
     Object.freeze(that);
     return that;

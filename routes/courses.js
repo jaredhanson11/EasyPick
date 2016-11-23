@@ -11,9 +11,10 @@ var CoursesController = require('../controllers/CoursesController');
 router.post('/search', function (req, res) {
     CoursesController.search(req, res);
 });
+
 /** get route for /courses/:course_number. display the course page */
-router.get('/:course_number', function (req, res) {
-    CoursesController.getCourseInfo(req, res);
+router.get('/:course_number', utils.auth, function(req, res) {
+  CoursesController.getCourseInfo(req, res);
 });
 
 module.exports = router;

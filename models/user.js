@@ -60,5 +60,20 @@ userSchema.statics.post_review = function(review_form, cb){
   });
 };
 
+/**
+ * returns if a user email is in a valid mit email format.
+ * ex: kerberos@mit.edu
+ * @param  {String} email user email
+ * @return {boolean}      true is email is valid, false otherwise.
+ */
+var validateEmail = function (email) {
+  var re = /\S+{@mit\.edu}$/;
+  return re.test(email);
+}
+
+/** validators */
+userSchema.path('email').validate(validateEmail, 'Not an MIT email.');
+
 userSchema.plugin(deepPopulate);
+
 module.exports = mongoose.model('User', userSchema);
