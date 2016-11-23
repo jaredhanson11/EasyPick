@@ -18,7 +18,5 @@ $(function() {
       $(insertSelector).html(html);
       populateNavbar();
     }
-  });;
-
-
+  });
 });
