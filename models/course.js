@@ -7,7 +7,7 @@ courseSchema = mongoose.Schema({
     description: {type: String},
     units: {type: String},
     total_units: {type: Number},
-    prereqs: [{type: String}],
+    prereqs: {type: String},
     tags: [{type: String}]
 });
 
