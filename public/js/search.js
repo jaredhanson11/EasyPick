@@ -13,7 +13,7 @@ $(function () {
 
     // get courses tables using these selectors
     var courseTableSelector = '#courses-table';
-    var courseInsertSelector = '#courses-table tr:last';
+    var courseInsertSelector = '#courses-table tbody';
 
     //Populate dropdown with courses
     $.post('/courses/search',
@@ -53,9 +53,12 @@ $(function () {
                 total_units: total_units
             },
             function (res, textStatus, jqXHR) {
+
                 $(courseTableSelector).find('tr:gt(0)').remove();
                 var html = Handlebars.templates.courses_table_items({courses: res.content});
-                $(courseInsertSelector).after(html);
+                $(courseInsertSelector).html(html);
+
+                $(courseTableSelector).DataTable();
             }
         ).fail(function(xmlhttp) {
             var res = JSON.parse(xmlhttp.responseText);
