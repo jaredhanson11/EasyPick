@@ -15,6 +15,8 @@ $(function () {
     var courseTableSelector = '#courses-table';
     var courseInsertSelector = '#courses-table tbody';
 
+    var coursesTable = $(courseTableSelector).DataTable();
+
     //Populate dropdown with courses
     $.post('/courses/search',
         {},// search with empty params to get all classes
@@ -53,12 +55,17 @@ $(function () {
                 total_units: total_units
             },
             function (res, textStatus, jqXHR) {
+                coursesTable.clear();
 
-                $(courseTableSelector).find('tr:gt(0)').remove();
-                var html = Handlebars.templates.courses_table_items({courses: res.content});
-                $(courseInsertSelector).html(html);
+                html = Handlebars.templates.courses_table_items({courses: res.content});
 
-                $(courseTableSelector).DataTable();
+                $(html).filter('tr').each(function (index) {
+                    coursesTable.row.add(this);//add new data to datatable
+                });
+
+                $(courseInsertSelector).prepend(html);
+
+                coursesTable.draw();//refresh datatable
             }
         ).fail(function(xmlhttp) {
             var res = JSON.parse(xmlhttp.responseText);
