@@ -16,11 +16,21 @@ def get_classes_by_dept(dept_string):
     headers = {'Accept': 'application/json', 'client_id': client_id, 'client_secret': client_secret}
 
     ret = []
+    added = {}
     for term_string in ['2016FA', '2016JA', '2017SP']:
         url = 'https://mit-public.cloudhub.io/coursecatalog/v2/terms/' + term_string + '/subjects?dept=' + str(dept_string)
         resp = requests.get(url, headers=headers)
         content = resp.json()
-        ret.extend(content['items'])
+        items = []
+        if 'item' in content:
+            items.append(content['item'])
+        if 'items' in content:
+            items.extend(content['items'])
+    def add_if_not_added(x):
+        if x['subjectId'] not in added:
+            added[x['subjectId']] = True
+            ret.append(x)
+    map(add_if_not_added, items)
 
     return ret
 
@@ -55,17 +65,25 @@ def populate_courses(courses_list):
         try:
             units = re.match(r'[0-9]-[0-9]-[0-9]', course['units']).group(0)
             total_units = reduce(lambda x, y: int(x) + int(y), units.split('-'), 0)
-            department = int(course['subjectId'].split('.')[0])
+            department = course['subjectId'].split('.')[0]
             new_course = {
                     'name': course['title'],
-                    'course_numbers': [course['subjectId']],
+                    'course_numbers': course['subjectId'],
                     'department': department,
                     'description': course['description'],
                     'units': units,
                     'total_units': total_units,
-                    'prereqs': course['prerequisites']
+                    'prereqs': course['prerequisites'],
+                    'tags': []
                 }
-            courses.insert_one(new_course)
+            if 'HASS' in course['units']:
+                new_course['tags'].append('HASS')
+            if 'REST' in course['units']:
+                new_course['tags'].append('REST')
+            i = courses.insert_one(new_course)
+            if 'HASS' in course['units']:
+                print new_course
+
             inserted_count += 1
         except Exception, e:
             print course
@@ -73,6 +91,7 @@ def populate_courses(courses_list):
     return inserted_count
 
 def main():
+
     while True:
         y_or_n = str(raw_input('Drop existing courses db? y/n \t\t')).lower()
         if y_or_n == 'y':
@@ -81,12 +100,21 @@ def main():
         elif y_or_n == 'n':
             break
 
-    if os.path.exists('courses_list.json'):
+    if os.path.exists('courses_list.json') and str(raw_input('Use cache if exists?')).lower() == 'y':
+        print 'Using cache'
         courses_list = json.load(open('courses_list.json'))
     else:
+        print 'Using api'
         courses_list = []
         added_courses = {}
-        for dept in range(0,24):
+
+
+        extra_depts = ['MAS', 'ESD', 'EC', 'CMS', 'HST', '21M', 'CSB', '21A', 'STS', 'IDS']
+        depts = range(1,24)
+        depts.extend(extra_depts)
+
+
+        for dept in depts:
             print 'Getting course ' + str(dept) + ' classes.'
             classes = get_classes_by_dept(dept)
             def add_if_not_added(x):
