@@ -1,3 +1,11 @@
 #search-submit {
     margin: 20px;
 }
+
+#course-number-div {
+    margin-left: 20px;
+}
+
+#course-stats-filters label {
+    width: 200px;
+}
