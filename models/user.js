@@ -21,7 +21,8 @@ userSchema = mongoose.Schema ({
     password: { type: String, required: true }, // only for mvp
     // post mvp: interests: {type: mongoose.Schema.ObjectId, ref: 'Interest'}
     activated: { type: Boolean, default: false },
-    token: { type: String }
+    token: { type: String },
+    wishlist: [{type: mongoose.Schema.ObjectId, ref: 'Course'}]
 });
 
 
@@ -40,7 +41,7 @@ userSchema.methods.authenticate = function(pass) {
  * @return {JSON or Boolean} json user object, or false if user_id doesn't exist
  */
 userSchema.statics.get_profile = function(user_id) {
-    return this.findById(user_id)
+    return this.findById(user_id).populate('wishlist')
          .execQ();
 };
 
