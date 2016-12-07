@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 reviewSchema = mongoose.Schema ({
     course: {type: mongoose.Schema.ObjectId, ref: 'Course'},
-    term: {type: String}, //Fall, Spring, Summer, IAP
+    term: {type: Number}, //{1: 'IAP', 2: 'SPRING', 3; 'SUMMER', 4: 'FALL'} 
     year: {type: Number},
     reviewer: {type: mongoose.Schema.ObjectId, ref: 'User'},
     class_hrs: {type: Number, min: 0},
@@ -29,6 +29,27 @@ reviewSchema.statics.getStatsForCourse = function(course_id){
                         overall_satisfaction: 0,
                     });
                 })
+}
+
+reviewSchema.statics.getSatisfactionPerTerm = function(course_id) {
+    return this.find({course: course_id})
+                .then(function(reviews) {
+                    var stats = {};
+                    var count = {};
+
+                    reviews.forEach(function(review) {
+                        stats[review.year] = stats[review.year] || 0;
+                        count[review.year] = count[review.year] || 0;
+                        stats[review.year] += review.overall_satisfaction;
+                        count[review.year] += 1;
+                    });
+
+                    reviews.forEach(function(review) {
+                        stats[review.year] = stats[review.year] / count[review.year];
+                    });
+
+                    return stats;
+                });
 }
 
 var addStats = function(prev, cur, n) {
