@@ -80,6 +80,21 @@ var CoursesController = function () {
             });
     }
 
+    that.getCourseSatisfaction = function(req, res) {
+        Courses.findOne({ course_numbers: req.params.course_number })
+            .then(function(course) {
+                if (!course)
+                    return utils.sendErrorResponse(res, 404, "Course not found");
+                else
+                    return Reviews.getSatisfactionPerTerm(course._id);
+            }).then(function(stats) {
+                    return utils.sendSuccessResponse(res, stats);
+            }).catch(function(err) {
+                    console.log(err);
+                    return utils.sendErrorResponse(res, 500, "Unknown server error");
+            });
+    }
+
 
     that.getCourseComments = function(req, res) {
         Courses.findOne({ course_numbers: req.params.course_number })

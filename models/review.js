@@ -31,6 +31,27 @@ reviewSchema.statics.getStatsForCourse = function(course_id){
                 })
 }
 
+reviewSchema.statics.getSatisfactionPerTerm = function(course_id) {
+    return this.find({course: course_id})
+                .then(function(reviews) {
+                    var stats = {};
+                    var count = {};
+
+                    reviews.forEach(function(review) {
+                        stats[review.year] = stats[review.year] || 0;
+                        count[review.year] = count[review.year] || 0;
+                        stats[review.year] += review.overall_satisfaction;
+                        count[review.year] += 1;
+                    });
+
+                    reviews.forEach(function(review) {
+                        stats[review.year] = stats[review.year] / count[review.year];
+                    });
+
+                    return stats;
+                });
+}
+
 var addStats = function(prev, cur, n) {
     prev.class_hrs += cur.class_hrs / n;
     prev.outside_hrs += cur.outside_hrs / n;

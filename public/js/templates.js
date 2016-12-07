@@ -31,9 +31,6 @@ templates['course_comments'] = template({"1":function(container,depth0,helpers,p
     + ((stack1 = helpers.each.call(depth0 != null ? depth0 : {},(depth0 != null ? depth0.comments : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "</ul>\n";
 },"usePartial":true,"useData":true});
-templates['course_stats'] = template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    return "<div class=\"panel panel-default\">\n  <div class=\"panel-heading\">Statistics</div>\n  <ul class=\"nav nav-tabs\">\n    <li class=\"active\"><a href=\"#\">General</a></li>\n    <!-- <li><a href=\"#\">Satisfaction Time Series</a></li> -->\n  </ul>\n  <div class=\"panel-body\">\n    <canvas id=\"stats-canvas\"></canvas>\n  </div>\n</div>";
-},"useData":true});
 templates['courses_table_item'] = template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression, alias5=container.lambda;
 
