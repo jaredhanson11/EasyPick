@@ -33,8 +33,8 @@ router.post('/wishlist', utils.auth, function(req, res){
     UsersController.postToWishlist(req, res);
 });
 
-//router.delete('/wishlist', utils.auth, function(req, res){
-//    UsersController.removeFromWishlist(req, res);
-//});
+router.delete('/wishlist', utils.auth, function(req, res){
+    UsersController.removeFromWishlist(req, res);
+});
 
 module.exports = router;

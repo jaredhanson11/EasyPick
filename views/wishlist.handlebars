@@ -5,6 +5,7 @@
   {{#each wishlist}}
     <tr>
       <td><a href='/courses/?course_number={{this.course_numbers}}'>{{course_numbers}}</a></td>
+      <td><button id='{{course_numbers}}' class='del-button'>&#10006;</button>
     </tr>
   {{/each}}
 </table>

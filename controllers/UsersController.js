@@ -149,23 +149,37 @@ var UsersController = function() {
   that.postToWishlist = function(req, res){
       var userId = req.session.user._id;
       var courseNumber = req.body.courseNumber.toString();
-      console.log('POST users/wishlist: courseNumber:' + courseNumber);
+      console.log('POST users/wishlist: courseNumber: ' + courseNumber);
       Courses.findOne({'course_numbers': courseNumber}, function(err, course){
           if (err){
-              console.log('err1');
               return utils.sendErrorResponse(res, 400, 'No such course');
           }
           console.log(course);
           var courseId = course._id;
           Users.findByIdAndUpdate(userId, {$push: {wishlist: courseId}}, function(err, user){
               if (err){
-                  console.log('err2');
                   return utils.sendErrorResponse(res, 400, "Couldn't update");
               }
-              console.log('dop');
               return utils.sendSuccessResponse(res, {addedCourse: courseNumber});
           });
+      });
+  };
 
+  that.removeFromWishlist = function(req, res){
+      var userId = req.session.user._id;
+      var courseNumber = req.body.courseNumber.toString();
+      console.log('DELETE users/wishlist?courseNumber=' + courseNumber);
+      Courses.findOne({'course_numbers': courseNumber}, function(err, course){
+          if (err){
+              return utils.sendErrorResponse(res, 400, 'No such course');
+          }
+          var courseId = course._id;
+          Users.findByIdAndUpdate(userId, {$pull: {wishlist: courseId}}, function(err, user){
+              if (err){
+                  return utils.sendErrorResponse(res, 400, "Couldn't update");
+              }
+              return utils.sendSuccessResponse(res, {deletedCourse: courseNumber});
+          });
       });
   };
 
