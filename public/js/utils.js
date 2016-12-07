@@ -40,6 +40,11 @@ var populateNavbar = function() {
     $('.navigation').html(navbar_html);
 };
 
+var populateWishlist = function() {
+    var wishlistHtml = Handlebars.templates['wishlist']({wishlist: [{course_numbers: '6.034'}, {course_numbers: '6.170'}]});
+    $('.wishlist').html(wishlistHtml);
+};
+
 /**
  * Iterator functional that executes function f(i) for i = from --> i = to
  *

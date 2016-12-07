@@ -37,5 +37,6 @@ $(function() {
     };
     populate_profile();
     populateNavbar();
+    populateWishlist();
 });
 

@@ -22,3 +22,15 @@ canvas {
 body {
     padding-top: 65px;
 }
+
+#main-div {
+    text-align: center;
+}
+
+.profile table {
+    margin: auto;
+}
+
+.profile th {
+    text-align: center;
+}

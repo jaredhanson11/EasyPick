@@ -131,7 +131,7 @@ templates['recommendations'] = template({"1":function(container,depth0,helpers,p
     + ((stack1 = helpers.each.call(depth0 != null ? depth0 : {},(depth0 != null ? depth0.recommendations : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "");
 },"usePartial":true,"useData":true});
 templates['review_form'] = template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    return "<h1>Course Review Form</h1>\n<table>\n<tr>\n  <th>Course # Search: </th>\n  <td><input type=\"text\" id=\"course-num\"></td>\n</tr>\n</table>\n<button id=\"find-course\" class=\"btn btn-default\">Find Course</button>\n<br><br>\n<div id=\"selected-course\"><b>Course Selected:</b> None</div>\n<h5>Please answer some questions about the taking the class.</h5>\n<table>\n<tr>\n  <td>Spring/Fall/Summer/IAP?</td>\n  <td><input type=\"text\" id=\"term\"></td>\n</tr>\n<tr>\n  <td>Year?</td>\n  <td><input type=\"text\" id=\"year\"></td>\n</tr>\n<tr>\n  <td>Class Hours? (1-7)</td>\n  <td><input type=\"text\" id=\"class_hrs\"></td>\n</tr>\n<tr>\n  <td>Outside Hours? (1-7)</td>\n  <td><input type=\"text\" id=\"outside_hrs\"></td>\n</tr>\n<tr>\n  <td>Content Difficulty? (1-7)</td>\n  <td><input type=\"text\" id=\"content_difficulty\"></td>\n</tr>\n<tr>\n  <td>Grading Difficulty? (1-7)</td>\n  <td><input type=\"text\" id=\"grading_difficulty\"></td>\n</tr>\n<tr>\n  <td>Overall Satisfaction? (1-7)</td>\n  <td><input type=\"text\" id=\"overall_satisfaction\"></td>\n</tr>\n</table>\n<button id=\"submit-review\" class=\"btn btn-default\">Review Course</button>\n";
+    return "<h1>Course Review Form</h1>\n<table>\n<tr>\n  <th>Course # Search: </th>\n  <td><input type=\"text\" id=\"course-num\"></td>\n</tr>\n</table>\n<button id=\"find-course\" class=\"btn btn-default\">Find Course</button>\n<br><br>\n<div id=\"selected-course\"><b>Course Selected:</b> None</div>\n<h5>Please answer some questions about the taking the class.</h5>\n<table>\n<tr>\n  <td>Spring/Fall/Summer/IAP?</td>\n  <td><input type=\"text\" id=\"term\"></td>\n</tr>\n<tr>\n  <td>Year?</td>\n  <td><input type=\"text\" id=\"year\"></td>\n</tr>\n<tr>\n  <td>Class Hours? (1-7)</td>\n  <td><input type=\"text\" id=\"class_hrs\"></td>\n</tr>\n<tr>\n  <td>Outside Hours? (1-7)</td>\n  <td><input type=\"text\" id=\"outside_hrs\"></td>\n</tr>\n<tr>\n  <td>Content Difficulty? (1-7)</td>\n  <td><input type=\"text\" id=\"content_difficulty\"></td>\n</tr>\n<tr>\n  <td>Grading Difficulty? (1-7)</td>\n  <td><input type=\"text\" id=\"grading_difficulty\"></td>\n</tr>\n<tr>\n  <td>Overall Satisfaction? (1-7)</td>\n  <td><input type=\"text\" id=\"overall_satisfaction\"></td>\n</tr>\n</table>\n<div>\n  <h2>(Optional) Add a comment</h2>\n  <input type='text' id='comment'>\n</div>\n<button id=\"submit-review\" class=\"btn btn-default\">Review Course</button>\n";
 },"useData":true});
 templates['review_thumbnail'] = template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, alias1=container.lambda, alias2=container.escapeExpression;
@@ -157,5 +157,20 @@ templates['review_thumbnail'] = template({"compiler":[7,">= 4.0.0"],"main":funct
     + "/7</td>\n</tr>\n<tr>\n    <td>Content Difficulty: "
     + alias2(alias1(((stack1 = (depth0 != null ? depth0.review : depth0)) != null ? stack1.content_difficulty : stack1), depth0))
     + "/7</td>\n</tr>\n\n";
+},"useData":true});
+templates['wishlist'] = template({"1":function(container,depth0,helpers,partials,data) {
+    var helper, alias1=container.escapeExpression;
+
+  return "    <tr>\n      <td><a href='/courses/?course_number="
+    + alias1(container.lambda((depth0 != null ? depth0.course_numbers : depth0), depth0))
+    + "'>"
+    + alias1(((helper = (helper = helpers.course_numbers || (depth0 != null ? depth0.course_numbers : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : {},{"name":"course_numbers","hash":{},"data":data}) : helper)))
+    + "</a></td>\n    </tr>\n";
+},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    var stack1;
+
+  return "<table>\n  <tr>\n   <th>Wishlist:<th>\n  </tr>\n"
+    + ((stack1 = helpers.each.call(depth0 != null ? depth0 : {},(depth0 != null ? depth0.wishlist : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "</table>\n";
 },"useData":true});
 })();
