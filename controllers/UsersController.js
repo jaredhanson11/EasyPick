@@ -7,7 +7,8 @@ var Reviews = require('../models/review.js');
 var Comments = require('../models/comment.js');
 
 var mongoose = require('mongoose-q')(require('mongoose'));
-
+var nodemailer = require('nodemailer');
+var transporter = nodemailer.createTransport('smtps://walimu.easypick%40gmail.com:walimueasypick@smtp.gmail.com');
 var UsersController = function() {
   var that = Object.create(UsersController.prototype);
 
@@ -24,13 +25,14 @@ var UsersController = function() {
 
     Users.create({
       email: req.body.email,
-      password: req.body.password
+      password: req.body.password,
+      token: Users.generateToken(),
     }).then(function(user) {
       req.session.user = user;
+      sendEmail(user);
       return utils.sendSuccessResponse(res, { userid: user._id });
     }).catch(function(err) {
       // if email is already in use, warn user
-      console.log(err);
       if (err.code === 11000)
         return utils.sendErrorResponse(res, 400, "Email is in use");
       else if (err.name === "ValidationError")
@@ -39,6 +41,21 @@ var UsersController = function() {
         return utils.sendErrorResponse(res, 500, err.message);
     });
   };
+
+  that.activate = function(req, res) {
+    Users.findOne({ token: req.params.token })
+        .then(function(user) {
+          if (!user)
+            return utils.sendErrorResponse(res, 500, "Invalid token");
+
+          return Users.findByIdAndUpdate(user._id, { $set: { activated: true }});
+        }).then(function(user) {
+          if (user)
+            return utils.sendSuccessResponse(res, { userid: user._id });
+        }).catch(function(err) {
+          return utils.sendErrorResponse(res, 500, err.message);
+        });
+  }
 
 
   that.get_profile = function get_profile(req, res) {
@@ -101,10 +118,30 @@ var UsersController = function() {
       })
   };
 
-
-
   Object.freeze(that);
   return that;
+}
+
+var sendEmail = function(user) {
+  var siteUrl = "localhost:3000"
+  var activationLink = siteUrl +'/activate?token=' + user.token;
+  // setup e-mail data with unicode symbols
+  var mailOptions = {
+      from: '"EasyPick 👥" <walimu.easypick@gmail.com>', // sender address
+      to: user.email, // list of receivers
+      subject: "Account activation", // Subject line
+      text: "Account activation", // plaintext body
+      html: '<b>Welcome to EasyPick</b><br />'
+          + 'To activate your account, please click the following link: '
+          + '<a href="' + activationLink + '">' + activationLink + '</a>',
+  };
+  // send mail with defined transport object
+  transporter.sendMail(mailOptions, function(error, info){
+      if(error){
+          return console.log(error);
+      }
+      console.log('Message sent: ' + info.response);
+  });
 }
 
 module.exports = UsersController();

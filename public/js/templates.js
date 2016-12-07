@@ -73,7 +73,14 @@ templates['error_box'] = template({"compiler":[7,">= 4.0.0"],"main":function(con
     + "\n</div>";
 },"useData":true});
 templates['login_form'] = template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    return "<h1>EasyPick</h1>\n<div id=\"error\"></div>\n<form id=\"login-form\">\n  <div class=\"form-group\">\n    <label for=\"email-input\">MIT email</label>\n    <input type=\"text\" class=\"form-control\" id=\"email\"\n    name=\"email\" placeholder=\"\">\n    <label for=\"password-input\">Password</label>\n    <input type=\"password\" class=\"form-control\" id=\"password\"\n    name=\"password\" placeholder=\"\">\n  </div>\n  <button type=\"submit\" class=\"btn btn-primary\">Login</button>\n  <button class=\"btn btn-primary\" id=\"form-signup\">Sign up</button>\n</form>";
+    return "<h1>EasyPick</h1>\n<div id=\"error\"></div>\n<div id=\"msg-box\"></div>\n<form id=\"login-form\">\n  <div class=\"form-group\">\n    <label for=\"email-input\">MIT email</label>\n    <input type=\"text\" class=\"form-control\" id=\"email\"\n    name=\"email\" placeholder=\"\">\n    <label for=\"password-input\">Password</label>\n    <input type=\"password\" class=\"form-control\" id=\"password\"\n    name=\"password\" placeholder=\"\">\n  </div>\n  <button type=\"submit\" class=\"btn btn-primary\">Login</button>\n  <button class=\"btn btn-primary\" id=\"form-signup\">Sign up</button>\n</form>";
+},"useData":true});
+templates['msg_box'] = template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    var helper;
+
+  return "<div class=\"alert alert-success\" id=\"msg-box\">\n  "
+    + container.escapeExpression(((helper = (helper = helpers.msg || (depth0 != null ? depth0.msg : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : {},{"name":"msg","hash":{},"data":data}) : helper)))
+    + "\n</div>";
 },"useData":true});
 templates['nav'] = template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     return "<nav class=\"navbar navbar-default navbar-fixed-top\">\n  <div class=\"container-fluid\">\n    <div class=\"navbar-header\">\n      <a class=\"navbar-brand\" href='/'>EasyPick</a>\n    </div>\n    <ul class=\"nav navbar-nav\">\n      <li id='search'><a href='/search'>\n        <span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span>\n      </a></li>\n      <li id='home'><a href='/profile'>\n        <span class=\"glyphicon glyphicon-home\" aria-hidden=\"true\"></span>\n      </a></li>\n      <li id='recommendations'><a href='/recommendations'>\n        <span class=\"glyphicon glyphicon-thumbs-up\" aria-hidden=\"true\"></span>\n      </a></li>\n    </ul>\n    <ul class=\"nav navbar-nav navbar-right  \">\n      <li>\n        <button type=\"button\" class=\"btn btn-default navbar-btn\"\n          id=\"navbar-logout\">Logout</button>\n        </li>\n    </ul>\n  </div>\n</nav>\n\n<script src=\"/js/logout.js\"></script>\n";

@@ -20,6 +20,8 @@ userSchema = mongoose.Schema ({
     course_reviews: [{type: mongoose.Schema.ObjectId, ref: 'Review'}],
     password: { type: String, required: true }, // only for mvp
     // post mvp: interests: {type: mongoose.Schema.ObjectId, ref: 'Interest'}
+    activated: { type: Boolean, default: false },
+    token: { type: String }
 });
 
 
@@ -29,7 +31,7 @@ userSchema = mongoose.Schema ({
  * @return {boolean}      true, is passwords match. false, otherwise.
  */
 userSchema.methods.authenticate = function(pass) {
-  return pass === this.password;
+  return pass === this.password && this.activated;
 };
 
 /**
@@ -57,6 +59,16 @@ userSchema.statics.post_review = function(review_form, cb){
       }
       return result;
   });
+};
+
+userSchema.statics.generateToken = function() {
+  var chars = "_!abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+  var token = new Date().getTime() + '_';
+  for ( var x = 0; x < 16; x++ ) {
+    var i = Math.floor( Math.random() * 62 );
+    token += chars.charAt( i );
+  }
+  return token;
 };
 
 /**

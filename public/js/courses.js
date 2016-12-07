@@ -16,7 +16,6 @@ $(function() {
     function(res, textStatus, jqXHR) {
       var html = Handlebars.templates.course(res.content);
       $(insertSelector).html(html);
-      populateNavbar();
   }).fail(function(xmlhttp) {
     if (xmlhttp.status === 401)
       window.location = "/";
