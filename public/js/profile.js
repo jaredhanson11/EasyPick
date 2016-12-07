@@ -7,6 +7,23 @@ $(function() {
             if (resp.success) {
                 var html = Handlebars.templates['profile'](resp.msg);
                 $('.profile').html(html);
+                populateWishlist(resp.msg.profile.wishlist);
+
+
+                $('.wishlist .del-button').click(function(){
+                    var courseNumber = $(this).attr('id');
+                    $.ajax({
+                        url: '/users/wishlist',
+                        type: 'DELETE',
+                        data: {'courseNumber': courseNumber},
+                        success: function(data){
+                            alert('Successfully deleted item!');
+                            populate_profile();
+                        }
+                    });
+                })
+
+
                 $('.btn#edit-user').click(function(){
                     var updatedData = {
                         major1: $("input#major1").val(),
@@ -37,6 +54,5 @@ $(function() {
     };
     populate_profile();
     populateNavbar();
-    populateWishlist();
 });
 
