@@ -21,14 +21,49 @@ $(function () {
     $.post('/courses/search',
         {},// search with empty params to get all classes
         function (res, textStatus, jqXHR) {
+            var departments = [];
+
             $.each(res.content, function (i, course) {
-                $('#course-number-select').append($('<option>').text(course.course_numbers).attr('value', course.course_numbers))
+                if ($.inArray(course.department[0], departments) == -1) {
+                    departments.push(course.department[0]);
+                    $('#department-number-select').append($('<option>').text(course.department[0]).attr('value', course.department[0]))
+                }
             });
         }
     ).fail(function(xmlhttp) {
         var res = JSON.parse(xmlhttp.responseText);
         var html = Handlebars.templates.error_box(res);
         $(error_box).html(html);
+    });
+
+    $('#department-number-select').change(function () {
+        if ($('#department-number-select').val() != 'any') {
+
+            $('#course-number-select').find('option:gt(0)').remove();// remove old courses
+
+            //Populate dropdown with courses
+            $.post('/courses/search',
+                {
+                    department: $('#department-number-select').val()
+                },
+                function (res, textStatus, jqXHR) {
+                    $.each(res.content, function (i, course) {
+                        $('#course-number-select').append($('<option>').text(course.course_numbers).attr('value', course.course_numbers))
+                    });
+                }
+            ).fail(function (xmlhttp) {
+                var res = JSON.parse(xmlhttp.responseText);
+                var html = Handlebars.templates.error_box(res);
+                $(error_box).html(html);
+            });
+
+            $('#course-number-div').css('display', 'inline-block');
+
+        } else {
+
+            $('#course-number-select').val('any'); // set course to 'any' if department is 'any'
+            $('#course-number-div').hide();
+        }
     });
 
     //Get Navbar
@@ -48,8 +83,11 @@ $(function () {
 
         var total_units = $('#units-select').val();
 
+        var department = $('#department-number-select').val();
+
         $.post('/courses/search',
             {
+                department: department,
                 course_numbers: course_numbers,
                 tags: tags,
                 total_units: total_units

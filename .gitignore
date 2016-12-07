@@ -7,3 +7,4 @@ local_package.json
 mongo_utils/courses_commands.js
 mongo_utils/courses_list.json
 courses_commands.js
+public/js/templates.js
