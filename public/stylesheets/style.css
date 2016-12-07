@@ -22,3 +22,19 @@ canvas {
 body {
     padding-top: 65px;
 }
+
+#main-div {
+    text-align: center;
+}
+
+.review-form table {
+    margin: auto;
+}
+
+.profile table {
+    margin: auto;
+}
+
+.profile th {
+    text-align: center;
+}
