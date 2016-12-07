@@ -47,6 +47,7 @@ $(function () {
                     department: $('#department-number-select').val()
                 },
                 function (res, textStatus, jqXHR) {
+
                     $.each(res.content, function (i, course) {
                         $('#course-number-select').append($('<option>').text(course.course_numbers).attr('value', course.course_numbers))
                     });
@@ -95,7 +96,62 @@ $(function () {
             function (res, textStatus, jqXHR) {
                 coursesTable.clear();
 
-                html = Handlebars.templates.courses_table_items({courses: res.content});
+                var courses = res.content;
+
+                var filtered_courses =  courses.filter(function (course) {
+                    if ($('#min-class-hours-select').val()) {
+                        if (course.stats.class_hrs < $('#min-class-hours-select').val()) {
+                            return false;
+                        }
+                    }
+
+                    if ($('#max-class-hours-select').val()) {
+                        if (course.stats.class_hrs > $('#max-class-hours-select').val()) {
+                            return false;
+                        }
+                    }
+
+                    if ($('#min-class-content-difficulty-select').val()) {
+                        if (course.stats.content_difficulty < $('#min-class-content-difficulty-select').val()) {
+                            return false;
+                        }
+                    }
+
+                    if ($('#max-class-content-difficulty-select').val()) {
+                        if (course.stats.content_difficulty > $('#max-class-content-difficulty-select').val()) {
+                            return false;
+                        }
+                    }
+
+                    if ($('#min-class-grading-difficulty-select').val()) {
+                        if (course.stats.content_difficulty < $('#min-class-grading-difficulty-select').val()) {
+                            return false;
+                        }
+                    }
+
+                    if ($('#max-class-grading-difficulty-select').val()) {
+                        if (course.stats.content_difficulty > $('#max-class-grading-difficulty-select').val()) {
+                            return false;
+                        }
+                    }
+
+                    if ($('#min-class-satisfaction-select').val()) {
+                        if (course.stats.content_difficulty < $('#min-class-satisfaction-select').val()) {
+                            return false;
+                        }
+                    }
+
+                    if ($('#max-class-satisfaction-select').val()) {
+                        if (course.stats.content_difficulty > $('#max-class-satisfaction-select').val()) {
+                            return false;
+                        }
+                    }
+
+                    return true;
+                });
+
+
+                html = Handlebars.templates.courses_table_items({courses:filtered_courses});
 
                 $(html).filter('tr').each(function (index) {
                     coursesTable.row.add(this);//add new data to datatable

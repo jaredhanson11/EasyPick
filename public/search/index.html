@@ -45,7 +45,8 @@
                         <option value="18">18</option>
                         <option value="9">9</option>
                         <option value="6">6</option>
-                    </select></div>
+                    </select>
+                </div>
                 <label for="hass-input"> Filters</label>
                 <div class="checkbox">
                     <label>
@@ -67,6 +68,45 @@
                         <input type="checkbox" id='cihw-input' value="CI-HW"> CI-HW
                     </label>
                 </div>
+
+                <div class="form-group" id="course-stats-filters">
+                    <div class="form-group form-inline stats-select">
+                        <label for="min-class-hours-select">Min Hours in Class</label>
+                        <input id="min-class-hours-select" class="form-control min" type="number">
+
+                        <label for="max-class-hours-select">Max Hours in Class</label>
+                        <input id="max-class-hours-select" class="form-control max" type="number">
+                    </div>
+
+                    <div class="form-group form-inline stats-select">
+
+                        <label for="min-class-content-difficulty-select">Min Content Difficulty Rating</label>
+                        <input id="min-class-content-difficulty-select" class="form-control min" type="number">
+
+                        <label for="max-class-content-difficulty-select">Max Difficulty Rating</label>
+                        <input id="max-class-content-difficulty-select" class="form-control max" type="number">
+
+                    </div>
+
+                    <div class="form-group form-inline stats-select">
+
+                        <label for="min-class-grading-difficulty-select">Min Grading Difficulty Rating</label>
+                        <input id="min-class-grading-difficulty-select" class="form-control min" type="number">
+
+                        <label for="max-class-grading-difficulty-select">Max Difficulty Rating</label>
+                        <input id="max-class-grading-difficulty-select" class="form-control max" type="number">
+
+                    </div>
+                    <div class="form-group form-inline stats-select">
+
+                        <label for="min-satisfaction-select">Min Satisfaction Rating</label>
+                        <input id="min-satisfaction-select" class="form-control min" type="number">
+
+                        <label for="max-satisfaction-select">Max Satisfaction Rating</label>
+                        <input id="max-satisfaction-select" class="form-control max" type="number">
+                    </div>
+
+                </div>
                 <button type="submit" class="btn btn-default" id="search-submit">Submit</button>
             </form>
         </div>
@@ -77,9 +117,9 @@
                     <th>Course</th>
                     <th>Name</th>
                     <th>Units</th>
-                    <th>Class Hours</th>
-                    <th>Outside Class Hours</th>
-                    <th>Content Difficuluty</th>
+                    <th>Avg Class Hours</th>
+                    <th>Avg Outside Class Hours</th>
+                    <th>Content Difficulty</th>
                     <th>Grading Difficulty</th>
                     <th>Overall Satisfaction</th>
                 </tr>
