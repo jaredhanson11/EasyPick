@@ -26,8 +26,40 @@ $(function() {
   /** gets course stats and populates stats section */
   $.get("/courses/" + course_number + "/stats",
     function(res, textStatus, jqXHR) {
-      var html = Handlebars.templates.course_stats(res.content);
-      $(statsDiv).html(html);
+      var stats = res.content;
+
+      var data = {
+        labels: ["Class Hours", "Outside Hours", "Content Difficulty", "Grading Difficulty", "Overall Satisfaction"],
+        datasets: [
+            {
+                label: "Class Stats",
+                fillColor: "rgba(151,187,205,0.2)",
+                strokeColor: "rgba(151,187,205,1)",
+                pointColor: "rgba(151,187,205,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(151,187,205,1)",
+                data: [stats.class_hrs, stats.outside_hrs, stats.content_difficulty, stats.grading_difficulty, stats.overall_satisfaction]
+            },
+        ]
+      };
+
+      var option = {
+        scaleOverride: true,
+        scaleSteps: 7,
+        scaleStepWidth: 1,
+        scaleStartValue: 0,
+        responsive: true,
+      };
+
+      var html = Handlebars.templates.course_stats();
+
+      $(statsDiv).html(html).promise().done(function(){
+        // Load data into the chart
+        var ctx = document.getElementById("stats-canvas").getContext('2d');
+        var chart = new Chart(ctx).Radar(data, option);
+      });
+
   });
 
   /** gets course stats and populates stats section */

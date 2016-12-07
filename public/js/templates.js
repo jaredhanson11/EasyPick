@@ -32,19 +32,7 @@ templates['course_comments'] = template({"1":function(container,depth0,helpers,p
     + "</ul>\n";
 },"usePartial":true,"useData":true});
 templates['course_stats'] = template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
-
-  return "<h2>Statistics</h2>\n<p><b>Class Hours:</b> "
-    + alias4(((helper = (helper = helpers.class_hrs || (depth0 != null ? depth0.class_hrs : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"class_hrs","hash":{},"data":data}) : helper)))
-    + "</p>\n<p><b>Outside Hours:</b> "
-    + alias4(((helper = (helper = helpers.outside_hrs || (depth0 != null ? depth0.outside_hrs : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"outside_hrs","hash":{},"data":data}) : helper)))
-    + "</p>\n<p><b>Content Difficulty:</b> "
-    + alias4(((helper = (helper = helpers.content_difficulty || (depth0 != null ? depth0.content_difficulty : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"content_difficulty","hash":{},"data":data}) : helper)))
-    + "</p>\n<p><b>Grading Difficulty:</b> "
-    + alias4(((helper = (helper = helpers.grading_difficulty || (depth0 != null ? depth0.grading_difficulty : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"grading_difficulty","hash":{},"data":data}) : helper)))
-    + "</p>\n<p><b>Overall Satisfaction:</b> "
-    + alias4(((helper = (helper = helpers.overall_satisfaction || (depth0 != null ? depth0.overall_satisfaction : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"overall_satisfaction","hash":{},"data":data}) : helper)))
-    + "</p>";
+    return "<div class=\"panel panel-default\">\n  <div class=\"panel-heading\">Statistics</div>\n  <ul class=\"nav nav-tabs\">\n    <li class=\"active\"><a href=\"#\">General</a></li>\n    <!-- <li><a href=\"#\">Satisfaction Time Series</a></li> -->\n  </ul>\n  <div class=\"panel-body\">\n    <canvas id=\"stats-canvas\"></canvas>\n  </div>\n</div>";
 },"useData":true});
 templates['courses_table_item'] = template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression, alias5=container.lambda;
