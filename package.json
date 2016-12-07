@@ -25,6 +25,7 @@
     "mongoose-deep-populate": "^3.0.0",
     "mongoose-q": "^0.1.0",
     "morgan": "^1.7.0",
+    "nodemailer": "^2.6.4",
     "q": "^1.4.1"
   }
 }

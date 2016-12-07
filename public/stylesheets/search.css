@@ -9,3 +9,8 @@
 #course-stats-filters label {
     width: 200px;
 }
+
+#courses-table {
+    cellspacing: "0";
+    width: "100%";
+}
