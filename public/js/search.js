@@ -8,6 +8,9 @@
 $(function () {
     checkLogin();
 
+    //Get Navbar
+    populateNavbar();
+
     Handlebars.partials = Handlebars.templates;
     var insertSelector = '#results-div';
 
@@ -66,9 +69,6 @@ $(function () {
             $('#course-number-div').hide();
         }
     });
-
-    //Get Navbar
-    populateNavbar();
 
     //Search button
     $('#search-form').submit(function (e) {
@@ -168,6 +168,4 @@ $(function () {
         });
 
     });
-
-    populateNavbar();
 });
