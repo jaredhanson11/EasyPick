@@ -13,12 +13,28 @@ router.get('/', utils.auth, function(req, res) {
   UsersController.get_profile(req, res);
 });
 
-router.put('/', function(req, res){
+router.put('/', utils.auth, function(req, res){
     UsersController.edit_profile(req, res);
 })
 
-router.post('/review', function(req, res) {
+router.post('/review', utils.auth, function(req, res) {
     UsersController.post_review(req, res);
 });
+
+//router.put('/review', utils.auth, function(req, res) {
+//    UsersController.editReview(req, res);
+//});
+
+//router.delete('/review', utils.auth, function(req, res) {
+//    UsersController.delReview(req, res);
+//});
+
+router.post('/wishlist', utils.auth, function(req, res){
+    UsersController.postToWishlist(req, res);
+});
+
+//router.delete('/wishlist', utils.auth, function(req, res){
+//    UsersController.removeFromWishlist(req, res);
+//});
 
 module.exports = router;

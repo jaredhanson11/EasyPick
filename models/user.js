@@ -21,7 +21,8 @@ userSchema = mongoose.Schema ({
     password: { type: String, required: true }, // only for mvp
     // post mvp: interests: {type: mongoose.Schema.ObjectId, ref: 'Interest'}
     activated: { type: Boolean, default: false },
-    token: { type: String }
+    token: { type: String },
+    wishlist: [{type: mongoose.Schema.ObjectId, ref: 'Course'}]
 });
 
 
