@@ -27,4 +27,9 @@ router.get('/:course_number/comments', utils.auth, function(req, res) {
   CoursesController.getCourseComments(req, res);
 });
 
+/** get route for /courses/:course_number/satisfaction. return satisfaction data for each term */
+router.get('/:course_number/satisfaction', utils.auth, function(req, res) {
+  CoursesController.getCourseSatisfaction(req, res);
+});
+
 module.exports = router;

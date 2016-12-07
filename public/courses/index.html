@@ -7,6 +7,9 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.runtime.min.js"></script>
   <script src="/js/templates.js"></script>
+  <!-- pretty graphs CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.2.0/css/mdb.min.css"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.2.0/js/mdb.min.js"></script>
   <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 <body>
@@ -19,6 +22,16 @@
 
     <div class="row show-grid">
       <div class="col-md-8 col-md-offset-2 col-xs-10 col-xs-offset-1" id="stats-div">
+        <div class="panel panel-default">
+          <div class="panel-heading">Statistics</div>
+          <ul class="nav nav-tabs">
+            <li class="active" id="general-tab"><a href="#">General</a></li>
+            <li id="satisfaction-tab"><a href="#">Satisfaction</a></li>
+          </ul>
+          <div class="panel-body">
+            <canvas id="stats-canvas"></canvas>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -26,6 +39,8 @@
       <div class="col-md-8 col-md-offset-2 col-xs-10 col-xs-offset-1" id="comments-div">
       </div>
     </div>
+
+
   </div>
   <script src="/js/utils.js"></script>
   <script src="/js/courses.js"></script>
