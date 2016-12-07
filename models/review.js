@@ -1,8 +1,9 @@
 var mongoose = require('mongoose');
+var utils = require('../utils.js');
 
 reviewSchema = mongoose.Schema ({
     course: {type: mongoose.Schema.ObjectId, ref: 'Course'},
-    term: {type: Number}, //{1: 'IAP', 2: 'SPRING', 3; 'SUMMER', 4: 'FALL'} 
+    term: {type: Number}, //{1: 'IAP', 2: 'SPRING', 3; 'SUMMER', 4: 'FALL'}
     year: {type: Number},
     reviewer: {type: mongoose.Schema.ObjectId, ref: 'User'},
     class_hrs: {type: Number, min: 0},
@@ -11,6 +12,25 @@ reviewSchema = mongoose.Schema ({
     grading_difficulty: {type: Number, max: 7, min: 1},
     overall_satisfaction: {type: Number, max: 7, min: 1}
 });
+
+reviewSchema.statics.getRatingsMatrix = function(department) {
+    return this.find({}).populate("course")
+        .then(function(reviews) {
+            var dep_reviews = reviews.filter(function(review) { return review.course.department.indexOf(department) >= 0; });
+            var users = utils.dedup(dep_reviews.map(function(review) { return review.reviewer }));
+            var courses = utils.dedup(dep_reviews.map(function(review) { return review.course._id }));
+            var rec_matrix = utils.createZeroMatrix(users.length, courses.length);
+            console.log(courses);
+
+            dep_reviews.forEach(function(review) {
+                var useridx = users.indexOf(review.reviewer);
+                var courseidx = courses.indexOf(review.course._id);
+                rec_matrix[useridx][courseidx] = review.overall_satisfaction;
+            });
+
+            return [rec_matrix, users, courses];
+        });
+}
 
 reviewSchema.statics.get_reviews = function(user_id){
     return this.find({reviewer: user_id}).populate('course').execQ();

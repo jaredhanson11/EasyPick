@@ -4,11 +4,15 @@
 var utils = require('../utils.js');
 var Users = require("../models/user.js");
 var Reviews = require('../models/review.js');
+var Courses = require('../models/course.js');
 var Comments = require('../models/comment.js');
 
 var mongoose = require('mongoose-q')(require('mongoose'));
 var nodemailer = require('nodemailer');
 var transporter = nodemailer.createTransport('smtps://walimu.easypick%40gmail.com:walimueasypick@smtp.gmail.com');
+
+var recommender = require('likely');
+
 var UsersController = function() {
   var that = Object.create(UsersController.prototype);
 
@@ -117,6 +121,29 @@ var UsersController = function() {
         }
       })
   };
+
+  that.getRecommendations = function(req, res) {
+    var user = req.session.user;
+    // TODO: check if user has at least one review.
+    Reviews.getRatingsMatrix("6")
+          .then(function(results) {
+            var matrix = results[0];
+            var users = results[1];
+            var courses = results[2];
+
+            var model = recommender.buildModel(matrix, users, courses);
+            var recs = model.recommendations(user._id);
+            var rec_ids = recs.map(function(rec) {
+              return rec[0];
+            });
+
+            return Courses.find({ _id: { $in: rec_ids } });
+          }).then(function(courses) {
+            return utils.sendSuccessResponse(res, { courses: courses });
+          }).catch(function(err) {
+            return utils.sendErrorResponse(res, 500, err.message);
+          })
+  }
 
   Object.freeze(that);
   return that;
