@@ -7,6 +7,7 @@ $(function() {
             if (resp.success) {
                 var html = Handlebars.templates['profile'](resp.msg);
                 $('.profile').html(html);
+                populateWishlist(resp.msg.profile.wishlist);
                 $('.btn#edit-user').click(function(){
                     var updatedData = {
                         major1: $("input#major1").val(),
@@ -37,6 +38,5 @@ $(function() {
     };
     populate_profile();
     populateNavbar();
-    populateWishlist();
 });
 

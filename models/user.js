@@ -41,7 +41,7 @@ userSchema.methods.authenticate = function(pass) {
  * @return {JSON or Boolean} json user object, or false if user_id doesn't exist
  */
 userSchema.statics.get_profile = function(user_id) {
-    return this.findById(user_id)
+    return this.findById(user_id).populate('wishlist')
          .execQ();
 };
 
