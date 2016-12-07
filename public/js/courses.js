@@ -4,6 +4,7 @@ $(function() {
   Handlebars.partials = Handlebars.templates;
   var insertSelector = '#main-div';
   var statsDiv = '#stats-div';
+  var commentsDiv = '#comments-div';
 
   var course_number = getUrlParameter('course_number');
   /** gets course info and populates course page */
@@ -22,11 +23,18 @@ $(function() {
     }
   });
 
-  /** gets course info and populates course page */
+  /** gets course stats and populates stats section */
   $.get("/courses/" + course_number + "/stats",
     function(res, textStatus, jqXHR) {
       var html = Handlebars.templates.course_stats(res.content);
       $(statsDiv).html(html);
+  });
+
+  /** gets course stats and populates stats section */
+  $.get("/courses/" + course_number + "/comments",
+    function(res, textStatus, jqXHR) {
+      var html = Handlebars.templates.course_comments({ comments: res.content });
+      $(commentsDiv).html(html);
   });
 
   populateNavbar();
