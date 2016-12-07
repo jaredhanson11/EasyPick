@@ -1,0 +1,10 @@
+<table>
+  <tr>
+   <th>Wishlist:<th>
+  </tr>
+  {{#each wishlist}}
+    <tr>
+      <td><a href='/courses/?course_number={{this.course_numbers}}'>{{course_numbers}}</a></td>
+    </tr>
+  {{/each}}
+</table>

@@ -2,6 +2,7 @@
 $(function() {
   Handlebars.partials = Handlebars.templates;
   var error_box = '#error';
+  var msg_box = '#msg-box';
   var main_div = '#main-div';
 
   $.get('/users', function(resp) {
@@ -25,7 +26,8 @@ $(function() {
           password: $("#password").val()
         },
         function(res, textStatus, jqXHR) {
-          window.location = "/profile";
+          var html = Handlebars.templates.msg_box({ msg: "Registered successfully. Verify your email before logging in."});
+          $(msg_box).html(html);
         }
       ).fail(function(xmlhttp) {
         var res = JSON.parse(xmlhttp.responseText);

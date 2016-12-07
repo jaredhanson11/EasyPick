@@ -23,7 +23,7 @@ var SessionsController = function() {
         req.session.user = user;
         return utils.sendSuccessResponse(res, { userid: user._id });
       } else {
-        return utils.sendErrorResponse(res, 401, "Incorrect email or password!");
+        return utils.sendErrorResponse(res, 401, "Failed to authenticate.");
       }
     }).catch(function(err) {
       return utils.sendErrorResponse(res, 500, err.message);
