@@ -20,17 +20,26 @@ $(function(){
             if (!course_id){
                 alert("Try a new class number.");
             } else {
-                var review_form = {
-                    course: course_id,
-                    term: $('input#term').val(),
-                    year: $('input#year').val(),
-                    class_hrs: $('input#class_hrs').val(),
-                    outside_hrs: $('input#outside_hrs').val(),
-                    content_difficulty: $('input#content_difficulty').val(),
-                    grading_difficulty: $('input#grading_difficulty').val(),
-                    overall_satisfaction: $('input#overall_satisfaction').val()
+
+                var review = {
+                    reviewForm: {
+                        course: course_id,
+                        term: $('input#term').val(),
+                        year: $('input#year').val(),
+                        class_hrs: $('input#class_hrs').val(),
+                        outside_hrs: $('input#outside_hrs').val(),
+                        content_difficulty: $('input#content_difficulty').val(),
+                        grading_difficulty: $('input#grading_difficulty').val(),
+                        overall_satisfaction: $('input#overall_satisfaction').val()
+                    },
+                    comment: {
+                        content: $('input#comment').val(),
+                        course: course_id
+                    }
                 };
-                $.post('/users/review', review_form, function(resp){
+
+                $.post('/users/review', review, function(resp){
+                    console.log(resp);
                     if(!resp.success){
                         alert('Failed to post review, have you alredy tried to review this class?');
                         window.location.href = '/profile';
@@ -38,7 +47,10 @@ $(function(){
                         alert('Successfully posted review');
                         window.location.href = '/profile';
                     }
-                })
+                }).fail(function(err){
+                    alert('Failed to post review, have you alredy tried to review this class?');
+                    window.location.href = '/profile';
+                });
             }
         });
     }

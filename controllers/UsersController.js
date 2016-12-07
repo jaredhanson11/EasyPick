@@ -4,6 +4,9 @@
 var utils = require('../utils.js');
 var Users = require("../models/user.js");
 var Reviews = require('../models/review.js');
+var Comments = require('../models/comment.js');
+
+var mongoose = require('mongoose-q')(require('mongoose'));
 
 var UsersController = function() {
   var that = Object.create(UsersController.prototype);
@@ -77,15 +80,25 @@ var UsersController = function() {
   };
 
   that.post_review = function(req, res) {
-      var review_form = req.body;
+      var review_form = req.body.reviewForm;
+      var comment_form = req.body.comment;
       review_form.reviewer = req.session.user._id;
       console.log('POST /review: review_form:' + review_form);
-      if (!Users.post_review(review_form)){
-          utils.errorRes(res, "Coudln't post review");
-      } else{
-          utils.successRes(res, "Success");
-      };
-
+      Reviews.create(review_form, function(err, review){
+        if (err){
+          return utils.errorRes(res, "Couldn't post review");
+        }
+        if (comment_form.content){
+            return Comments.create(comment_form, function(err, comment){
+              if (err){
+                  return utils.errorRes(res, "Couldn't post comment, but review was posted.");
+              }
+              return utils.successRes(res, "Success");
+            });
+        } else {
+            return utils.successRes(res, "Success");
+        }
+      })
   };
 
 
