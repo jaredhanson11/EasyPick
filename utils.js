@@ -47,7 +47,7 @@ var Utils = function() {
    * @param  {String} error     the error message
    */
   that.sendErrorResponse = function(res, errorCode, error) {
-    console.log(errorCode);
+    console.log(error);
     res.status(errorCode).json({
       success: false,
       error: error
@@ -65,6 +65,25 @@ var Utils = function() {
       content: content
     }).end();
   };
+
+  // TODO: make this more functional
+  that.createZeroMatrix = function(rows, cols) {
+    var matrix = [];
+    for(var i=0; i<rows; i++) {
+        matrix[i] = [];
+        for(var j=0; j<cols; j++) {
+            matrix[i][j] = 0;
+        }
+    }
+
+    return matrix;
+  }
+
+  that.dedup = function(arr) {
+    return arr.filter(function(item, pos, self) {
+      return arr.indexOf(item) == pos;
+    });
+  }
 
   Object.freeze(that);
   return that;
