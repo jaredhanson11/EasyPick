@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 reviewSchema = mongoose.Schema ({
     course: {type: mongoose.Schema.ObjectId, ref: 'Course'},
-    term: {type: String}, //Fall, Spring, Summer, IAP
+    term: {type: Number}, //{1: 'IAP', 2: 'SPRING', 3; 'SUMMER', 4: 'FALL'} 
     year: {type: Number},
     reviewer: {type: mongoose.Schema.ObjectId, ref: 'User'},
     class_hrs: {type: Number, min: 0},
