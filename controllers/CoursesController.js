@@ -9,6 +9,7 @@ var Reviews = require('../models/review.js');
 var Tags = require('../models/tag.js');
 var utils = require('../utils.js');
 var mongoose = require('mongoose-q')(require('mongoose'));
+var q = require('q');
 
 var CoursesController = function () {
     var that = Object.create(CoursesController.prototype);
@@ -32,7 +33,17 @@ var CoursesController = function () {
                 if (err) utils.errorRes(res, err);
 
                 else {
-                    return utils.sendSuccessResponse(res, courses)
+                    q.all(courses.map(function (course) {
+                        return Reviews.getStatsForCourse(course).then(function (stats) {
+                            var courseObj = course.toObject();//Turn to object since we can't add to mongoose model
+                            courseObj.stats = stats;
+                            return courseObj;
+                        });
+                    })).then(function (coursesWithStats) {
+                            return utils.sendSuccessResponse(res, coursesWithStats);
+
+                        }
+                    );
                 }
             });
     };

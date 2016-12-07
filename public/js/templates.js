@@ -29,7 +29,7 @@ templates['course_stats'] = template({"compiler":[7,">= 4.0.0"],"main":function(
     + "</p>";
 },"useData":true});
 templates['courses_table_item'] = template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
+    var stack1, helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression, alias5=container.lambda;
 
   return "<tr>\n    <td><a href='/courses/?course_number="
     + alias4(((helper = (helper = helpers.course_numbers || (depth0 != null ? depth0.course_numbers : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"course_numbers","hash":{},"data":data}) : helper)))
@@ -42,7 +42,15 @@ templates['courses_table_item'] = template({"compiler":[7,">= 4.0.0"],"main":fun
     + ">"
     + alias4(((helper = (helper = helpers.units || (depth0 != null ? depth0.units : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"units","hash":{},"data":data}) : helper)))
     + "</td>\n    <td>"
-    + alias4(((helper = (helper = helpers.description || (depth0 != null ? depth0.description : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"description","hash":{},"data":data}) : helper)))
+    + alias4(alias5(((stack1 = (depth0 != null ? depth0.stats : depth0)) != null ? stack1.class_hrs : stack1), depth0))
+    + "</td>\n    <td>"
+    + alias4(alias5(((stack1 = (depth0 != null ? depth0.stats : depth0)) != null ? stack1.outside_hrs : stack1), depth0))
+    + "</td>\n    <td>"
+    + alias4(alias5(((stack1 = (depth0 != null ? depth0.stats : depth0)) != null ? stack1.content_difficulty : stack1), depth0))
+    + "</td>\n    <td>"
+    + alias4(alias5(((stack1 = (depth0 != null ? depth0.stats : depth0)) != null ? stack1.grading_difficulty : stack1), depth0))
+    + "</td>\n    <td>"
+    + alias4(alias5(((stack1 = (depth0 != null ? depth0.stats : depth0)) != null ? stack1.overall_satisfaction : stack1), depth0))
     + "</td>\n</tr>\n";
 },"useData":true});
 templates['courses_table_items'] = template({"1":function(container,depth0,helpers,partials,data) {

@@ -13,7 +13,9 @@ $(function () {
 
     // get courses tables using these selectors
     var courseTableSelector = '#courses-table';
-    var courseInsertSelector = '#courses-table tr:last';
+    var courseInsertSelector = '#courses-table tbody';
+
+    var coursesTable = $(courseTableSelector).DataTable();
 
     //Populate dropdown with courses
     $.post('/courses/search',
@@ -53,9 +55,17 @@ $(function () {
                 total_units: total_units
             },
             function (res, textStatus, jqXHR) {
-                $(courseTableSelector).find('tr:gt(0)').remove();
-                var html = Handlebars.templates.courses_table_items({courses: res.content});
-                $(courseInsertSelector).after(html);
+                coursesTable.clear();
+
+                html = Handlebars.templates.courses_table_items({courses: res.content});
+
+                $(html).filter('tr').each(function (index) {
+                    coursesTable.row.add(this);//add new data to datatable
+                });
+
+                $(courseInsertSelector).prepend(html);
+
+                coursesTable.draw();//refresh datatable
             }
         ).fail(function(xmlhttp) {
             var res = JSON.parse(xmlhttp.responseText);
