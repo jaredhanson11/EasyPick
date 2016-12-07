@@ -6,7 +6,6 @@ $(function() {
     var getCourseRecommendations = function(callback) {
         $.get("/recommendations/courses", function(res) {
             if (res.success) {
-                console.log(res);
                 callback(res.content.courses);
             }
         }).fail(function(xmlhttp) {
