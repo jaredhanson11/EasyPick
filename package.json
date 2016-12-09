@@ -21,6 +21,7 @@
     "express4": "0.0.1",
     "handlebars": "^4.0.6",
     "hbs": "^4.0.1",
+    "likely": "^0.2.0",
     "mongoose": "^4.6.8",
     "mongoose-deep-populate": "^3.0.0",
     "mongoose-q": "^0.1.0",
