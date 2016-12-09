@@ -18,13 +18,13 @@ reviewSchema.statics.getRatingsMatrix = function(department) {
         .populate("course")
         .then(function(reviews) {
             var dep_reviews = reviews.filter(function(review) { return review.course.department.indexOf(department) >= 0; });//only use course 6 reviews
-            var users = utils.dedup(dep_reviews.map(function(review) { return review.reviewer }));
-            var courses = utils.dedup(dep_reviews.map(function(review) { return review.course._id }));
+            var users = utils.dedup(dep_reviews.map(function(review) { return review.reviewer.toString() }));
+            var courses = utils.dedup(dep_reviews.map(function(review) { return review.course._id.toString() }));
             var rec_matrix = utils.createZeroMatrix(users.length, courses.length);
 
             dep_reviews.forEach(function(review) {
-                var useridx = users.indexOf(review.reviewer);
-                var courseidx = courses.indexOf(review.course._id);
+                var useridx = users.indexOf(review.reviewer.toString());
+                var courseidx = courses.indexOf(review.course._id.toString());
                 rec_matrix[useridx][courseidx] = review.overall_satisfaction;
             });
             return [rec_matrix, users, courses];
