@@ -149,7 +149,7 @@ var UsersController = function() {
                             var courses = results[2];
                             var model = recommender.buildModel(matrix, users, courses);
 
-                            var recs = model.recommendations(user._id);
+                            var recs = model.recommendations(user._id.toString());
                             var course_rec_ids = recs.map(function (rec) {
 
                                 return rec[0];
@@ -157,19 +157,8 @@ var UsersController = function() {
 
                             return Courses.find({_id: {$in: course_rec_ids}})
                         }).then(function (courses) {
-                            var filtered_courses = courses.filter(function (course) {//don't include courses we've taken(reviewed)
-                                var not_taken = true;
 
-                                reviews.forEach(function (review) {
-                                    if (review.course == course._id.toString()) {
-                                        not_taken = false;
-                                    }
-                                });
-
-                                return not_taken;
-                            });
-
-                            return utils.sendSuccessResponse(res, {courses: filtered_courses});
+                            return utils.sendSuccessResponse(res, {courses: courses});
                         }).catch(function (err) {
                         return utils.sendErrorResponse(res, 500, err.message);
                     })
