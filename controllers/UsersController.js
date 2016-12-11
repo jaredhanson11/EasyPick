@@ -7,6 +7,7 @@ var Reviews = require('../models/review.js');
 var Courses = require('../models/course.js');
 var Comments = require('../models/comment.js');
 var Courses = require('../models/course.js');
+var PeopleService = require('../services/PeopleService.js');
 
 var mongoose = require('mongoose-q')(require('mongoose'));
 var nodemailer = require('nodemailer');
@@ -15,36 +16,53 @@ var transporter = nodemailer.createTransport('smtps://walimu.easypick%40gmail.co
 var recommender = require('likely');
 
 var UsersController = function() {
-  var that = Object.create(UsersController.prototype);
+    var that = Object.create(UsersController.prototype);
 
-  // TODO: change this to user passport
-  /**
-   * creates a new user and logs them in
-   * @param  {Object} req the email and password must be in req.body
-   * @param  {Object} res the response
-   */
-  that.signup = function(req, res) {
+      // TODO: change this to user passport
+    /**
+    * creates a new user and logs them in
+    * @param  {Object} req the email and password must be in req.body
+    * @param  {Object} res the response
+    */
+    that.signup = function(req, res) {
         // check if user forgot to add a field
         if (!(req.body.email && req.body.password))
             return utils.sendErrorResponse(res, 400, "Missing field");
 
-        Users.create({
-            email: req.body.email,
-            password: req.body.password,
-            token: Users.generateToken(),
-        }).then(function(user) {
-            sendEmail(user);
-            return utils.sendSuccessResponse(res, {});
-        }).catch(function(err) {
-              // if email is already in use, warn user
-            if (err.code === 11000)
-                return utils.sendErrorResponse(res, 400, "Email is in use");
-            else if (err.name === "ValidationError")
-                return utils.sendErrorResponse(res, 400, err.message);
-            else
-                return utils.sendErrorResponse(res, 500, err.message);
+        PeopleService.person(req.body.email, function(data, error) {
+            // people service failed
+            if (error)
+                return utils.sendErrorResponse(res, 500, error.message);
+            else {
+                var user = data.person;
+                console.log(req.body.email);
+                console.log(data);
+                if (!user)
+                    return utils.sendErrorResponse(res, 400, "Invalid kerberos");
+
+                else {
+                    Users.create({
+                        first_name: user.givenName,
+                        last_name: user.familyName,
+                        email: user.email,
+                        password: req.body.password,
+                        token: Users.generateToken(),
+                    }).then(function(user) {
+                        sendEmail(user.email);
+                        return utils.sendSuccessResponse(res, {});
+                    }).catch(function(err) {
+                          // if email is already in use, warn user
+                        if (err.code === 11000)
+                            return utils.sendErrorResponse(res, 400, "Email is in use");
+                        else if (err.name === "ValidationError")
+                            return utils.sendErrorResponse(res, 400, err.message);
+                        else
+                            return utils.sendErrorResponse(res, 500, err.message);
+                    });
+                }
+            }
         });
-  };
+    };
 
   that.activate = function(req, res) {
         Users.findOne({ token: req.params.token })
