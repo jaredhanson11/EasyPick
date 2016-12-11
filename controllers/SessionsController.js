@@ -17,7 +17,7 @@ var SessionsController = function() {
      */
     that.login = function(req, res) {
         User.findOne({
-            email: req.body.email
+            kerberos: req.body.kerberos
         }).then(function(user) {
             if (user && user.authenticate(req.body.password)) {
                 req.session.user = user;

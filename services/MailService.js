@@ -16,7 +16,7 @@ var MailService = function() {
         var activation_link = site_url +'/activate?token=' + user.token;
         var mail_options = {
             from: '"EasyPick" <walimu.easypick@gmail.com>', // sender address
-            to: user.email, // list of receivers
+            to: user.kerberos + '@mit.edu', // list of receivers
             subject: "Account activation", // Subject line
             text: "Account activation", // plaintext body
             html: '<b>Welcome to EasyPick</b><br />'

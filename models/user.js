@@ -11,7 +11,7 @@ var Course = require('./course.js');
 userSchema = mongoose.Schema ({
     first_name: {type: String, maxlength: 30},
     last_name: {type: String, maxlength: 30},
-    email: {type: String, maxlength: 50, required: true, index: { unique: true } },
+    kerberos: {type: String, maxlength: 50, required: true, index: { unique: true } },
     major1: {type: String, maxlength: 100},
     major2: {type: String, maxlength: 100},
     minor: {type: String, maxlength: 100},
@@ -71,20 +71,6 @@ userSchema.statics.generateToken = function() {
   }
   return token;
 };
-
-/**
- * returns if a user email is in a valid mit email format.
- * ex: kerberos@mit.edu
- * @param  {String} email user email
- * @return {boolean}      true is email is valid, false otherwise.
- */
-var validateEmail = function (email) {
-  var re = /\S+@mit\.edu$/;
-  return re.test(email);
-}
-
-/** validators */
-userSchema.path('email').validate(validateEmail, 'Not an MIT email.');
 
 userSchema.plugin(deepPopulate);
 

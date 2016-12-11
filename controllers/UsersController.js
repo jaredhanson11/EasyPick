@@ -25,10 +25,10 @@ var UsersController = function() {
     */
     that.signup = function(req, res) {
         // check if user forgot to add a field
-        if (!(req.body.email && req.body.password))
+        if (!(req.body.kerberos && req.body.password))
             return utils.sendErrorResponse(res, 400, "Missing field");
 
-        PeopleService.person(req.body.email, function(data, error) {
+        PeopleService.person(req.body.kerberos, function(data, error) {
             // people service failed
             if (error)
                 return utils.sendErrorResponse(res, 500, error.message);
@@ -41,7 +41,7 @@ var UsersController = function() {
                     Users.create({
                         first_name: user.givenName,
                         last_name: user.familyName,
-                        email: user.email,
+                        kerberos: user.kerberosId,
                         password: req.body.password,
                         token: Users.generateToken(),
                     }).then(function(user) {
