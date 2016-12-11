@@ -128,7 +128,6 @@ var UsersController = function() {
               return utils.successRes(res, "Success");
             });
         } else {
-            Courses.find({_id: review_form.course}).then(function(course){ console.log("course: " , course)}).catch(function (err) {console.log("err : ", err)})
             return utils.successRes(res, "Success");
         }
       })
@@ -140,7 +139,7 @@ var UsersController = function() {
             function (reviews) {
                 var reviews_courses = reviews.map(function (review) {
                     return review.course;
-                })
+                });
                 if (reviews.length > 0) {
                     Reviews.getRatingsMatrix("6")
                         .then(function (results) {
@@ -156,15 +155,15 @@ var UsersController = function() {
                             });
 
                             return Courses.find({_id: {$in: course_rec_ids}})
-                        }).then(function (courses) {
-
+                        })
+                        .then(function (courses) {
                             return utils.sendSuccessResponse(res, {courses: courses});
-                        }).catch(function (err) {
-                        return utils.sendErrorResponse(res, 500, err.message);
-                    })
+                        })
+                        .catch(function (err) {
+                            return utils.sendErrorResponse(res, 500, err.message);
+                        })
                 } else {
                     return utils.sendSuccessResponse(res, {courses: []});
-
                 }
             }
         );
