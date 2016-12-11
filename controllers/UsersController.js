@@ -128,42 +128,45 @@ var UsersController = function() {
               return utils.successRes(res, "Success");
             });
         } else {
-            Courses.find({_id: review_form.course}).then(function(course){ console.log("course: " , course)}).catch(function (err) {console.log("err : ", err)})
             return utils.successRes(res, "Success");
         }
       })
   };
 
-  that.getRecommendations = function(req, res) {
-    var user = req.session.user;
-      Reviews.find({reviewer: user._id}).then(
-          function(reviews){
-              if (reviews.length> 0) {
-                  Reviews.getRatingsMatrix("6")
-                      .then(function (results) {
-                          var matrix = results[0];
-                          var users = results[1];
-                          var courses = results[2];
-                          var model = recommender.buildModel(matrix, users, courses);
+    that.getRecommendations = function (req, res) {
+        var user = req.session.user;
+        Reviews.find({reviewer: user._id}).then(
+            function (reviews) {
+                var reviews_courses = reviews.map(function (review) {
+                    return review.course;
+                });
+                if (reviews.length > 0) {
+                    Reviews.getRatingsMatrix("6")
+                        .then(function (results) {
+                            var matrix = results[0];
+                            var users = results[1];
+                            var courses = results[2];
+                            var model = recommender.buildModel(matrix, users, courses);
 
-                          var recs = model.recommendations(user._id);
-                          var rec_ids = recs.map(function (rec) {
+                            var recs = model.recommendations(user._id.toString());
+                            var course_rec_ids = recs.map(function (rec) {
 
-                              return rec[0];
-                          });
+                                return rec[0];
+                            });
 
-                          return Courses.find({ _id: { $in: rec_ids } });
-                      }).then(function(courses) {
-                      return utils.sendSuccessResponse(res, { courses: courses });
-                  }).catch(function(err) {
-                      return utils.sendErrorResponse(res, 500, err.message);
-                  })
-              } else {
-                  return utils.sendSuccessResponse(res, { courses: [] });
-
-              }
-          }
-      );
+                            return Courses.find({_id: {$in: course_rec_ids}})
+                        })
+                        .then(function (courses) {
+                            return utils.sendSuccessResponse(res, {courses: courses});
+                        })
+                        .catch(function (err) {
+                            return utils.sendErrorResponse(res, 500, err.message);
+                        })
+                } else {
+                    return utils.sendSuccessResponse(res, {courses: []});
+                }
+            }
+        );
 
   }
 
