@@ -105,8 +105,18 @@ var UsersController = function() {
       var review_form = req.body.reviewForm;
       var comment_form = req.body.comment;
       review_form.reviewer = req.session.user._id;
-      console.log('POST /review: review_form:' + review_form);
-      Reviews.create(review_form, function(err, review){
+      console.log('POST /review: review_form:' , review_form);
+      Reviews.create({
+          course: mongoose.Types.ObjectId(review_form.course),
+          term: review_form.term,
+          year: review_form.year,
+          reviewer: mongoose.Types.ObjectId(review_form.reviewer),
+          class_hrs: review_form.class_hrs,
+          outside_hrs: review_form.outside_hrs,
+          content_difficulty: review_form.content_difficulty,
+          grading_difficulty: review_form.grading_difficulty,
+          overall_satisfaction: review_form.overall_satisfaction
+      }, function(err, review){
         if (err){
           return utils.errorRes(res, "Couldn't post review");
         }
@@ -118,6 +128,7 @@ var UsersController = function() {
               return utils.successRes(res, "Success");
             });
         } else {
+            Courses.find({_id: review_form.course}).then(function(course){ console.log("course: " , course)}).catch(function (err) {console.log("err : ", err)})
             return utils.successRes(res, "Success");
         }
       })
@@ -125,25 +136,35 @@ var UsersController = function() {
 
   that.getRecommendations = function(req, res) {
     var user = req.session.user;
-    // TODO: check if user has at least one review.
-    Reviews.getRatingsMatrix("6")
-          .then(function(results) {
-            var matrix = results[0];
-            var users = results[1];
-            var courses = results[2];
+      Reviews.find({reviewer: user._id}).then(
+          function(reviews){
+              if (reviews.length> 0) {
+                  Reviews.getRatingsMatrix("6")
+                      .then(function (results) {
+                          var matrix = results[0];
+                          var users = results[1];
+                          var courses = results[2];
+                          var model = recommender.buildModel(matrix, users, courses);
 
-            var model = recommender.buildModel(matrix, users, courses);
-            var recs = model.recommendations(user._id);
-            var rec_ids = recs.map(function(rec) {
-              return rec[0];
-            });
+                          var recs = model.recommendations(user._id);
+                          var rec_ids = recs.map(function (rec) {
 
-            return Courses.find({ _id: { $in: rec_ids } });
-          }).then(function(courses) {
-            return utils.sendSuccessResponse(res, { courses: courses });
-          }).catch(function(err) {
-            return utils.sendErrorResponse(res, 500, err.message);
-          })
+                              return rec[0];
+                          });
+
+                          return Courses.find({ _id: { $in: rec_ids } });
+                      }).then(function(courses) {
+                      return utils.sendSuccessResponse(res, { courses: courses });
+                  }).catch(function(err) {
+                      return utils.sendErrorResponse(res, 500, err.message);
+                  })
+              } else {
+                  return utils.sendSuccessResponse(res, { courses: [] });
+
+              }
+          }
+      );
+
   }
 
   that.postToWishlist = function(req, res){
