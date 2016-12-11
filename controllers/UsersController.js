@@ -24,42 +24,40 @@ var UsersController = function() {
    * @param  {Object} res the response
    */
   that.signup = function(req, res) {
-    // check if user forgot to add a field
-    if (!(req.body.email && req.body.password))
-      return utils.sendErrorResponse(res, 400, "Missing field");
+        // check if user forgot to add a field
+        if (!(req.body.email && req.body.password))
+            return utils.sendErrorResponse(res, 400, "Missing field");
 
-    Users.create({
-      email: req.body.email,
-      password: req.body.password,
-      token: Users.generateToken(),
-    }).then(function(user) {
-      req.session.user = user;
-      sendEmail(user);
-      return utils.sendSuccessResponse(res, { userid: user._id });
-    }).catch(function(err) {
-      // if email is already in use, warn user
-      if (err.code === 11000)
-        return utils.sendErrorResponse(res, 400, "Email is in use");
-      else if (err.name === "ValidationError")
-        return utils.sendErrorResponse(res, 400, err.message);
-      else
-        return utils.sendErrorResponse(res, 500, err.message);
-    });
+        Users.create({
+            email: req.body.email,
+            password: req.body.password,
+            token: Users.generateToken(),
+        }).then(function(user) {
+            sendEmail(user);
+            return utils.sendSuccessResponse(res, {});
+        }).catch(function(err) {
+              // if email is already in use, warn user
+            if (err.code === 11000)
+                return utils.sendErrorResponse(res, 400, "Email is in use");
+            else if (err.name === "ValidationError")
+                return utils.sendErrorResponse(res, 400, err.message);
+            else
+                return utils.sendErrorResponse(res, 500, err.message);
+        });
   };
 
   that.activate = function(req, res) {
-    Users.findOne({ token: req.params.token })
-        .then(function(user) {
-          if (!user)
-            return utils.sendErrorResponse(res, 500, "Invalid token");
-
-          return Users.findByIdAndUpdate(user._id, { $set: { activated: true }});
-        }).then(function(user) {
-          if (user)
-            return utils.sendSuccessResponse(res, { userid: user._id });
-        }).catch(function(err) {
-          return utils.sendErrorResponse(res, 500, err.message);
-        });
+        Users.findOne({ token: req.params.token })
+            .then(function(user) {
+                if (!user)
+                    return utils.sendErrorResponse(res, 500, "Invalid token");
+                return Users.findByIdAndUpdate(user._id, { $set: { activated: true }});
+            }).then(function(user) {
+                if (user)
+                    return utils.sendSuccessResponse(res, { userid: user._id });
+                }).catch(function(err) {
+                    return utils.sendErrorResponse(res, 500, err.message);
+            });
   }
 
 
