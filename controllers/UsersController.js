@@ -43,7 +43,6 @@ var UsersController = function() {
                         last_name: user.familyName,
                         kerberos: user.kerberosId,
                         password: req.body.password,
-                        token: Users.generateToken(),
                     }).then(function(user) {
                         MailService.sendConfirmationEmail(user, function(email_res) {
                             if (email_res.success)
