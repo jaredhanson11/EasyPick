@@ -1,11 +1,13 @@
-<table>
-  <tr>
-   <th>Wishlist:<th>
-  </tr>
-  {{#each wishlist}}
-    <tr>
-      <td><a href='/courses/?course_number={{this.course_numbers}}'>{{course_numbers}}</a></td>
-      <td><button id='{{course_numbers}}' class='del-button'>&#10006;</button>
-    </tr>
-  {{/each}}
-</table>
+<button id="toggle_wishlist"></button>
+
+<div class="wishlist-menu">
+	<h2>Wishlist</h2>
+	<ul class="wishlist_items">
+	{{#each wishlist}}
+    	<li class="wishlist_item">
+      		<a href='/courses/?course_number={{this.course_numbers}}' class="wishlist_link">{{course_numbers}}</a>
+      		<button id='{{course_numbers}}' class='del-button'>&#10006;</button>
+    	</li>
+	{{/each}}
+	</ul>
+</div>

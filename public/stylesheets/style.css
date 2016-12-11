@@ -20,13 +20,70 @@ canvas {
 }
 
 body {
-    padding-top: 65px;
     font-family: 'Lato', sans-serif;
 }
 
-/*#profile-div {
-    text-align: center;
-}*/
+#main-div {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+li#search a:hover, li#home a:hover, li#recommendations a:hover {
+    background-color: transparent;
+}
+
+.navbar a {
+    color: white;
+    text-shadow: 2px 2px black;
+}
+
+.navbar a:hover {
+    color: #22547a;
+    text-shadow: 0px 0px;
+}
+
+.navbar, .navbar-brand {
+    font-size: 36px;
+    font-weight: bolder;
+    line-height: 40px;
+}
+
+.navbar-brand {
+    background-image: url("/resources/logo_white.png");
+    background-size: 40px 40px;
+    background-position: 35px 15px;
+    background-repeat: no-repeat;
+    padding-left: 80px;
+    height: 60px;
+}
+
+.navbar-brand:hover {
+    background-image: url("/resources/logo_dark.png");
+}
+
+.navbar-nav li {
+    margin: auto 20px;
+}
+
+#navbar-logout {
+    height: 50px;
+    padding: 15px;
+    background-color: #44a6f2;
+    font-size: 18px;
+    line-height: 18px;
+    border-radius: 24px;
+    border: 2px solid white;
+    margin-top: 15px;
+    color: white;
+    transition: all 250ms ease;
+}
+
+#navbar-logout:hover {
+    background-color: white;
+    border: 2px solid #44a6f2;
+    color: #44a6f2;
+}
 
 .review-form table {
     margin: auto;
@@ -113,7 +170,7 @@ body {
     height: 200px;
     margin: auto;
     position: relative;
-    bottom: -140px;
+    bottom: -54px;
     background-image: url("/resources/profile.jpg");
     background-size: cover;
     background-position: center;
@@ -215,4 +272,197 @@ body {
 #submit-profile {
     display: none;
     width: 120px;
+}
+
+.course_reviews {
+    width: 800px;
+    margin: auto auto 50px;
+    text-align: center;
+}
+
+.course_reviews table {
+    margin: auto auto 25px;
+    text-align: left;
+}
+
+.course_reviews table td {
+    padding-left: 60px;
+}
+
+.review_thumbnail {
+    height: 70px;
+}
+
+.review_thumbnail th {
+    font-size: 18px;
+    line-height: 18px;
+}
+
+.review_thumbnail .sign {
+    cursor: pointer;
+    font-size: 40px;
+    padding: 5px;
+    background-color: #44a6f2;
+    color: white;
+    border-radius: 11px;
+}
+
+.review_thumbnail .sign:after {
+  content: "+";
+  display: inline-block;
+  text-align: center;
+  margin: 10px;
+  width: 22px;
+}
+
+.review_thumbnail.expand .sign:after {
+  content: "-";
+  display: inline-block;
+  text-align: center;
+  margin: 10px;
+  width: 22px;
+}
+
+#add-review {
+    background-color: #44a6f2;
+    color: white;
+    border: 2px solid #44a6f2;
+    height: 48px;
+    border-radius: 28px;
+    margin: 48px auto;
+    font-size: 20px;
+    padding: 18px;
+    line-height: 20px;
+    transition: all 250ms ease;
+    width: 136px;
+}
+
+#add-review:hover {
+    color: #44a6f2;
+    background-color: white;
+    border: 2px solid #44a6f2;
+    text-decoration: none;
+}
+
+#add-review:focus {
+    text-decoration: none;
+}
+
+#toggle_wishlist {
+    display: block;
+    position: fixed;
+    z-index: 200;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    transition: all 0.3s;
+    padding: 12px 24px;
+    color: white;
+    background-color: #22547a;
+    font-size: 14px;
+    border: none;
+    border-left: none;
+    box-shadow: none;
+    border-radius: none;
+    -webkit-appearnce: none;
+    -moz-appearance: none;
+    appearance: none;
+    cursor: pointer;
+}
+
+#toggle_wishlist:focus {
+    outline: none;
+}
+
+#toggle_wishlist::after {
+    content: "Wishlist";
+}
+
+#wishlist.is-active #toggle_wishlist::after {
+    content: "\2014";
+}
+
+#wishlist.is-active #toggle_wishlist {
+    left: 90%;
+}
+
+.wishlist_items {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.wishlist-menu {
+    width: 90%;
+    max-height: 100%;
+    overflow-y: auto;
+    position: fixed;
+    z-index: 200;
+    top: 50%;
+    left: 0;
+    transform: translate(-100%, -50%);
+    background-color: #22547a;
+    transition: transform 0.3s;
+    border-radius: 24px;
+}
+
+@media all and (min-width: 220px) {
+    .wishlist-menu {
+        width: 200px;
+        transform: translate(-200px, -50%);
+    }
+
+    #wishlist.is-active #toggle_wishlist {
+        left: 200px;
+        border-left: 4px solid white;
+    }
+}
+
+#wishlist.is-active .wishlist-menu {
+    transform: translate(0, -50%);
+    text-align: center;
+}
+
+.wishlist-menu h2 {
+    font-weight: bold;
+    font-size: 32px;
+    background-color: #44a6f2;
+    color: #22547a;
+    margin: 0 auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.wishlist-menu .wishlist_item {
+    display: block;
+    margin-top: 20px;
+    padding-bottom: 20px;
+    border-bottom: solid 4px white;
+}
+
+.wishlist-menu .wishlist_item:last-child {
+    border-bottom: none;
+}
+
+.wishlist-menu .wishlist_link {
+    margin-right: 5px;
+    color: white;
+    font-size: 20px;
+}
+
+.del-button {
+    background-color: transparent;
+    border: none;
+    padding: 5px;
+    color: #44a6f2;
+    font-size: 20px;
+    line-height: 20px;
+}
+
+.del-button:focus {
+    outline: none;
+}
+
+.del-button:hover {
+    color: white;
 }

@@ -42,7 +42,7 @@ var populateNavbar = function() {
 
 var populateWishlist = function(wishList) {
     var wishlistHtml = Handlebars.templates['wishlist']({wishlist: wishList});
-    $('.wishlist').html(wishlistHtml);
+    $('#wishlist').html(wishlistHtml);
 };
 
 /**

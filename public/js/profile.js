@@ -7,7 +7,6 @@ $(function() {
             if (resp.success) {
                 var html = Handlebars.templates['profile'](resp.msg);
                 $('.profile').html(html);
-                populateWishlist(resp.msg.profile.wishlist);
 
                 var $inputs = $('.resizing-input');
                 var $profile_inputs = $inputs.find('input');
@@ -107,8 +106,32 @@ $(function() {
                     });
                 })
                 
-                html = Handlebars.templates['course_reviews'](resp.msg);
-                $('.course_reviews').html(html);
+                var reviews_html = Handlebars.templates['course_reviews'](resp.msg);
+                $('.course_reviews').html(reviews_html);
+
+                $('tr.review_thumbnail').each(function() {
+                    $(this).toggleClass('expand').nextUntil('tr.review_thumbnail').slideToggle(0);
+                })
+
+                $('.review_thumbnail .sign').click(function() {
+                    var $row = $(this).parent().parent();
+                    $row.toggleClass('expand').nextUntil('tr.review_thumbnail').slideToggle(0);
+                });
+
+                populateWishlist(resp.msg.profile.wishlist);
+
+                function openWishlist() {
+                    $("#wishlist").addClass("is-active");
+                }
+
+                function closeWishlist() {
+                    $("#wishlist").removeClass("is-active");
+                }
+
+                $("#toggle_wishlist").click(function(e) {
+                    e.preventDefault();
+                    $("#wishlist").hasClass("is-active") ? closeWishlist() : openWishlist();
+                });
 
             } else {
                 alert(resp.msg);
