@@ -8,10 +8,9 @@ var Courses = require('../models/course.js');
 var Comments = require('../models/comment.js');
 var Courses = require('../models/course.js');
 var PeopleService = require('../services/PeopleService.js');
+var MailService = require('../services/MailService.js');
 
 var mongoose = require('mongoose-q')(require('mongoose'));
-var nodemailer = require('nodemailer');
-var transporter = nodemailer.createTransport('smtps://walimu.easypick%40gmail.com:walimueasypick@smtp.gmail.com');
 
 var recommender = require('likely');
 
@@ -35,8 +34,6 @@ var UsersController = function() {
                 return utils.sendErrorResponse(res, 500, error.message);
             else {
                 var user = data.person;
-                console.log(req.body.email);
-                console.log(data);
                 if (!user)
                     return utils.sendErrorResponse(res, 400, "Invalid kerberos");
 
@@ -48,8 +45,12 @@ var UsersController = function() {
                         password: req.body.password,
                         token: Users.generateToken(),
                     }).then(function(user) {
-                        sendEmail(user.email);
-                        return utils.sendSuccessResponse(res, {});
+                        MailService.sendConfirmationEmail(user, function(email_res) {
+                            if (email_res.success)
+                                return utils.sendSuccessResponse(res, {});
+                            else
+                                return utils.sendErrorResponse(res, 400, "Failed to send confirmation email");
+                        });
                     }).catch(function(err) {
                           // if email is already in use, warn user
                         if (err.code === 11000)
@@ -224,26 +225,5 @@ var UsersController = function() {
   return that;
 }
 
-var sendEmail = function(user) {
-  var siteUrl = "localhost:3000"
-  var activationLink = siteUrl +'/activate?token=' + user.token;
-  // setup e-mail data with unicode symbols
-  var mailOptions = {
-      from: '"EasyPick 👥" <walimu.easypick@gmail.com>', // sender address
-      to: user.email, // list of receivers
-      subject: "Account activation", // Subject line
-      text: "Account activation", // plaintext body
-      html: '<b>Welcome to EasyPick</b><br />'
-          + 'To activate your account, please click the following link: '
-          + '<a href="' + activationLink + '">' + activationLink + '</a>',
-  };
-  // send mail with defined transport object
-  transporter.sendMail(mailOptions, function(error, info){
-      if(error){
-          return console.log(error);
-      }
-      console.log('Message sent: ' + info.response);
-  });
-}
 
 module.exports = UsersController();

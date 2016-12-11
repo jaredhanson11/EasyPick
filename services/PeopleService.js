@@ -1,6 +1,8 @@
 /**
  * Contains methods for hitting the external People API
  * https://developer.mit.edu/apis-people
+ *
+ * @author: larat
  */
 var request = require('request');
 
