@@ -33,6 +33,10 @@ body {
     margin-top: 3em;
 }
 
+.recommendations-page#main-div {
+    margin-top: 2em;
+}
+
 li#search a:hover, li#home a:hover, li#recommendations a:hover {
     background-color: transparent;
 }
