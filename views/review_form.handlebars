@@ -1,46 +1,51 @@
 <h1>Course Review Form</h1>
-<table>
-<tr>
-  <th>Course # Search: </th>
-  <td><input type="text" id="course-num"></td>
-</tr>
-</table>
-<button id="find-course" class="btn btn-default">Find Course</button>
-<br><br>
-<div id="selected-course"><b>Course Selected:</b> None</div>
-<h5>Please answer some questions about the taking the class.</h5>
-<table>
-<tr>
-  <td>Spring/Fall/Summer/IAP?</td>
-  <td><input type="text" id="term"></td>
-</tr>
-<tr>
-  <td>Year?</td>
-  <td><input type="text" id="year"></td>
-</tr>
-<tr>
-  <td>Class Hours? (1-7)</td>
-  <td><input type="text" id="class_hrs"></td>
-</tr>
-<tr>
-  <td>Outside Hours? (1-7)</td>
-  <td><input type="text" id="outside_hrs"></td>
-</tr>
-<tr>
-  <td>Content Difficulty? (1-7)</td>
-  <td><input type="text" id="content_difficulty"></td>
-</tr>
-<tr>
-  <td>Grading Difficulty? (1-7)</td>
-  <td><input type="text" id="grading_difficulty"></td>
-</tr>
-<tr>
-  <td>Overall Satisfaction? (1-7)</td>
-  <td><input type="text" id="overall_satisfaction"></td>
-</tr>
-</table>
-<div>
-  <h2>(Optional) Add a comment</h2>
-  <input type='text' id='comment'>
+<div class="course-search">
+  <input type="text" id="course-num" placeholder="Course Number (e.g. 6.170)">
+  <button id="find-course" class="search-btn glyphicon glyphicon-search" aria-hidden="true"></button>
 </div>
-<button id="submit-review" class="btn btn-default">Review Course</button>
+<div id="selected-course"><span class="bold-text">Selected Course:&nbsp;</span><span class="course-text">None</span></div>
+<div id="form-info">
+  <p>Please answer a few questions about this class:</p>
+  <table>
+    <tr>
+      <td>
+        <select id="term" class="review_select">
+          <option value="" disabled selected>Term taken</option>
+          <option value="0">IAP</option>
+          <option value="1">Spring</option>
+          <option value="2">Summer</option>
+          <option value="3">Fall</option>
+        </select>
+      </td>
+      <td>
+        <select id="year" class="review_select">
+          <option value="" disabled selected>Year taken</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td>Class Hours:&nbsp;</td>
+      <td><input type="range" class="review_slider" id="class_hrs" min=1 max=7 step=1></td>
+    </tr>
+    <tr>
+      <td>Outside Hours:&nbsp;</td>
+      <td><input type="range" class="review_slider" id="outside_hrs" min=1 max=7 step=1></td>
+    </tr>
+    <tr>
+      <td>Content Difficulty:&nbsp;</td>
+      <td><input type="range" class="review_slider" id="content_difficulty" min=1 max=7 step=1></td>
+    </tr>
+    <tr>
+      <td>Grading Difficulty:&nbsp;</td>
+      <td><input type="range" class="review_slider" id="grading_difficulty" min=1 max=7 step=1></td>
+    </tr>
+    <tr>
+      <td>Overall Satisfaction:&nbsp;</td>
+      <td><input type="range" class="review_slider" id="overall_satisfaction" min=1 max=7 step=1></td>
+    </tr>
+  </table>
+  <div class="review_comment">
+    <textarea id='comment' placeholder='Comment (Optional)'></textarea>
+  </div>
+  <button id="submit-review">Review Course</button>
+</div>

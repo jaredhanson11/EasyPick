@@ -23,7 +23,7 @@ body {
     font-family: 'Lato', sans-serif;
 }
 
-#main-div {
+.login-page#main-div {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -158,6 +158,15 @@ li#search a:hover, li#home a:hover, li#recommendations a:hover {
 
 .header {
     width: 100%;
+    height: 100px;
+    background: #44a6f2;
+    background: -webkit-linear-gradient(#2dc0fd, #5a8ce6);
+    background: -o-linear-gradient(#2dc0fd, #5a8ce6);
+    background: -moz-linear-gradient(#2dc0fd, #5a8ce6);
+    background: linear-gradient(#2dc0fd, #5a8ce6);
+}
+
+.header.profile_header {
     height: 240px;
     background-image: url("/resources/banner.jpg");
     background-size: cover;
@@ -248,12 +257,12 @@ li#search a:hover, li#home a:hover, li#recommendations a:hover {
 #edit-user, #submit-profile {
     background-color: #44a6f2;
     color: white;
-    border: 2px solid #44a6f2;
+    border: 2px solid white;
     height: 44px;
     border-radius: 20px;
     margin: 10px auto;
     font-size: 20px;
-    padding: 8px;
+    padding: 10px;
     line-height: 20px;
     transition: all 250ms ease;
 }
@@ -326,12 +335,12 @@ li#search a:hover, li#home a:hover, li#recommendations a:hover {
 #add-review {
     background-color: #44a6f2;
     color: white;
-    border: 2px solid #44a6f2;
+    border: 2px solid white;
     height: 48px;
-    border-radius: 28px;
+    border-radius: 32px;
     margin: 48px auto;
     font-size: 20px;
-    padding: 18px;
+    padding: 20px;
     line-height: 20px;
     transition: all 250ms ease;
     width: 136px;
@@ -465,4 +474,235 @@ li#search a:hover, li#home a:hover, li#recommendations a:hover {
 
 .del-button:hover {
     color: white;
+}
+
+.review-form {
+    font-size: 20px;
+    position: relative;
+    margin-top: 64px;
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+.review-form h1 {
+    text-align: center;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #ccc;
+    margin-bottom: 36px;
+    font-weight: bold;
+    font-size: 40px;
+    display: block;
+}
+
+.review-form table {
+    border-collapse: collapse;
+}
+
+.review-form td {
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+}
+
+.course-search {
+    text-align: center;
+}
+
+#course-num {
+    display: inline;
+    border: 0px;
+    border-bottom: 1px solid #ccc;
+    padding: 10px 8px;
+    margin-right: 0px;
+    font-weight: normal;
+    font-size: 18px;
+    text-align: center;
+}
+
+#course-num:focus {
+    border-bottom: 2px solid #a5d0f2;
+    outline: none;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.search-btn {
+    background-color: transparent;
+    border: 0px;
+    font-size: 18px;
+    font-weight: normal;
+    line-height: 18px;
+}
+
+.search-btn:hover {
+    color: #44a6f2;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 20px;
+}
+
+#selected-course {
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #ccc;
+}
+
+.bold-text {
+    font-weight: bold;
+}
+
+#selected-course .bold-text {
+    display: inline-block;
+}
+
+#selected-course .course-text {
+    display: inline-block;
+    font-style: italic;
+}
+
+.review_select {
+    border: 0px;
+    border-bottom: 2px solid #a5d0f2;
+    padding: 8px;
+}
+
+.review_select:focus {
+    outline: none;
+    border-bottom: 0px;
+}
+
+.review_slider {
+  -webkit-appearance: none;
+  margin: 10px 0;
+  width: 100%;
+}
+
+.review_slider:focus {
+  outline: none;
+}
+
+.review_slider::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 5px;
+  cursor: pointer;
+  animate: 0.2s;
+  box-shadow: 1px 1px 1px #22547A;
+  background: #44A6F2;
+  border-radius: 5px;
+  border: 1px solid #000000;
+}
+
+.review_slider::-webkit-slider-thumb {
+  box-shadow: 1px 1px 1px #000000;
+  border: 1px solid #000000;
+  height: 30px;
+  width: 15px;
+  border-radius: 8px;
+  background: #FFFFFF;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -13.5px;
+}
+
+.review_slider:focus::-webkit-slider-runnable-track {
+  background: #44A6F2;
+}
+
+.review_slider::-moz-range-track {
+  width: 100%;
+  height: 5px;
+  cursor: pointer;
+  animate: 0.2s;
+  box-shadow: 1px 1px 1px #22547A;
+  background: #44A6F2;
+  border-radius: 5px;
+  border: 1px solid #000000;
+}
+
+.review_slider::-moz-range-thumb {
+  box-shadow: 1px 1px 1px #000000;
+  border: 1px solid #000000;
+  height: 30px;
+  width: 15px;
+  border-radius: 8px;
+  background: #FFFFFF;
+  cursor: pointer;
+}
+
+.review_slider::-ms-track {
+  width: 100%;
+  height: 5px;
+  cursor: pointer;
+  animate: 0.2s;
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+
+.review_slider::-ms-fill-lower {
+  background: #44A6F2;
+  border: 1px solid #000000;
+  border-radius: 10px;
+  box-shadow: 1px 1px 1px #22547A;
+}
+
+.review_slider::-ms-fill-upper {
+  background: #44A6F2;
+  border: 1px solid #000000;
+  border-radius: 10px;
+  box-shadow: 1px 1px 1px #22547A;
+}
+
+.review_slider::-ms-thumb {
+  box-shadow: 1px 1px 1px #000000;
+  border: 1px solid #000000;
+  height: 30px;
+  width: 15px;
+  border-radius: 8px;
+  background: #FFFFFF;
+  cursor: pointer;
+}
+
+.review_slider:focus::-ms-fill-lower {
+  background: #44A6F2;
+}
+
+.review_slider:focus::-ms-fill-upper {
+  background: #44A6F2;
+}
+
+.review_comment {
+    margin: 25px auto;
+}
+
+.review_comment #comment {
+    width: 95%;
+    height: 12em;
+    padding: 1em;
+    border: 0.1em solid #ccc;
+    border-radius: 1em;
+}
+
+.review_comment #comment:focus {
+    outline: none;
+    border-color: #44a6f2;
+}
+
+#submit-review {
+    background-color: #44a6f2;
+    color: white;
+    border: 2px solid white;
+    height: 60px;
+    border-radius: 28px;
+    font-size: 20px;
+    padding: 16px 28px;
+    line-height: 20px;
+    transition: all 250ms ease;
+}
+
+#submit-review:hover {
+    color: #44a6f2;
+    background-color: white;
+    border: 2px solid #44a6f2;
 }
