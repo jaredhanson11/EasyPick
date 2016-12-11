@@ -29,6 +29,10 @@ body {
     transform: translateY(-50%);
 }
 
+.search-page#main-div {
+    margin-top: 3em;
+}
+
 li#search a:hover, li#home a:hover, li#recommendations a:hover {
     background-color: transparent;
 }
