@@ -17,7 +17,6 @@ var recommender = require('likely');
 var UsersController = function() {
     var that = Object.create(UsersController.prototype);
 
-      // TODO: change this to user passport
     /**
     * creates a new user and logs them in
     * @param  {Object} req the email and password must be in req.body
