@@ -88,6 +88,12 @@ var Utils = function() {
 		return matrix;
 	}
 
+	that.breakPromise = function() {
+		var err = new Error("Broke promise");
+		err.status = 200;
+		throw err;
+	}
+
 	that.dedup = function(arr) {
 		return arr.filter(function(item, pos, self) {
 			return arr.indexOf(item) == pos;
