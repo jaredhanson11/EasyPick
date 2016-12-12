@@ -4,11 +4,6 @@ var utils = require('../utils.js');
 
 var UsersController = require('../controllers/UsersController');
 
-/** post route for /users. signs up a new user */
-router.post('/', function(req, res) {
-  UsersController.signup(req, res);
-});
-
 router.get('/', utils.auth, function(req, res) {
   UsersController.getProfile(req, res);
 });

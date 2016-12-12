@@ -22,14 +22,18 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(session({ secret : '6170', resave : true, saveUninitialized : true }));
-app.use(csrf({ cookie: true }));
+
 
 // set up view engine
 app.set('views', path.join(__dirname, 'views'));
 
 // set up routes
-var routes = require('./routes/routes');
+var routes = require('./routes/routes'); // these routes don't require csrf authentication
 app.use('/', routes);
+
+// enable csrf for the routes below
+app.use(csrf({ cookie: true }));
+
 var users = require('./routes/users');
 app.use('/users', users);
 var courses = require('./routes/courses');

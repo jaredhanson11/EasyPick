@@ -19,5 +19,9 @@ router.post('/activate/:token', function(req, res, next) {
   UsersController.activate(req, res);
 });
 
+/** post route for /signup. signs up a new user */
+router.post('/signup', function(req, res) {
+  UsersController.signup(req, res);
+});
 
 module.exports = router;
