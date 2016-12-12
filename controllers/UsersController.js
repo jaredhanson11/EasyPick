@@ -222,15 +222,21 @@ var UsersController = function() {
      */
     that.postToWishlist = function(req, res){
         var user_id = req.session.user._id;
-        var course_number = req.body.course_number.toString();
+        var course_id = null;
+        var course_number = req.body.courseNumber.toString();
         Courses.findOne({'course_numbers': course_number})
             .then(function(course) {
                 if (!course){
                     return utils.sendErrorResponse(req, res, 400, 'No such course');
                 }
-                var course_id = course._id;
-                return Users.findByIdAndUpdate(user_id, {$push: {wishlist: course_id}})
+                course_id = course._id.toString();
+                return Users.findOne({'_id': user_id, 'wishlist': course_id})
             .then(function(user) {
+                if (user){
+                    throw new Error();
+                }
+                return Users.findByIdAndUpdate(user_id, {$push: {wishlist: course_id}})
+            }).then(function(user){
                 return utils.sendSuccessResponse(req, res, {addedCourse: course_number});
             }).catch(function(err) {
                 return utils.sendErrorResponse(req, res, 500, err.message);
@@ -246,7 +252,7 @@ var UsersController = function() {
      */
     that.removeFromWishlist = function(req, res){
         var user_id = req.session.user._id;
-        var course_number = req.body.course_number.toString();
+        var course_number = req.body.courseNumber.toString();
 
         Courses.findOne({'course_numbers': course_number})
             .then(function(course) {
