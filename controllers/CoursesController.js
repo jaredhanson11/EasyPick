@@ -45,6 +45,22 @@ var CoursesController = function () {
             });
     };
 
+
+    /**
+     * get course info for all courses
+     * @param  {Object} req the request
+     * @param  {Object} res the response
+     */
+    that.getAllCourses = function (req, res) {
+        Courses.find()
+            .then(function (courses) {
+                console.log(courses);
+                return utils.sendSuccessResponse(req, res, courses);
+            }).catch(function (err) {
+                return utils.sendErrorResponse(req, res, 500, "Unknown server error");
+            });
+    };
+
     /**
      * get course info for a course number
      * @param  {Object} req the course number must be in req.params.course_number

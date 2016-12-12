@@ -7,9 +7,15 @@ var utils = require('../utils.js');
 
 var CoursesController = require('../controllers/CoursesController');
 
-/** GET route for searching for courses */
+/** get route for searching for courses */
 router.get('/search', utils.auth, function (req, res) {
     CoursesController.search(req, res);
+});
+
+/** get route for /courses/. return basic course info for all courses */
+router.get('/', utils.auth, function(req, res) {
+    console.log("here");
+    CoursesController.getAllCourses(req, res);
 });
 
 /** get route for /courses/:course_number. return basic course info */

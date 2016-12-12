@@ -17,13 +17,15 @@ $(function () {
 
     var coursesTable = $(courseTableSelector).DataTable();
 
+    var allCourses;
+
     //Populate dropdown with courses
-    $.get('/courses/search',
+    $.get('/courses/',
         {}, // search with empty params to get all classes
         function (res, textStatus, jqXHR) {
             var departments = [];
-
-            $.each(res.content, function (i, course) {
+            allCourses = res.content;
+            $.each(allCourses, function (i, course) {
                 if ($.inArray(course.department[0], departments) == -1) {
                     departments.push(course.department[0]);
                     $('#department-number-select').append($('<option>').text(course.department[0]).attr('value', course.department[0]))
@@ -41,21 +43,14 @@ $(function () {
 
             $('#course-number-select').find('option:gt(0)').remove();// remove old courses
 
-            //Populate dropdown with courses
-            $.get('/courses/search',
-                {
-                    department: $('#department-number-select').val()
-                },
-                function (res, textStatus, jqXHR) {
+            var depCourses = allCourses.filter(function(course) {
+                return course.department == $('#department-number-select').val();
+            }).sort(function(course1, course2) {
+                return course1.course_numbers - course2.course_numbers;
+            });;
 
-                    $.each(res.content, function (i, course) {
-                        $('#course-number-select').append($('<option>').text(course.course_numbers).attr('value', course.course_numbers))
-                    });
-                }
-            ).fail(function (xmlhttp) {
-                var res = JSON.parse(xmlhttp.responseText);
-                var html = Handlebars.templates.error_box(res);
-                $(error_box).html(html);
+            $.each(depCourses, function (i, course) {
+                $('#course-number-select').append($('<option>').text(course.course_numbers).attr('value', course.course_numbers))
             });
 
             $('#course-number-div').css('display', 'inline-block');
