@@ -54,7 +54,6 @@ var CoursesController = function () {
     that.getAllCourses = function (req, res) {
         Courses.find()
             .then(function (courses) {
-                console.log(courses);
                 return utils.sendSuccessResponse(req, res, courses);
             }).catch(function (err) {
                 return utils.sendErrorResponse(req, res, 500, "Unknown server error");
