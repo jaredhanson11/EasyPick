@@ -15,9 +15,34 @@ $(function () {
 
     var coursesTable = $(courseTableSelector).DataTable();
 
+    $("input[type='search'].form-control.input-sm").attr('id', 'course-search-box');
+    var oldParent = $('#course-search-box').parent()
+    var newParent = oldParent.parent();
+    var searchbox = $('#course-search-box').detach();
+    oldParent.remove();
+    searchbox.appendTo(newParent);
+    searchbox.attr('placeholder', 'Course Number');
+    searchbox.removeClass('form-control input-sm');
+    searchbox.addClass('text-input');
+    searchbox.after("<button type='button' class='search-btn glyphicon glyphicon-search' id='search-submit'></button>");
+
+    $('.slider-range').each(function() {
+        var id = $(this).attr('id')
+        var prefix = id.substring(0, id.length - 6);
+        $(this).slider({
+            min: 1,
+            max: 7,
+            range: true,
+            values: [1, 7],
+            slide: function(event, ui) {
+                $('#' + prefix + '-display').text(ui.values[0] + ' - ' + ui.values[1]);
+            }
+        });
+    });
+
     var allCourses;
 
-    /** populate dropdown with courses */
+    /**Populate dropdown with courses */
     $.get('/courses/',
         {}, // search with empty params to get all classes
         function (res, textStatus, jqXHR) {
@@ -39,48 +64,38 @@ $(function () {
     /** listener for department dropdown  */
     $('#department-number-select').change(function () {
         if ($('#department-number-select').val() != 'any') {
-            // remove old courses
-            $('#course-number-select').find('option:gt(0)').remove();
-
             // populates courses dropdown with only courses from the selected department
             var depCourses = allCourses.filter(function(course) {
                 return course.department == $('#department-number-select').val();
             }).sort(function(course1, course2) {
                 return course1.course_numbers - course2.course_numbers;
             });;
-
-            // add courses to dropdown
-            $.each(depCourses, function (i, course) {
-                $('#course-number-select').append($('<option>').text(course.course_numbers).attr('value', course.course_numbers))
-            });
-
-            $('#course-number-div').css('display', 'inline-block');
-
-        } else {
-            // set course to 'any' if department is 'any'
-            $('#course-number-select').val('any');
-            $('#course-number-div').hide();
         }
     });
 
-    /** search submit button listener */
-    $('#search-form').submit(function (e) {
-        e.preventDefault();
-
+    //Search button
+    $('#search-submit').click(function () {
         var tags = $.map($('input:checked'), function (value, i) {
             return value['value'];
         });
 
-        if (tags == []) tags = 'any'; // query parameters with 'any' will match all records for that field in the database api
+        if (tags.length == 0) {
+            tags = 'any';//Query parameters with 'any' will match all records for that field in the database api
+        }
 
-        var course_numbers = $('#course-number-select').val();
         var total_units = $('#units-select').val();
+        if (!total_units) {
+            total_units = 'any';
+        }
+
         var department = $('#department-number-select').val();
+        if (!department) {
+            department = 'any';
+        }
 
         $.get('/courses/search',
             {
                 department: department,
-                course_numbers: course_numbers,
                 tags: tags,
                 total_units: total_units
             },
@@ -91,52 +106,55 @@ $(function () {
 
                 // apply stats filters
                 var filtered_courses =  courses.filter(function (course) {
-                    if ($('#min-class-hours-select').val()) {
-                        if (course.stats.class_hrs < $('#min-class-hours-select').val()) {
-                            return false;
-                        }
+                    var min_class_hrs = $('#class-hours-range').slider("values", 0);
+                    var max_class_hrs = $('#class-hours-range').slider("values", 1);
+                    var min_outside_hrs = $('#outside-hours-range').slider("values", 0);
+                    var max_outside_hrs = $('#outside-hours-range').slider("values", 1);
+                    var min_content_difficulty = $('#content-difficulty-range').slider("values", 0);
+                    var max_content_difficulty = $('#content-difficulty-range').slider("values", 1);
+                    var min_grading_difficulty = $('#grading-difficulty-range').slider("values", 0);
+                    var max_grading_difficulty = $('#grading-difficulty-range').slider("values", 1);
+                    var min_satisfaction = $('#satisfaction-range').slider("values", 0);
+                    var max_satisfaction = $('#satisfaction-range').slider("values", 1);
+
+                    if (min_class_hrs > 1 && course.stats.class_hrs < min_class_hrs) {
+                        return false;
                     }
 
-                    if ($('#max-class-hours-select').val()) {
-                        if (course.stats.class_hrs > $('#max-class-hours-select').val()) {
-                            return false;
-                        }
+                    if (max_class_hrs < 7 && course.stats.class_hrs > max_class_hrs) {
+                        return false;
                     }
 
-                    if ($('#min-class-content-difficulty-select').val()) {
-                        if (course.stats.content_difficulty < $('#min-class-content-difficulty-select').val()) {
-                            return false;
-                        }
+                    if (min_outside_hrs > 1 && course.stats.outside_hrs < min_outside_hrs) {
+                        return false;
                     }
 
-                    if ($('#max-class-content-difficulty-select').val()) {
-                        if (course.stats.content_difficulty > $('#max-class-content-difficulty-select').val()) {
-                            return false;
-                        }
+                    if (max_outside_hrs < 7 && course.stats.outside_hrs > max_outside_hrs) {
+                        return false;
                     }
 
-                    if ($('#min-class-grading-difficulty-select').val()) {
-                        if (course.stats.grading_difficulty < $('#min-class-grading-difficulty-select').val()) {
-                            return false;
-                        }
+                    if (min_content_difficulty > 1 && course.stats.content_difficulty < min_content_difficulty) {
+                        return false;
                     }
 
-                    if ($('#max-class-grading-difficulty-select').val()) {
-                        if (course.stats.grading_difficulty > $('#max-class-grading-difficulty-select').val()) {
-                            return false;
-                        }
+                    if (max_content_difficulty < 7 && course.stats.content_difficulty > max_content_difficulty) {
+                        return false;
                     }
 
-                    if ($('#min-class-satisfaction-select').val()) {
-                        if (course.stats.overall_satisfaction < $('#min-class-satisfaction-select').val()) {
-                            return false;
-                        }
+                    if (min_grading_difficulty > 1 && course.stats.grading_difficulty < min_grading_difficulty) {
+                        return false;
                     }
 
-                    if ($('#max-class-satisfaction-select').val()) {
-                        if (course.stats.overall_satisfaction > $('#max-class-satisfaction-select').val()) {
-                            return false;
-                        }
+                    if (max_grading_difficulty < 7 && course.stats.grading_difficulty > max_grading_difficulty) {
+                        return false;
+                    }
+
+                    if (min_satisfaction > 1 && course.stats.overall_satisfaction < min_satisfaction) {
+                        return false;
+                    }
+
+                    if (max_satisfaction < 7 && course.stats.overall_satisfaction > max_satisfaction) {
+                        return false;
                     }
 
                     return true;
@@ -159,4 +177,5 @@ $(function () {
             $(error_box).html(html);
         });
     });
+
 });

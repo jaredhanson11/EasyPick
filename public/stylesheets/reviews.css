@@ -39,21 +39,6 @@
     text-align: center;
 }
 
-.search-btn {
-    background-color: transparent;
-    border: 0px;
-    font-size: 18px;
-    font-weight: normal;
-    line-height: 18px;
-}
-
-.search-btn:hover {
-    color: #44a6f2;
-    font-size: 20px;
-    font-weight: bold;
-    line-height: 20px;
-}
-
 #selected-course {
     text-align: center;
     margin-top: 50px;
