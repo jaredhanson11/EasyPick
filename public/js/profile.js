@@ -94,7 +94,7 @@ $(function() {
                     });
                 })
                 
-                var reviews_html = Handlebars.templates['course_reviews'](resp.content);
+                var reviews_html = Handlebars.templates['course_reviews']({profile: resp.content});
                 $('.course_reviews').html(reviews_html);
 
                 $('tr.review_thumbnail').each(function() {
