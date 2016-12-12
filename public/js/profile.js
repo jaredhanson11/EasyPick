@@ -89,12 +89,12 @@ $(function() {
                             $profile_inputs.css("border-bottom", "0px");
                             $('#submit-profile').css("display", "none");
                             $('#edit-user').css("display", "block");
-                            populate_profile();
+                            populateProfile();
                         }
                     });
                 })
                 
-                var reviews_html = Handlebars.templates['course_reviews'](resp.msg);
+                var reviews_html = Handlebars.templates['course_reviews'](resp.content);
                 $('.course_reviews').html(reviews_html);
 
                 $('tr.review_thumbnail').each(function() {

@@ -43,7 +43,7 @@ var populateNavbar = function(data) {
 
 var populateWishlist = function(wishlist) {
     var wishlist_html = Handlebars.templates['wishlist']({wishlist: wishlist});
-    $('.wishlist').html(wishlist_html);
+    $('#wishlist').html(wishlist_html);
 };
 
 /**
