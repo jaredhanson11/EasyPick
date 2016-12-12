@@ -3,8 +3,6 @@
  */
 var assert = require("assert");
 var mongoose = require("mongoose");
-var Review = require("../models/review");
-var User = require("../models/user");
 var Course = require("../models/course");
 
 describe("Course model", function() {
@@ -30,9 +28,28 @@ describe("Course model", function() {
                     name: "Software Studio",
                     department: ["6"],
                     units: "12",
-                    description: "Design and build cool web apps"
+                    description: "Design and build cool web apps",
+                    tags: ["web-dev"]
                 })
-                .then(function(course){
+                .then(function(course1){
+                    Course.create({
+                        course_numbers: ["6.824"],
+                        name: "Distributed Systems",
+                        department: ["6"],
+                        units: "12",
+                        description: "Design and build cool web apps"
+                    })
+                })
+                .then(function(course2){
+                    Course.create({
+                        course_numbers: ["6.002"],
+                        name: "Circuits",
+                        department: ["6"],
+                        units: "12",
+                        description: "Build Circuits"
+                    })
+                })
+                .then(function(course3){
                     done();
                 });
 
@@ -42,15 +59,36 @@ describe("Course model", function() {
     describe("Course", function() {
         it("should return a the proper info for a course", function(done) {
             Course.findOne({course_numbers: ["6.170"]}).then(function(course){
-                assert.deepEqual(course.name, 'Software Studio', "Wrong name");
-                assert.deepEqual(course.units, '12');
-                assert.deepEqual(course.description, 'Design and build cool web apps');
+                assert.deepEqual(course.name, "Software Studio", "Incorrect course");
+                assert.deepEqual(course.units, "12","Incorrect course");
+                assert.deepEqual(course.description, "Design and build cool web apps","Incorrect course");
                 done();
             }).catch(function(err) {
-                console.log('err',err);
+                assert(false);
+                done();
+            });
+        });
+
+        it("should search by units", function(done) {
+            Course.find({units: "12"}).then(function(courses){
+                assert.equal(courses.length, 3);
+                done();
+            }).catch(function(err) {
+                assert(false);
+                done();
+            });
+        });
+
+        it("should search by tags", function(done) {
+            Course.find({tags: ["web-dev"]}).then(function(courses){
+                console.log("courses", courses);
+                assert.equal(courses.length, 1);
+                assert.equal(courses[0].name, "Software Studio","Incorrect course");
+                done();
+            }).catch(function(err) {
                 assert(false);
                 done();
             });
         });
     });
-}); // End describe App.
+}); // End describe Course.

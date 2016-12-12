@@ -6,6 +6,17 @@
 $(function () {
     checkLogin();
 
+    var $loading = $('#loader-div').hide();
+
+    $(document)
+        .ajaxStart(function () {
+            console.log("ajax start");
+            $loading.show();
+        })
+        .ajaxStop(function () {
+            $loading.hide();
+        });
+
     Handlebars.partials = Handlebars.templates;
     var insertSelector = '#results-div';
 
