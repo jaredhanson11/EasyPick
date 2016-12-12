@@ -1,3 +1,4 @@
+/** script for user activation */
 $(function() {
   Handlebars.partials = Handlebars.templates;
   var token = getUrlParameter('token');
