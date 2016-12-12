@@ -1,5 +1,6 @@
 #main-div {
 	margin-bottom: 36px;
+	text-align: center;
 }
 
 table {
@@ -12,7 +13,7 @@ table {
 }
 
 .search-options {
-	margin: auto;
+	margin: auto auto 25px;
 }
 
 .search-options td {
@@ -53,4 +54,9 @@ table {
 
 .text-input {
 	text-align: center;
+}
+
+.search-button {
+	padding: 13px 18px;
+	border-radius: 20px;
 }

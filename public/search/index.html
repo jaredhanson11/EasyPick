@@ -36,6 +36,12 @@
                             <option value="any">Any Department</option>
                         </select>
                     </td>
+                    <td id="course-number-cell" hidden>
+                        <select id="course-number-select" class="search-select">
+                            <option value="any" disabled selected>Course Number</option>
+                            <option value="any">Any Class</option>
+                        </select>
+                    </td>
                     <td>
                         <select id="units-select" class="search-select">
                             <option value="any" disabled selected>Units</option>
@@ -45,9 +51,6 @@
                             <option value="9">9</option>
                             <option value="6">6</option>
                         </select>
-                    </td>
-                    <td>
-                        <label class="right">Filters:</label>
                     </td>
                     <td>
                         <span class="left"><input type="checkbox" id="hass-input" value="HASS">&nbsp;HASS</span>
@@ -87,6 +90,7 @@
                     </td>
                 </tr>
             </table>
+            <button type='button' class='button search-button' id='search-submit'>Search</button>
         </div>
 
         <div id="results-div" class="col-sm-10 col-md-offset-1 col-md-10">
