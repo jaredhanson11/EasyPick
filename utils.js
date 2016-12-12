@@ -52,7 +52,6 @@ var Utils = function() {
 		res.status(errorCode).json({
 			success: false,
 			error: error,
-			csrf_token: req.csrfToken(),
 		}).end();
 	};
 
@@ -62,11 +61,11 @@ var Utils = function() {
 	 * @param  {Object} res       the response
 	 * @param  {Object} content   any contents sent in the server reply
 	 */
-	that.sendSuccessResponse = function(req, res, content) {
+	that.sendSuccessResponse = function(req, res, content, csrf) {
 		res.status(200).json({
 			success: true,
 			content: content,
-			csrf_token: req.csrfToken(),
+			csrf_token: csrf,
 		}).end();
 	};
 
