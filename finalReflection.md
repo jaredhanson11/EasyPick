@@ -1,4 +1,4 @@
-# Team Walimu: Final Reflection:
+# Team Walimu: Final Reflection
 As we look back on our project, we are proud of the work that we all
 accomplished. We think that we made something that actually has use and can
 make a difference in people’s lives. We feel that we all worked well together
