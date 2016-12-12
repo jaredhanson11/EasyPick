@@ -1,16 +1,15 @@
-<h1>EasyPick</h1>
+<img src="/resources/logo.png" class="logo" alt="EasyPick">
+<h1 id="title">EasyPick</h1>
 <div id="error"></div>
 <div id="msg-box"></div>
 <form id="login-form">
   <div class="form-group">
     <input type="hidden" name="_csrf" id="_csrf" value="{{csrf_token}}">
-    <label for="kerberos-input">Kerberos</label>
-    <input type="text" class="form-control" id="kerberos"
-    name="kerberos" placeholder="">
-    <label for="password-input">Password</label>
-    <input type="password" class="form-control" id="password"
-    name="password" placeholder="">
+    <input type="text" class="text-input login-input" id="kerberos" name="kerberos" placeholder="Kerberos">
+    <input type="password" class="text-input login-input" id="password" name="password" placeholder="Password">
   </div>
-  <button type="submit" class="btn btn-primary">Login</button>
-  <button class="btn btn-primary" id="form-signup">Sign up</button>
+  <div id="buttons">
+    <button type="submit" class="button form-button">Login</button>
+    <button class="button form-button" id="form-signup">Sign up</button>
+  </div>
 </form>

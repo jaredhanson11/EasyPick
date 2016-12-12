@@ -1,0 +1,178 @@
+.profile table {
+    margin: auto;
+}
+
+.profile th {
+    text-align: center;
+}
+
+.header.profile_header {
+    height: 180px;
+    background-image: url("/resources/banner.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.avatar {
+    width: 200px;
+    height: 200px;
+    margin: auto;
+    position: relative;
+    bottom: 6px;
+    background-image: url("/resources/profile.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 200px;
+    border: 5px solid white;
+}
+
+.profile {
+    width: 800px;
+    margin: 108px auto 25px;
+    padding-bottom: 20px;
+    border-bottom: 3px solid #e6e6e6;
+}
+
+.profile_info {
+    margin: auto;
+    width: 300px;
+    text-align: left;
+}
+
+.profile_img {
+    height: 20px;
+    width: auto;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.resizing-input, .resizing-input input, .profile_text {
+    font-size: 16px;
+    display: inline-block;
+}
+
+.resizing-input input {
+    border: 0px;
+    background: none;
+    padding: 0;
+    margin: 0;
+}
+
+.resizing-input span {
+    font-size: 16px;
+}
+.resizing-input input:focus, .resizing-input input:focus + span {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.resizing-input input:focus {
+    border-bottom: 2px solid #a5d0f2;
+    outline: none;
+}
+
+#first_name, #last_name, #first_name + span, #last_name + span {
+    font-size: 32px;
+    font-weight: bold;
+}
+
+#first_name:focus, #last_name:focus, #first_name:focus + span, #last_name:focus + span {
+    font-size: 36px;
+}
+
+.profile_text {
+    line-height: 20px;
+}
+
+.profile_line {
+    display: block;
+    margin: 10px auto;
+}
+
+.no-display {
+    display: none;
+}
+
+#edit-user, #submit-profile {
+    height: 44px;
+    border-radius: 20px;
+    margin: 10px auto;
+    padding: 10px;
+}
+
+#edit-user {
+    display: block;
+    width: 100px;
+}
+
+#submit-profile {
+    display: none;
+    width: 120px;
+}
+
+.course_reviews {
+    width: 800px;
+    margin: auto auto 50px;
+    text-align: center;
+}
+
+.course_reviews table {
+    margin: auto auto 25px;
+    text-align: left;
+}
+
+.course_reviews table td {
+    padding-left: 60px;
+}
+
+.review_thumbnail {
+    height: 70px;
+}
+
+.review_thumbnail th {
+    font-size: 18px;
+    line-height: 18px;
+}
+
+.review_thumbnail .sign {
+    cursor: pointer;
+    font-size: 28px;
+    padding: 6px 4px;
+    background-color: #44a6f2;
+    color: white;
+    border-radius: 14px;
+}
+
+.review_thumbnail .sign:after {
+  content: "+";
+  display: inline-block;
+  text-align: center;
+  margin: 10px;
+  width: 22px;
+}
+
+.review_thumbnail.expand .sign:after {
+  content: "\2212";
+  display: inline-block;
+  text-align: center;
+  margin: 10px;
+  width: 22px;
+}
+
+#add-review {
+    height: 48px;
+    border-radius: 32px;
+    margin: 48px auto;
+    padding: 20px;
+    width: 136px;
+}
+
+#add-review:hover {
+    text-decoration: none;
+}
+
+#add-review:focus {
+    text-decoration: none;
+}

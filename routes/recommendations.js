@@ -5,7 +5,6 @@ var utils = require('../utils.js');
 var UsersController = require('../controllers/UsersController');
 
 router.get('/courses', utils.auth, function(req, res) {
-    console.log("route");
     UsersController.getRecommendations(req, res);
 });
 

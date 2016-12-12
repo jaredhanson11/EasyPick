@@ -1,22 +1,35 @@
-<tr class='review_thumbnail' id='{{review._id}}'>
-    <th>{{review.course.course_numbers}}: {{review.course.name}}</th>
-</tr>
-<tr>
-    <td>Taken: {{review.term}} {{review.year}}</td>
-</tr>
-<tr>
-    <td>Overall: {{review.overall_satisfaction}}/7</td>
-</tr>
-<tr>
-    <td>Class Time: {{review.class_hrs}}/7</td>
-</tr>
-<tr>
-    <td>Outside Time: {{review.outside_hrs}}/7</td>
-</tr>
-<tr>
-    <td>Grading Difficulty: {{review.grading_difficulty}}/7</td>
-</tr>
-<tr>
-    <td>Content Difficulty: {{review.content_difficulty}}/7</td>
-</tr>
+  <table id='{{review._id}}'>
+    <tr class='review_thumbnail expand' id='{{review._id}}'>
+        <th>
+            <span class="sign"></span>
+            {{review.course.course_numbers}}: {{review.course.name}}
+        </th>
+    </tr>
+      <td>Year Taken:&nbsp;</td>
+      <td>{{review.year}}</td>
+    </tr>
+    <tr>
+      <td>Class Hours:&nbsp;</td>
+      <td><input type="range" class="review_slider {{review._id}}" {{#if review.class_hrs}}value="{{review.class_hrs}}"{{/if}}id="class_hrs" min=1 max=7 step=1></td>
+    </tr>
+    <tr>
+      <td>Outside Hours:&nbsp;</td>
+      <td><input type="range" class="review_slider {{review._id}}" {{#if review.outside_hrs}}value="{{review.outside_hrs}}"{{/if}}id="outside_hrs" min=1 max=7 step=1></td>
+    </tr>
+    <tr>
+      <td>Content Difficulty:&nbsp;</td>
+      <td><input type="range" class="review_slider {{review._id}}" {{#if review.content_difficulty}}value="{{review.content_difficulty}}"{{/if}}id="content_difficulty" min=1 max=7 step=1></td>
+    </tr>
+    <tr>
+      <td>Grading Difficulty:&nbsp;</td>
+      <td><input type="range" class="review_slider {{review._id}}" {{#if review.grading_difficulty}}value="{{review.grading_difficulty}}"{{/if}}id="grading_difficulty" min=1 max=7 step=1></td>
+    </tr>
+    <tr>
+      <td>Overall Satisfaction:&nbsp;</td>
+      <td><input type="range" class="review_slider {{review._id}}" {{#if review.overall_satisfaction}}value="{{review.overall_satisfaction}}"{{/if}}id="overall_satisfaction" min=1 max=7 step=1></td>
+    </tr>
+    <tr>
+      <td><button class='edit-review btn'id='{{review._id}}'>Edit Review</button></td>
+    <tr>
+  </table>
 

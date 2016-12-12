@@ -1,38 +1,39 @@
-<h1>Welcome Back, {{ profile.first_name }} {{ profile.last_name }}</h1>
-<h2>User Info:</h2>
-<table>
-<tr>
-  <td>Email:</td>
-  <td>{{ profile.kerberos }}@mit.edu
-</tr>
-<tr>
-  <td>First Name:</td>
-  <td><input type="text" id="first_name" value="{{ profile.first_name}}"></td>
-</tr>
-<tr>
-  <td>Last Name:</td>
-  <td><input type="text" id="last_name" value="{{ profile.last_name}}"></td>
-</tr>
-<tr>
-  <td>Major:</td>
-  <td><input type="text" id="major1" value="{{ profile.major1 }}"></td>
-</tr>
-<tr>
-  <td>Minor:</td>
-  <td><input type="text" id="minor" value="{{ profile.minor}}"></td>
-</tr>
-<tr>
-  <td>Graduation Year:</td>
-  <td><input type="text" id="graduation_year" value="{{ profile.graduation_year}}"></td>
-</tr>
-</table>
-<br>
-<button id="edit-user" class="btn btn-default">Submit Changes</button>
-<h2>Courses/Reviews:</h2>
-<table>
-{{#each profile.course_reviews}}
-  {{> review_thumbnail review=this }}
-{{/each}}
-</table>
-<br>
-<a href="/profile/review" id="add-review" class="btn btn-default">Add/Review Course:</a>
+<div class="profile_info">
+  <span class="profile_line">
+    <div class="resizing-input">
+      <input type="text" id="first_name" value="{{ profile.first_name}}" placeholder="Firstname" disabled>
+      <span class="no-display"></span>
+    </div>
+    <div class="resizing-input">
+      <input type="text" id="last_name" value="{{ profile.last_name}}" placeholder="Lastname" disabled>
+      <span class="no-display"></span>
+    </div>
+  </span>
+  <span class="profile_line">
+    <img src="/resources/email.png" class="profile_img" alt="email">
+    <p class="profile_text">{{ profile.kerberos }}@mit.edu</p>
+  </span>
+  <span class="profile_line">
+    <img src="/resources/major.png" class="profile_img" alt="major">
+    <div class="resizing-input">
+      <input type="text" id="major1" value="{{ profile.major1 }}" placeholder="No major" disabled>
+      <span class="no-display"></span>
+    </div>
+  </span>
+  <span class="profile_line">
+    <img src="/resources/minor.png" class="profile_img" alt="minor">
+    <div class="resizing-input">
+      <input type="text" id="minor" value="{{ profile.minor}}" placeholder="No minor" disabled>
+      <span class="no-display"></span>
+    </div>
+  </span>
+  <span class="profile_line">
+    <img src="/resources/year.png" class="profile_img" alt="graduation year">
+    <div class="resizing-input">
+      <input type="text" id="graduation_year" value="{{ profile.graduation_year}}" placeholder="No graduation year" disabled>
+      <span class="no-display"></span>
+    </div>
+  </span>
+  <button id="edit-user" class="button">Edit</button>
+  <button id="submit-profile" class="button">Submit</button>
+</div>

@@ -21,11 +21,10 @@ $(function() {
         /** event handler for signup button */
         $("#form-signup").click(function(e) {
             e.preventDefault();
-            $.post("/users",
+            $.post("/signup",
                 {
                     kerberos: $("#kerberos").val(),
                     password: $("#password").val(),
-                    _csrf: $("#_csrf").val()
                 },
                 function(res, textStatus, jqXHR) {
                     var html = Handlebars.templates.msg_box({ msg: "Registered successfully. Verify your email before logging in."});
@@ -45,7 +44,6 @@ $(function() {
                 {
                     kerberos: $("#kerberos").val(),
                     password: $("#password").val(),
-                    _csrf: $("#_csrf").val()
                 },
                 function(res, textStatus, jqXHR) {
                     window.location = "/profile";
