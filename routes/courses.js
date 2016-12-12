@@ -14,7 +14,6 @@ router.get('/search', utils.auth, function (req, res) {
 
 /** get route for /courses/. return basic course info for all courses */
 router.get('/', utils.auth, function(req, res) {
-    console.log("here");
     CoursesController.getAllCourses(req, res);
 });
 

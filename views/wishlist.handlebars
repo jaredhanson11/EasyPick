@@ -5,7 +5,7 @@
 	<ul class="wishlist_items">
 	{{#each wishlist}}
     	<li class="wishlist_item">
-      		<a href='/courses/?course_number={{this.course_numbers}}' class="wishlist_link">{{course_numbers}}</a>
+      		<a href='/course/?course_number={{this.course_numbers}}' class="wishlist_link">{{course_numbers}}</a>
       		<button id='{{course_numbers}}' class='del-button'>&#10006;</button>
     	</li>
 	{{/each}}

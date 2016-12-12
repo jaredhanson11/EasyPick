@@ -116,25 +116,26 @@ $(function () {
                     }
 
                     if ($('#min-class-grading-difficulty-select').val()) {
-                        if (course.stats.content_difficulty < $('#min-class-grading-difficulty-select').val()) {
+                        if (course.stats.grading_difficulty < $('#min-class-grading-difficulty-select').val()) {
                             return false;
                         }
                     }
 
                     if ($('#max-class-grading-difficulty-select').val()) {
-                        if (course.stats.content_difficulty > $('#max-class-grading-difficulty-select').val()) {
+                        if (course.stats.grading_difficulty > $('#max-class-grading-difficulty-select').val()) {
                             return false;
                         }
                     }
 
                     if ($('#min-class-satisfaction-select').val()) {
-                        if (course.stats.content_difficulty < $('#min-class-satisfaction-select').val()) {
+                        if (course.stats.overall_satisfaction < $('#min-class-satisfaction-select').val()) {
                             return false;
                         }
                     }
 
+                    console.log($('#max-class-satisfaction-select').val())
                     if ($('#max-class-satisfaction-select').val()) {
-                        if (course.stats.content_difficulty > $('#max-class-satisfaction-select').val()) {
+                        if (course.stats.overall_satisfaction > $('#max-class-satisfaction-select').val()) {
                             return false;
                         }
                     }
