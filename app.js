@@ -2,8 +2,9 @@ var express = require('express');
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-// var csrf = require('csurf')
+var csrf = require('csurf');
 var path = require('path');
+var utils = require('./utils');
 
 // database set up
 var mongoose = require('mongoose');
@@ -21,9 +22,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(session({ secret : '6170', resave : true, saveUninitialized : true }));
-
-// var csrfProtection = csrf({ cookie: true })
-var parseForm = bodyParser.urlencoded({ extended: false })
+app.use(csrf({ cookie: true }));
 
 // set up view engine
 app.set('views', path.join(__dirname, 'views'));
@@ -43,6 +42,14 @@ app.use(function(req, res, next) {
   var err = new Error('Page Not Found');
   err.status = 404;
   next(err);
+});
+
+// error handler for bad csrf token
+app.use(function (err, req, res, next) {
+  if (err.code !== 'EBADCSRFTOKEN') return next(err)
+  // if crsf token is bad, logout user
+  req.session.user = null
+  return utils.sendErrorResponse(req, res, 403, "Invalid CSRF token");
 });
 
 // error handler

@@ -21,12 +21,12 @@ var SessionsController = function() {
         }).then(function(user) {
             if (user && user.authenticate(req.body.password)) {
                 req.session.user = user;
-                return utils.sendSuccessResponse(res, { userid: user._id });
+                return utils.sendSuccessResponse(req, res, { userid: user._id });
             } else {
-                return utils.sendErrorResponse(res, 401, "Failed to authenticate.");
+                return utils.sendErrorResponse(req, res, 401, "Failed to authenticate.");
             }
         }).catch(function(err) {
-            return utils.sendErrorResponse(res, 500, err.message);
+            return utils.sendErrorResponse(req, res, 500, err.message);
         });
     }
 
@@ -37,9 +37,7 @@ var SessionsController = function() {
      */
     that.logout = function(req, res) {
         req.session.user = null;
-        return res.json({
-            success: true,
-        });
+        return utils.sendSuccessResponse(req, res, {});
     }
 
     Object.freeze(that);

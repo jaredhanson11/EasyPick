@@ -10,8 +10,9 @@ $(function() {
     if (resp.success) {
       window.location = "/profile";
     }
-  }).fail(function() {
-    var html = Handlebars.templates.login_form();
+  }).fail(function(xmlhttp) {
+    var res = JSON.parse(xmlhttp.responseText);
+    var html = Handlebars.templates.login_form(res);
     $(main_div).html(html);
     addEventHandlers();
   });
@@ -23,7 +24,8 @@ $(function() {
       $.post("/users",
         {
           kerberos: $("#kerberos").val(),
-          password: $("#password").val()
+          password: $("#password").val(),
+          _csrf: $("#_csrf").val()
         },
         function(res, textStatus, jqXHR) {
           var html = Handlebars.templates.msg_box({ msg: "Registered successfully. Verify your email before logging in."});
@@ -42,7 +44,8 @@ $(function() {
       $.post("/login",
         {
           kerberos: $("#kerberos").val(),
-          password: $("#password").val()
+          password: $("#password").val(),
+          _csrf: $("#_csrf").val()
         },
         function(res, textStatus, jqXHR) {
           window.location = "/profile";
