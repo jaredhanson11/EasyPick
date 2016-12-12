@@ -113,7 +113,7 @@ var UsersController = function() {
   };
 
   that.post_review = function(req, res) {
-      var review_form = req.body.reviewForm;
+      var review_form = req.body.review_form;
       var comment_form = req.body.comment;
       review_form.reviewer = req.session.user._id;
       console.log('POST /review: review_form:' , review_form);
