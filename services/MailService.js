@@ -9,10 +9,9 @@ var nodemailer = require('nodemailer');
 var MailService = function() {
     var that = Object.create(MailService.prototype);
     var transporter = nodemailer.createTransport('smtps://walimu.easypick%40gmail.com:walimueasypick@smtp.gmail.com');
+    var site_url = "http://walimu-easypick.herokuapp.com"
 
     that.sendConfirmationEmail = function(user, next) {
-        // TODO: fix site_url for prod enviroment
-        var site_url = "localhost:3000"
         var activation_link = site_url +'/activate?token=' + user.token;
         var mail_options = {
             from: '"EasyPick" <walimu.easypick@gmail.com>', // sender address

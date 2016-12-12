@@ -53,7 +53,7 @@ reviewSchema.statics.getReviews = function(user_id){
  * @param  {ObjectId} course_id course id of the reviewed course
  */
 reviewSchema.statics.getStatsForCourse = function(course_id){
-    return this.find({course: course_id})
+    return this.find({course: course_id, year: { $gte: new Date().getFullYear() - 1 }})
                 .then(function(reviews) {
                     return reviews.reduce(function(prev, cur) {
                         return addStats(prev, cur, reviews.length);

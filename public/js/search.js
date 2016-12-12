@@ -26,16 +26,7 @@ $(function () {
 
     var coursesTable = $(courseTableSelector).DataTable();
 
-    $("input[type='search'].form-control.input-sm").attr('id', 'course-search-box');
-    var oldParent = $('#course-search-box').parent()
-    var newParent = oldParent.parent();
-    var searchbox = $('#course-search-box').detach();
-    oldParent.remove();
-    searchbox.appendTo(newParent);
-    searchbox.attr('placeholder', 'Course Number');
-    searchbox.removeClass('form-control input-sm');
-    searchbox.addClass('text-input');
-    searchbox.after("<button type='button' class='search-btn glyphicon glyphicon-search' id='search-submit'></button>");
+    $("input[type='search'].form-control.input-sm").parent().remove();
 
     $('.slider-range').each(function() {
         var id = $(this).attr('id')
@@ -75,12 +66,26 @@ $(function () {
     /** listener for department dropdown  */
     $('#department-number-select').change(function () {
         if ($('#department-number-select').val() != 'any') {
+            // remove old courses
+            $('#course-number-select').find('option:gt(1)').remove();
+
             // populates courses dropdown with only courses from the selected department
             var depCourses = allCourses.filter(function(course) {
                 return course.department == $('#department-number-select').val();
             }).sort(function(course1, course2) {
                 return course1.course_numbers - course2.course_numbers;
             });;
+
+            // add courses to dropdown
+            $.each(depCourses, function (i, course) {
+                $('#course-number-select').append($('<option>').text(course.course_numbers).attr('value', course.course_numbers))
+            });
+
+            $('#course-number-cell').css('display', 'inline-block');
+        }  else {
+            // set course to 'any' if department is 'any'
+            $('#course-number-select').val('any');
+            $('#course-number-cell').hide();
         }
     });
 
@@ -92,6 +97,11 @@ $(function () {
 
         if (tags.length == 0) {
             tags = 'any';//Query parameters with 'any' will match all records for that field in the database api
+        }
+
+        var course_numbers = $('#course-number-select').val();
+        if (!course_numbers) {
+            course_numbers = 'any';
         }
 
         var total_units = $('#units-select').val();
@@ -107,6 +117,7 @@ $(function () {
         $.get('/courses/search',
             {
                 department: department,
+                course_numbers: course_numbers,
                 tags: tags,
                 total_units: total_units
             },

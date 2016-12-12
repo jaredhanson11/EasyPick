@@ -1,5 +1,6 @@
 #main-div {
 	margin-bottom: 36px;
+	text-align: center;
 }
 
 table {
@@ -12,7 +13,7 @@ table {
 }
 
 .search-options {
-	margin: auto;
+	margin: auto auto 25px;
 }
 
 .search-options td {
@@ -70,4 +71,9 @@ table {
 @keyframes spin {
 	0% { transform: rotate(0deg); }
 	100% { transform: rotate(360deg); }
+}
+
+.search-button {
+	padding: 13px 18px;
+	border-radius: 20px;
 }

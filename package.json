@@ -4,7 +4,7 @@
   "description": "Finding classes should be easier than taking them.",
   "main": "app.js",
   "scripts": {
-    "start": "handlebars views -f public/js/templates.js",
+    "start": "handlebars views -f public/js/templates.js; node app.js",
     "test": "mocha test"
   },
   "repository": {
@@ -22,7 +22,6 @@
     "express-session": "^1.14.2",
     "express4": "0.0.1",
     "handlebars": "^4.0.6",
-    "hbs": "^4.0.1",
     "likely": "^0.2.0",
     "mocha": "^3.2.0",
     "mongoose": "^4.6.8",

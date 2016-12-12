@@ -243,6 +243,10 @@ li#search a:hover, li#home a:hover, li#recommendations a:hover {
     border: 2px solid #44a6f2;
 }
 
+.button:focus {
+    outline: none;
+}
+
 .text-input {
     border: 0px;
     border-bottom: 1px solid #ccc;
@@ -256,23 +260,4 @@ li#search a:hover, li#home a:hover, li#recommendations a:hover {
     outline: none;
     font-weight: bold;
     font-size: 20px;
-}
-
-.search-btn {
-    background-color: transparent;
-    border: 0px;
-    font-size: 18px;
-    font-weight: normal;
-    line-height: 18px;
-}
-
-.search-btn:hover {
-    color: #44a6f2;
-    font-size: 20px;
-    font-weight: bold;
-    line-height: 20px;
-}
-
-.search-btn:focus {
-    outline: none;
 }
