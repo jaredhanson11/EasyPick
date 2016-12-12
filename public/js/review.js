@@ -31,9 +31,8 @@ $(function(){
             if (!course_id){
                 alert("Try a new class number.");
             } else {
-
                 var review = {
-                    reviewForm: {
+                    review_form: {
                         course: course_id,
                         term: $('select#term').val(),
                         year: $('select#year').val(),
@@ -46,11 +45,11 @@ $(function(){
                     comment: {
                         content: $('textarea#comment').val(),
                         course: course_id
-                    }
+                    },
+                    _csrf: $("#_csrf").val()
                 };
 
                 $.post('/users/review', review, function(resp){
-                    console.log(resp);
                     if(!resp.success){
                         alert('Failed to post review, have you alredy tried to review this class?');
                         window.location.href = '/profile';
@@ -65,6 +64,6 @@ $(function(){
             }
         });
     }
-    populateNavbar();
+
     populate_review();
 });

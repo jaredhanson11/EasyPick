@@ -4,6 +4,7 @@
 <div id="msg-box"></div>
 <form id="login-form">
   <div class="form-group">
+    <input type="hidden" name="_csrf" id="_csrf" value="{{csrf_token}}">
     <input type="text" class="text-input login-input" id="kerberos" name="kerberos" placeholder="Kerberos">
     <input type="password" class="text-input login-input" id="password" name="password" placeholder="Password">
   </div>

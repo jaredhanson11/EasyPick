@@ -16,7 +16,7 @@ var Utils = function() {
 		if(req.session.user)
 			next();
 		else {
-			return that.sendErrorResponse(res, 401, "User is not logged in");
+			return that.sendErrorResponse(req, res, 401, "User is not logged in");
 		}
 	}
 
@@ -42,31 +42,41 @@ var Utils = function() {
 
 	/**
 	 * sends an error response with success: false.
+     * @param  {Object} req       the request
 	 * @param  {Object} res       the response
 	 * @param  {Int}    errorCode the error
 	 * @param  {String} error     the error message
 	 */
-	that.sendErrorResponse = function(res, errorCode, error) {
+	that.sendErrorResponse = function(req, res, errorCode, error) {
 		console.log(error);
 		res.status(errorCode).json({
 			success: false,
-			error: error
+			error: error,
+			csrf_token: req.csrfToken(),
 		}).end();
 	};
 
 	/**
 	 * sends a success response
+	 * @param  {Object} req       the request
 	 * @param  {Object} res       the response
 	 * @param  {Object} content   any contents sent in the server reply
 	 */
-	that.sendSuccessResponse = function(res, content) {
+	that.sendSuccessResponse = function(req, res, content) {
 		res.status(200).json({
 			success: true,
-			content: content
+			content: content,
+			csrf_token: req.csrfToken(),
 		}).end();
 	};
 
 	// TODO: make this more functional
+	/**
+	 * creates a matrix of all zeros
+	 * @param  {int} 	rows number of rows in the matrix
+	 * @param  {int} 	cols number of columns in the matrix
+	 * @return {matrix}      a matrix filled with zeros
+	 */
 	that.createZeroMatrix = function(rows, cols) {
 		var matrix = [];
 		for(var i=0; i<rows; i++) {
