@@ -1,20 +1,30 @@
+/**
+ * Created by Jared.
+ */
 var mongoose = require('mongoose');
 var utils = require('../utils.js');
 
 reviewSchema = mongoose.Schema ({
     course: {type: mongoose.Schema.ObjectId, ref: 'Course'},
     term: {type: Number}, //{1: 'IAP', 2: 'SPRING', 3; 'SUMMER', 4: 'FALL'}
-    year: {type: Number},
+    year: {type: Number, required: true},
     reviewer: {type: mongoose.Schema.ObjectId, ref: 'User'},
-    class_hrs: {type: Number, min: 0},
-    outside_hrs: {type: Number, min: 0},
+    class_hrs: {type: Number, max: 7, min: 1},
+    outside_hrs: {type: Number, max:7, min: 1},
     content_difficulty: {type: Number, max: 7, min: 1},
     grading_difficulty: {type: Number, max: 7, min: 1},
     overall_satisfaction: {type: Number, max: 7, min: 1}
 });
 
+/**
+ * gets a matrix of satisfaction ratings for courses in a given department.
+ * the matrix contains the ratings of given by each user to each class.
+ * the results array is of the form [matrix, users, course], were users and
+ * courses are the labels for the rows and columns of the matrix, respectively.
+ * @param  {string} department department of the courses to appear in the matrix
+ */
 reviewSchema.statics.getRatingsMatrix = function(department) {
-    return this.find({})
+    return this.find({ reviewer: {$ne: undefined }}) // ignore reviews not made by users (course evaluation reviews)
         .populate("course")
         .then(function(reviews) {
             var dep_reviews = reviews.filter(function(review) { return review.course.department.indexOf(department) >= 0; });//only use course 6 reviews
@@ -31,10 +41,18 @@ reviewSchema.statics.getRatingsMatrix = function(department) {
         });
 }
 
-reviewSchema.statics.get_reviews = function(user_id){
+/**
+ * get all reviews made by a user id
+ * @param  {ObjectId} user_id user id of the reviewer
+ */
+reviewSchema.statics.getReviews = function(user_id){
     return this.find({reviewer: user_id}).populate('course').execQ();
 }
 
+/**
+ * get review statistics for a given course id
+ * @param  {ObjectId} course_id course id of the reviewed course
+ */
 reviewSchema.statics.getStatsForCourse = function(course_id){
     return this.find({course: course_id})
                 .then(function(reviews) {
@@ -50,6 +68,10 @@ reviewSchema.statics.getStatsForCourse = function(course_id){
                 })
 }
 
+/**
+ * get satisfaction review statistics for a given course id broken down per term
+ * @param  {ObjectId} course_id course id of the reviewed course
+ */
 reviewSchema.statics.getSatisfactionPerTerm = function(course_id) {
     return this.find({course: course_id})
                 .then(function(reviews) {
@@ -71,6 +93,12 @@ reviewSchema.statics.getSatisfactionPerTerm = function(course_id) {
                 });
 }
 
+/**
+ * helper function to add class stats
+ * @param {Object} prev previous added stats
+ * @param {Object} cur  current stats to be added
+ * @param {int}    n    total number of stats
+ */
 var addStats = function(prev, cur, n) {
     prev.class_hrs += cur.class_hrs / n;
     prev.outside_hrs += cur.outside_hrs / n;

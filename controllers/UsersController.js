@@ -96,7 +96,7 @@ var UsersController = function() {
                     utils.sendErrorResponse(req, res, 400, 'User profile does not exist, or you do not have access to it.')
                 } else {
                     ret = msg;
-                    return Reviews.get_reviews(user_id);
+                    return Reviews.getReviews(user_id);
                 }
             }).then(function(reviews){
                 ret.course_reviews = reviews;
