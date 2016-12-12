@@ -16,13 +16,9 @@ router.post('/review', utils.auth, function(req, res) {
     UsersController.postReview(req, res);
 });
 
-//router.put('/review', utils.auth, function(req, res) {
-//    UsersController.editReview(req, res);
-//});
-
-//router.delete('/review', utils.auth, function(req, res) {
-//    UsersController.delReview(req, res);
-//});
+router.put('/review', utils.auth, function(req, res) {
+    UsersController.editReview(req, res);
+});
 
 router.post('/wishlist', utils.auth, function(req, res){
     UsersController.postToWishlist(req, res);

@@ -129,29 +129,47 @@ var UsersController = function() {
      * @param  {[type]} res the response
      */
     that.postReview = function(req, res) {
-        var review_form = req.body.review_form;
+        var reviewForm = req.body.review_form;
         var comment_form = req.body.comment;
-        review_form.reviewer = req.session.user._id;
+        reviewForm.reviewer = req.session.user._id;
+        Reviews.findOne({'reviewer': reviewForm.reviewer, 'course': reviewForm.course},
+                function(err, review){
+                    if (review){ return utils.sendErrorResponse(req, res, 500, 'Already reviewed this course');}
 
-        Reviews.create({
-            course: mongoose.Types.ObjectId(review_form.course),
-            term: review_form.term,
-            year: review_form.year,
-            reviewer: mongoose.Types.ObjectId(review_form.reviewer),
-            class_hrs: review_form.class_hrs,
-            outside_hrs: review_form.outside_hrs,
-            content_difficulty: review_form.content_difficulty,
-            grading_difficulty: review_form.grading_difficulty,
-            overall_satisfaction: review_form.overall_satisfaction
-        }).then(function(review){
-            if (comment_form.content){
-                return Comments.create(comment_form)
-            }
-        }).then(function(comment){
-            return utils.sendSuccessResponse(req, res, {});
-        }).catch(function(err) {
-            return utils.sendErrorResponse(req, res, 500, "Unknown server error");
-        });
+                        Reviews.create({
+                            course: mongoose.Types.ObjectId(reviewForm.course),
+                            term: reviewForm.term,
+                            year: reviewForm.year,
+                            reviewer: mongoose.Types.ObjectId(reviewForm.reviewer),
+                            class_hrs: reviewForm.class_hrs,
+                            outside_hrs: reviewForm.outside_hrs,
+                            content_difficulty: reviewForm.content_difficulty,
+                            grading_difficulty: reviewForm.grading_difficulty,
+                            overall_satisfaction: reviewForm.overall_satisfaction
+                        }).then(function(review){
+                            if (comment_form.content){
+                                return Comments.create(comment_form)
+                            }
+                        }).then(function(comment){
+                            return utils.sendSuccessResponse(req, res, {});
+                        }).catch(function(err) {
+                            return utils.sendErrorResponse(req, res, 500, "Unknown server error");
+                        });
+                })
+    };
+
+    /**
+     * edits a review
+     * @param  {[type]} req the request, review info must be in req.body.review_form
+     * @param  {[type]} res the response
+     */
+    that.editReview = function(req, res) {
+        var reviewForm = req.body.review_form;
+        Reviews.findByIdAndUpdate(reviewForm._id, {$set: reviewForm},
+                function(err, review){
+                    if (err || !review){ return utils.sendErrorResponse(req, res, 500, 'Error, does this review exist');}
+                    return utils.sendSuccessResponse(req, res, {});
+                })
     };
 
     /**
