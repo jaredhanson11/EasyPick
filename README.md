@@ -20,5 +20,14 @@ We currently have two deployments of EasyPick:
 
     only course 6 classes listed, course 6 review since 2014
 
+## Populate database
+```
+cd mongo_utils
+python populate_courses.py
+...
+python add_review_data.py
+...
+```
+
 
 Famien, Jared, Lara, Subby
