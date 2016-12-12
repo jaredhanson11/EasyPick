@@ -125,13 +125,11 @@ $(function() {
   });
 
   $('button.wishlist').click(function(){
-    $.post('/users/wishlist', {courseNumber:course_number},
+    $.post('/users/wishlist', {courseNumber:course_number, _csrf: $("#_csrf").val()},
       function(res, textStatus, jqXHR){
         alert("Successfully added to wishlist");
       }).fail(function(err){
         alert("error adding to wishlist");
       });
   });
-
-  populateNavbar();
 });

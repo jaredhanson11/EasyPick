@@ -61,10 +61,10 @@ def populate_db():
         for course_num in course_nums:
             offering['course_numbers'] = course_num
             for i, (mi, ma) in enumerate([(0,4.5), (4.5,6.5), (6.5,8.0), (8.0,10.25), (10.25, 12.5), (12.5, 15), (15, 1000000)]):
-                if offering['outside_hrs'] > mi and offering['outside_hrs'] < ma:
+                if offering['outside_hrs'] >= mi and offering['outside_hrs'] < ma:
                     offering['outside_hrs'] = i
             for i, (mi, ma) in enumerate([(0,1.7), (1.7,2.5), (2.5,3.2), (3.2,4), (4, 5), (5, 6.2), (6.2, 1000000)]):
-                if offering['class_hrs'] > mi and offering['class_hrs'] < ma:
+                if offering['class_hrs'] >= mi and offering['class_hrs'] < ma:
                     offering['class_hrs'] = i
 
             course = courses.find_one({'course_numbers': course_num})

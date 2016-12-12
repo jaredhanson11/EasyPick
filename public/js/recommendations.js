@@ -17,7 +17,6 @@ $(function() {
     var populateRecommendations = function(recs) {
         var html = Handlebars.templates.recommendations({ recommendations: recs });
         $("#recommendations").html(html);
-        populateNavbar();
     }
 
     var updateRecommendations = function() {
