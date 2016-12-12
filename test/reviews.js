@@ -19,69 +19,69 @@ describe("Review Model", function() {
   // Before running any test, connect to the database.
   before(function(done) {
     con = mongoose.connect("mongodb://localhost/easypick-test", function() {
-      done();
+        done();
     });
   });
 
   // Delete the database before each test.
   beforeEach(function(done) {
     con.connection.db.dropDatabase(function() {
-      done();
+        done();
     });
   });
 
   // add a test user
   beforeEach(function(done) {
     User.create({
-      kerberos: "test1",
-      password: "passtest"
+        kerberos: "test1",
+        password: "passtest"
     }).then(function(user) {
-      usertest1 = user._id;
-      done();
+        usertest1 = user._id;
+        done();
     })
   });
 
   // add a second test user
   beforeEach(function(done) {
     User.create({
-      kerberos: "test2",
-      password: "passtest"
+        kerberos: "test2",
+        password: "passtest"
     }).then(function(user) {
-      usertest2 = user._id;
-      done();
+        usertest2 = user._id;
+        done();
     })
   });
 
   // add a third test user
   beforeEach(function(done) {
     User.create({
-      kerberos: "test3",
-      password: "passtest"
+        kerberos: "test3",
+        password: "passtest"
     }).then(function(user) {
-      usertest3 = user._id;
-      done();
+        usertest3 = user._id;
+        done();
     })
   });
 
   // adds a test course
   beforeEach(function(done) {
     Course.create({
-      course_numbers: "6.170",
-      department: "6"
+        course_numbers: "6.170",
+        department: "6"
     }).then(function(course) {
-      coursetest1 = course._id;
-      done();
+        coursetest1 = course._id;
+        done();
     })
   });
 
   // adds a second test course
   beforeEach(function(done) {
     Course.create({
-      course_numbers: "6.828",
-      department: "6"
+        course_numbers: "6.828",
+        department: "6"
     }).then(function(course) {
-      coursetest2 = course._id;
-      done();
+        coursetest2 = course._id;
+        done();
     })
   });
 
