@@ -96,7 +96,7 @@ var UsersController = function() {
                     utils.sendErrorResponse(req, res, 400, 'User profile does not exist, or you do not have access to it.')
                 } else {
                     ret = msg;
-                    return Reviews.get_reviews(user_id);
+                    return Reviews.getReviews(user_id);
                 }
             }).then(function(reviews){
                 ret.course_reviews = reviews;
@@ -129,29 +129,47 @@ var UsersController = function() {
      * @param  {[type]} res the response
      */
     that.postReview = function(req, res) {
-        var review_form = req.body.review_form;
+        var reviewForm = req.body.review_form;
         var comment_form = req.body.comment;
-        review_form.reviewer = req.session.user._id;
+        reviewForm.reviewer = req.session.user._id;
+        Reviews.findOne({'reviewer': reviewForm.reviewer, 'course': reviewForm.course},
+                function(err, review){
+                    if (review){ return utils.sendErrorResponse(req, res, 500, 'Error, you already reviewed this course.');}
 
-        Reviews.create({
-            course: mongoose.Types.ObjectId(review_form.course),
-            term: review_form.term,
-            year: review_form.year,
-            reviewer: mongoose.Types.ObjectId(review_form.reviewer),
-            class_hrs: review_form.class_hrs,
-            outside_hrs: review_form.outside_hrs,
-            content_difficulty: review_form.content_difficulty,
-            grading_difficulty: review_form.grading_difficulty,
-            overall_satisfaction: review_form.overall_satisfaction
-        }).then(function(review){
-            if (comment_form.content){
-                return Comments.create(comment_form)
-            }
-        }).then(function(comment){
-            return utils.sendSuccessResponse(req, res, {});
-        }).catch(function(err) {
-            return utils.sendErrorResponse(req, res, 500, "Unknown server error");
-        });
+                        Reviews.create({
+                            course: mongoose.Types.ObjectId(reviewForm.course),
+                            term: reviewForm.term,
+                            year: reviewForm.year,
+                            reviewer: mongoose.Types.ObjectId(reviewForm.reviewer),
+                            class_hrs: reviewForm.class_hrs,
+                            outside_hrs: reviewForm.outside_hrs,
+                            content_difficulty: reviewForm.content_difficulty,
+                            grading_difficulty: reviewForm.grading_difficulty,
+                            overall_satisfaction: reviewForm.overall_satisfaction
+                        }).then(function(review){
+                            if (comment_form.content){
+                                return Comments.create(comment_form)
+                            }
+                        }).then(function(comment){
+                            return utils.sendSuccessResponse(req, res, {});
+                        }).catch(function(err) {
+                            return utils.sendErrorResponse(req, res, 500, "Error, did you enter the term and year?");
+                        });
+                })
+    };
+
+    /**
+     * edits a review
+     * @param  {[type]} req the request, review info must be in req.body.review_form
+     * @param  {[type]} res the response
+     */
+    that.editReview = function(req, res) {
+        var reviewForm = req.body.review_form;
+        Reviews.findByIdAndUpdate(reviewForm._id, {$set: reviewForm},
+                function(err, review){
+                    if (err || !review){ return utils.sendErrorResponse(req, res, 500, 'Error, does this review exist');}
+                    return utils.sendSuccessResponse(req, res, {});
+                })
     };
 
     /**
@@ -204,15 +222,21 @@ var UsersController = function() {
      */
     that.postToWishlist = function(req, res){
         var user_id = req.session.user._id;
-        var course_number = req.body.course_number.toString();
+        var course_id = null;
+        var course_number = req.body.courseNumber.toString();
         Courses.findOne({'course_numbers': course_number})
             .then(function(course) {
                 if (!course){
                     return utils.sendErrorResponse(req, res, 400, 'No such course');
                 }
-                var course_id = course._id;
-                return Users.findByIdAndUpdate(user_id, {$push: {wishlist: course_id}})
+                course_id = course._id.toString();
+                return Users.findOne({'_id': user_id, 'wishlist': course_id})
             .then(function(user) {
+                if (user){
+                    throw new Error();
+                }
+                return Users.findByIdAndUpdate(user_id, {$push: {wishlist: course_id}})
+            }).then(function(user){
                 return utils.sendSuccessResponse(req, res, {addedCourse: course_number});
             }).catch(function(err) {
                 return utils.sendErrorResponse(req, res, 500, err.message);
@@ -228,7 +252,7 @@ var UsersController = function() {
      */
     that.removeFromWishlist = function(req, res){
         var user_id = req.session.user._id;
-        var course_number = req.body.course_number.toString();
+        var course_number = req.body.courseNumber.toString();
 
         Courses.findOne({'course_numbers': course_number})
             .then(function(course) {

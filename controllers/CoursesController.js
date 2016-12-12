@@ -45,6 +45,22 @@ var CoursesController = function () {
             });
     };
 
+
+    /**
+     * get course info for all courses
+     * @param  {Object} req the request
+     * @param  {Object} res the response
+     */
+    that.getAllCourses = function (req, res) {
+        Courses.find()
+            .then(function (courses) {
+                console.log(courses);
+                return utils.sendSuccessResponse(req, res, courses);
+            }).catch(function (err) {
+                return utils.sendErrorResponse(req, res, 500, "Unknown server error");
+            });
+    };
+
     /**
      * get course info for a course number
      * @param  {Object} req the course number must be in req.params.course_number
@@ -70,13 +86,16 @@ var CoursesController = function () {
     that.getCourseStats = function(req, res) {
         Courses.findOne({ course_numbers: req.params.course_number })
             .then(function(course) {
-                if (!course)
-                    return utils.sendErrorResponse(req, res, 404, "Course not found");
+                if (!course) {
+                    utils.sendErrorResponse(req, res, 404, "Course not found");
+                    utils.breakPromise();
+                }
                 else
                     return Reviews.getStatsForCourse(course._id);
             }).then(function(stats) {
-                    return utils.sendSuccessResponse(req, res, stats);
+                return utils.sendSuccessResponse(req, res, stats);
             }).catch(function(err) {
+                if (err.status != 200)
                     return utils.sendErrorResponse(req, res, 500, "Unknown server error");
             });
     }
@@ -89,13 +108,16 @@ var CoursesController = function () {
     that.getCourseSatisfaction = function(req, res) {
         Courses.findOne({ course_numbers: req.params.course_number })
             .then(function(course) {
-                if (!course)
-                    return utils.sendErrorResponse(req, res, 404, "Course not found");
+                if (!course) {
+                    utils.sendErrorResponse(req, res, 404, "Course not found");
+                    utils.breakPromise();
+                }
                 else
                     return Reviews.getSatisfactionPerTerm(course._id);
             }).then(function(stats) {
-                    return utils.sendSuccessResponse(req, res, stats);
+                return utils.sendSuccessResponse(req, res, stats);
             }).catch(function(err) {
+                if(err.status != 200)
                     return utils.sendErrorResponse(req, res, 500, "Unknown server error");
             });
     }
@@ -108,13 +130,16 @@ var CoursesController = function () {
     that.getCourseComments = function(req, res) {
         Courses.findOne({ course_numbers: req.params.course_number })
             .then(function(course) {
-                if (!course)
-                    return utils.sendErrorResponse(req, res, 404, "Course not found");
+                if (!course) {
+                    utils.sendErrorResponse(req, res, 404, "Course not found");
+                    utils.breakPromise()
+                }
                 else
                     return Comments.find({course: course._id});
             }).then(function(comments) {
-                    return utils.sendSuccessResponse(req, res, comments);
+                return utils.sendSuccessResponse(req, res, comments);
             }).catch(function(err) {
+                if(err.status != 200)
                     return utils.sendErrorResponse(req, res, 500, "Unknown server error");
             });
     }

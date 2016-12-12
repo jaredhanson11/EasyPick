@@ -93,7 +93,7 @@ $(function() {
                         }
                     });
                 })
-                
+
                 var reviews_html = Handlebars.templates['course_reviews']({profile: resp.content});
                 $('.course_reviews').html(reviews_html);
 
@@ -106,6 +106,32 @@ $(function() {
                     $row.toggleClass('expand').nextUntil('tr.review_thumbnail').slideToggle(0);
                 });
 
+                $('.edit-review').click(function(){
+                    var reviewId = $(this).attr('id');
+                    $.ajax({
+                        url: '/users/review',
+                        type: 'PUT',
+                        data: {review_form: {
+                            _id: reviewId,
+                            class_hrs: $('input#class_hrs.' + reviewId).val(),
+                            outside_hrs: $('input#outside_hrs.' + reviewId).val(),
+                            content_difficulty: $('input#content_difficulty.' + reviewId).val(),
+                            grading_difficulty: $('input#grading_difficulty.' + reviewId).val(),
+                            overall_satisfaction: $('input#overall_satisfaction.' + reviewId).val()
+                        }, _csrf: $("#_csrf").val()},
+                        success: function(data){
+                            alert('Successfully edited item!');
+                            populateProfile();
+                        }, error: function(err){
+                            alert('Error editing review');
+                            populateProfile();
+                        }
+                    })
+
+                })
+
+
+
                 populateWishlist(resp.content.wishlist);
 
                 $('#wishlist .del-button').click(function(){
@@ -115,8 +141,8 @@ $(function() {
                         type: 'DELETE',
                         data: {'courseNumber': courseNumber, _csrf: $("#_csrf").val()},
                         success: function(data){
-                            alert('Successfully deleted item!');
-                            populate_profile();
+                            alert('Successfully updated item!');
+                            populateProfile();
                         }
                     });
                 });
