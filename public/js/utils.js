@@ -21,12 +21,13 @@ var getUrlParameter = function getUrlParameter(key) {
   return undefined;
 };
 
-
+/**
+ * checks if there's a log in user. if there's populate the navbar. otherwise,
+ * redirects to index page.
+ */
 var checkLogin = function() {
-  // TODO: change this
-  // quick fix to check logged in
   $.get('/users', function(resp) {
-
+    populateNavbar(resp);
   }).fail(function(xmlhttp) {
     if (xmlhttp.status === 401)
         window.location = "/";
@@ -35,14 +36,14 @@ var checkLogin = function() {
 /**
  * adds a navbar to the page
  */
-var populateNavbar = function() {
-    var navbar_html = Handlebars.templates['nav']();
+var populateNavbar = function(data) {
+    var navbar_html = Handlebars.templates['nav'](data);
     $('.navigation').html(navbar_html);
 };
 
-var populateWishlist = function(wishList) {
-    var wishlistHtml = Handlebars.templates['wishlist']({wishlist: wishList});
-    $('.wishlist').html(wishlistHtml);
+var populateWishlist = function(wishlist) {
+    var wishlist_html = Handlebars.templates['wishlist']({wishlist: wishlist});
+    $('.wishlist').html(wishlist_html);
 };
 
 /**

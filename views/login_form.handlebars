@@ -3,6 +3,7 @@
 <div id="msg-box"></div>
 <form id="login-form">
   <div class="form-group">
+    <input type="hidden" name="_csrf" id="_csrf" value="{{csrf_token}}">
     <label for="kerberos-input">Kerberos</label>
     <input type="text" class="form-control" id="kerberos"
     name="kerberos" placeholder="">

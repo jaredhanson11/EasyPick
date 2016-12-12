@@ -17,7 +17,6 @@ var recommender = require('likely');
 var UsersController = function() {
     var that = Object.create(UsersController.prototype);
 
-      // TODO: change this to user passport
     /**
     * creates a new user and logs them in
     * @param  {Object} req the email and password must be in req.body
@@ -26,16 +25,16 @@ var UsersController = function() {
     that.signup = function(req, res) {
         // check if user forgot to add a field
         if (!(req.body.kerberos && req.body.password))
-            return utils.sendErrorResponse(res, 400, "Missing field");
+            return utils.sendErrorResponse(req, res, 400, "Missing field");
 
         PeopleService.person(req.body.kerberos, function(data, error) {
             // people service failed
             if (error)
-                return utils.sendErrorResponse(res, 500, error.message);
+                return utils.sendErrorResponse(req, res, 500, error.message);
             else {
                 var user = data.person;
                 if (!user)
-                    return utils.sendErrorResponse(res, 400, "Invalid kerberos");
+                    return utils.sendErrorResponse(req, res, 400, "Invalid kerberos");
 
                 else {
                     Users.create({
@@ -46,18 +45,18 @@ var UsersController = function() {
                     }).then(function(user) {
                         MailService.sendConfirmationEmail(user, function(email_res) {
                             if (email_res.success)
-                                return utils.sendSuccessResponse(res, {});
+                                return utils.sendSuccessResponse(req, res, {});
                             else
-                                return utils.sendErrorResponse(res, 400, "Failed to send confirmation email");
+                                return utils.sendErrorResponse(req, res, 400, "Failed to send confirmation email");
                         });
                     }).catch(function(err) {
                           // if email is already in use, warn user
                         if (err.code === 11000)
-                            return utils.sendErrorResponse(res, 400, "Email is in use");
+                            return utils.sendErrorResponse(req, res, 400, "Email is in use");
                         else if (err.name === "ValidationError")
-                            return utils.sendErrorResponse(res, 400, err.message);
+                            return utils.sendErrorResponse(req, res, 400, err.message);
                         else
-                            return utils.sendErrorResponse(res, 500, err.message);
+                            return utils.sendErrorResponse(req, res, 500, err.message);
                     });
                 }
             }
@@ -68,13 +67,13 @@ var UsersController = function() {
         Users.findOne({ token: req.params.token })
             .then(function(user) {
                 if (!user)
-                    return utils.sendErrorResponse(res, 500, "Invalid token");
+                    return utils.sendErrorResponse(req, res, 500, "Invalid token");
                 return Users.findByIdAndUpdate(user._id, { $set: { activated: true }});
             }).then(function(user) {
                 if (user)
-                    return utils.sendSuccessResponse(res, { userid: user._id });
+                    return utils.sendSuccessResponse(req, res, { userid: user._id });
                 }).catch(function(err) {
-                    return utils.sendErrorResponse(res, 500, err.message);
+                    return utils.sendErrorResponse(req, res, 500, err.message);
             });
   }
 
@@ -85,20 +84,16 @@ var UsersController = function() {
     Users.get_profile(user_id)
       .then(function(msg){
         if (!msg) {
-          utils.errorRes(res, 'User profile does not exist, or you do not have access to it.')
+          utils.sendErrorResponse(req, res, 400, 'User profile does not exist, or you do not have access to it.')
         } else {
             ret = msg;
             return Reviews.get_reviews(user_id);
         }
       }).then(function(reviews){
           ret.course_reviews = reviews;
-          res.json({
-              success: true,
-              msg: {profile: ret}
-          });
+          return utils.sendSuccessResponse(req, res, ret);
     }).catch(function(err){
-          console.log(err);
-          utils.errorRes(res, err);
+          return utils.sendErrorResponse(req, res, 500, err.message);
     }).done();
   };
 
@@ -118,7 +113,7 @@ var UsersController = function() {
   };
 
   that.post_review = function(req, res) {
-      var review_form = req.body.reviewForm;
+      var review_form = req.body.review_form;
       var comment_form = req.body.comment;
       review_form.reviewer = req.session.user._id;
       console.log('POST /review: review_form:' , review_form);
@@ -183,7 +178,6 @@ var UsersController = function() {
                 }
             }
         );
-
   }
 
   that.postToWishlist = function(req, res){
@@ -192,15 +186,15 @@ var UsersController = function() {
       console.log('POST users/wishlist: courseNumber: ' + courseNumber);
       Courses.findOne({'course_numbers': courseNumber}, function(err, course){
           if (err){
-              return utils.sendErrorResponse(res, 400, 'No such course');
+              return utils.sendErrorResponse(req, res, 400, 'No such course');
           }
           console.log(course);
           var courseId = course._id;
           Users.findByIdAndUpdate(userId, {$push: {wishlist: courseId}}, function(err, user){
               if (err){
-                  return utils.sendErrorResponse(res, 400, "Couldn't update");
+                  return utils.sendErrorResponse(req, res, 400, "Couldn't update");
               }
-              return utils.sendSuccessResponse(res, {addedCourse: courseNumber});
+              return utils.sendSuccessResponse(req, res, {addedCourse: courseNumber});
           });
       });
   };
@@ -211,14 +205,14 @@ var UsersController = function() {
       console.log('DELETE users/wishlist?courseNumber=' + courseNumber);
       Courses.findOne({'course_numbers': courseNumber}, function(err, course){
           if (err){
-              return utils.sendErrorResponse(res, 400, 'No such course');
+              return utils.sendErrorResponse(req, res, 400, 'No such course');
           }
           var courseId = course._id;
           Users.findByIdAndUpdate(userId, {$pull: {wishlist: courseId}}, function(err, user){
               if (err){
-                  return utils.sendErrorResponse(res, 400, "Couldn't update");
+                  return utils.sendErrorResponse(req, res, 400, "Couldn't update");
               }
-              return utils.sendSuccessResponse(res, {deletedCourse: courseNumber});
+              return utils.sendSuccessResponse(req, res, {deletedCourse: courseNumber});
           });
       });
   };

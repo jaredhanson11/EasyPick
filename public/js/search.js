@@ -8,9 +8,6 @@
 $(function () {
     checkLogin();
 
-    //Get Navbar
-    populateNavbar();
-
     Handlebars.partials = Handlebars.templates;
     var insertSelector = '#results-div';
 
@@ -21,8 +18,8 @@ $(function () {
     var coursesTable = $(courseTableSelector).DataTable();
 
     //Populate dropdown with courses
-    $.post('/courses/search',
-        {},// search with empty params to get all classes
+    $.get('/courses/search',
+        {}, // search with empty params to get all classes
         function (res, textStatus, jqXHR) {
             var departments = [];
 
@@ -45,7 +42,7 @@ $(function () {
             $('#course-number-select').find('option:gt(0)').remove();// remove old courses
 
             //Populate dropdown with courses
-            $.post('/courses/search',
+            $.get('/courses/search',
                 {
                     department: $('#department-number-select').val()
                 },
@@ -86,7 +83,7 @@ $(function () {
 
         var department = $('#department-number-select').val();
 
-        $.post('/courses/search',
+        $.get('/courses/search',
             {
                 department: department,
                 course_numbers: course_numbers,
