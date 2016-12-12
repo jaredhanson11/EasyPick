@@ -7,7 +7,6 @@
 var Courses = require('../models/course.js');
 var Reviews = require('../models/review.js');
 var Comments = require('../models/comment.js');
-var Tags = require('../models/tag.js');
 var utils = require('../utils.js');
 var mongoose = require('mongoose-q')(require('mongoose'));
 var q = require('q');
@@ -16,7 +15,7 @@ var CoursesController = function () {
     var that = Object.create(CoursesController.prototype);
 
     /**
-     * searches courses with matching query paramters
+     * searches courses with matching query parameters/
      * @param {Object} req with req.query being what query we search with
      * @param {Object} res
      *
@@ -29,24 +28,20 @@ var CoursesController = function () {
                 query[key] = req.query[key];
         });
 
-
         Courses.find(query)
-            .exec(function (err, courses) {
-                if (err) utils.errorRes(res, err);
-
-                else {
-                    q.all(courses.map(function (course) {
-                        return Reviews.getStatsForCourse(course).then(function (stats) {
-                            var courseObj = course.toObject();//Turn to object since we can't add to mongoose model
-                            courseObj.stats = stats;
-                            return courseObj;
-                        });
-                    })).then(function (coursesWithStats) {
-                            return utils.sendSuccessResponse(req, res, coursesWithStats);
-
-                        }
-                    );
-                }
+            .then(function (courses) {
+                var promises = courses.map(function (course) {
+                    return Reviews.getStatsForCourse(course).then(function (stats) {
+                        var courseObj = course.toObject();//Turn to object since we can't add to mongoose model
+                        courseObj.stats = stats;
+                        return courseObj;
+                    });
+                })
+                return q.all(promises);
+            }).then(function (coursesWithStats) {
+                    return utils.sendSuccessResponse(req, res, coursesWithStats);
+            }).catch(function(err) {
+                return utils.sendErrorResponse(req, res, 500, "Unknown server error");
             });
     };
 
@@ -63,10 +58,15 @@ var CoursesController = function () {
                 else
                     return utils.sendSuccessResponse(req, res, course)
             }).catch(function (err) {
-            return utils.errorRes(res, err);
-        });
+                return utils.sendErrorResponse(req, res, 500, "Unknown server error");
+            });
     };
 
+    /**
+     * get course stats for a course number
+     * @param  {Object} req the course number must be in req.params.course_number
+     * @param  {Object} res the response
+     */
     that.getCourseStats = function(req, res) {
         Courses.findOne({ course_numbers: req.params.course_number })
             .then(function(course) {
@@ -81,6 +81,11 @@ var CoursesController = function () {
             });
     }
 
+    /**
+     * get course satisfaction per term for a course number
+     * @param  {Object} req the course number must be in req.params.course_number
+     * @param  {Object} res the response
+     */
     that.getCourseSatisfaction = function(req, res) {
         Courses.findOne({ course_numbers: req.params.course_number })
             .then(function(course) {
@@ -91,12 +96,15 @@ var CoursesController = function () {
             }).then(function(stats) {
                     return utils.sendSuccessResponse(req, res, stats);
             }).catch(function(err) {
-                    console.log(err);
                     return utils.sendErrorResponse(req, res, 500, "Unknown server error");
             });
     }
 
-
+    /**
+     * get course comments for a course number
+     * @param  {Object} req the course number must be in req.params.course_number
+     * @param  {Object} res the response
+     */
     that.getCourseComments = function(req, res) {
         Courses.findOne({ course_numbers: req.params.course_number })
             .then(function(course) {
