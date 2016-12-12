@@ -60,19 +60,6 @@ $(function() {
 
                 resizeProfileInfo();
 
-                $('.wishlist .del-button').click(function(){
-                    var courseNumber = $(this).attr('id');
-                    $.ajax({
-                        url: '/users/wishlist',
-                        type: 'DELETE',
-                        data: {'courseNumber': courseNumber},
-                        success: function(data){
-                            alert('Successfully deleted item!');
-                            populate_profile();
-                        }
-                    });
-                })
-
                 $('#edit-user').click(function(){
                     $profile_inputs.attr("disabled", false);
                     $profile_inputs.css("border-bottom", "1px solid #ccc");
@@ -119,6 +106,19 @@ $(function() {
                 });
 
                 populateWishlist(resp.msg.profile.wishlist);
+
+                $('#wishlist .del-button').click(function(){
+                    var courseNumber = $(this).attr('id');
+                    $.ajax({
+                        url: '/users/wishlist',
+                        type: 'DELETE',
+                        data: {'courseNumber': courseNumber},
+                        success: function(data){
+                            alert('Successfully deleted item!');
+                            populate_profile();
+                        }
+                    });
+                });
 
                 function openWishlist() {
                     $("#wishlist").addClass("is-active");
