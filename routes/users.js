@@ -10,15 +10,15 @@ router.post('/', function(req, res) {
 });
 
 router.get('/', utils.auth, function(req, res) {
-  UsersController.get_profile(req, res);
+  UsersController.getProfile(req, res);
 });
 
 router.put('/', utils.auth, function(req, res){
-    UsersController.edit_profile(req, res);
+    UsersController.editProfile(req, res);
 })
 
 router.post('/review', utils.auth, function(req, res) {
-    UsersController.post_review(req, res);
+    UsersController.postReview(req, res);
 });
 
 //router.put('/review', utils.auth, function(req, res) {
