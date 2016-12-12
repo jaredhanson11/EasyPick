@@ -28,7 +28,6 @@ var CoursesController = function () {
                 query[key] = req.query[key];
         });
 
-
         Courses.find(query)
             .then(function (courses) {
                 var promises = courses.map(function (course) {
@@ -40,9 +39,9 @@ var CoursesController = function () {
                 })
                 return q.all(promises);
             }).then(function (coursesWithStats) {
-                    return utils.sendSuccessResponse(res, coursesWithStats);
+                    return utils.sendSuccessResponse(req, res, coursesWithStats);
             }).catch(function(err) {
-                return utils.sendErrorResponse(res, 500, "Unknown server error");
+                return utils.sendErrorResponse(req, res, 500, "Unknown server error");
             });
     };
 
@@ -59,7 +58,7 @@ var CoursesController = function () {
                 else
                     return utils.sendSuccessResponse(req, res, course)
             }).catch(function (err) {
-                return utils.errorRes(res, err);
+                return utils.sendErrorResponse(req, res, 500, "Unknown server error");
             });
     };
 
@@ -97,7 +96,7 @@ var CoursesController = function () {
             }).then(function(stats) {
                     return utils.sendSuccessResponse(req, res, stats);
             }).catch(function(err) {
-                    return utils.sendErrorResponse(res, 500, "Unknown server error");
+                    return utils.sendErrorResponse(req, res, 500, "Unknown server error");
             });
     }
 

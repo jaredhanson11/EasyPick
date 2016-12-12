@@ -1,5 +1,7 @@
 /**
  * Contains methods for handling user sessions
+ *
+ * Created by Lara
  */
 var User = require("../models/user.js");
 var utils = require("../utils.js");
@@ -8,11 +10,8 @@ var SessionsController = function() {
     var that = Object.create(SessionsController.prototype);
 
     /**
-     * logs in a user with a given email.
-     * if email is valid (non-empty), logs in with that email and
-     * renders user's feed.
-     * if email is not valid, redirects to login page with login error.
-     * @param  {Object}   req  the email should be in req.body.email
+     * logs in a user with a given kerberos.
+     * @param  {Object}   req  the kerberos should be in req.body.kerberos
      * @param  {Object}   res  the response
      */
     that.login = function(req, res) {
@@ -31,7 +30,7 @@ var SessionsController = function() {
     }
 
     /**
-     * logs an user out and renders login page.
+     * logs an user out.
      * @param  {Object} req the request
      * @param  {Object} res the response
      */
