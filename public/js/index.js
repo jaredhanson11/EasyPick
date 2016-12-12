@@ -22,7 +22,7 @@ $(function() {
       e.preventDefault();
       $.post("/users",
         {
-          email: $("#email").val(),
+          kerberos: $("#kerberos").val(),
           password: $("#password").val()
         },
         function(res, textStatus, jqXHR) {
@@ -41,7 +41,7 @@ $(function() {
       e.preventDefault();
       $.post("/login",
         {
-          email: $("#email").val(),
+          kerberos: $("#kerberos").val(),
           password: $("#password").val()
         },
         function(res, textStatus, jqXHR) {
