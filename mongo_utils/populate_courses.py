@@ -80,13 +80,13 @@ def populate_courses(courses_list):
                 new_course['tags'].append('HASS')
             if 'REST' in course['units']:
                 new_course['tags'].append('REST')
-            i = courses.insert_one(new_course)
-            if 'HASS' in course['units']:
+            if 'CI-H' in course['units']:
+                new_course['tags'].append('CI-H')
                 print new_course
 
+            i = courses.insert_one(new_course)
             inserted_count += 1
         except Exception, e:
-            print course
             print e
     return inserted_count
 

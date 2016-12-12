@@ -134,7 +134,7 @@ var UsersController = function() {
         reviewForm.reviewer = req.session.user._id;
         Reviews.findOne({'reviewer': reviewForm.reviewer, 'course': reviewForm.course},
                 function(err, review){
-                    if (review){ return utils.sendErrorResponse(req, res, 500, 'Already reviewed this course');}
+                    if (review){ return utils.sendErrorResponse(req, res, 500, 'Error, you already reviewed this course.');}
 
                         Reviews.create({
                             course: mongoose.Types.ObjectId(reviewForm.course),
@@ -153,7 +153,7 @@ var UsersController = function() {
                         }).then(function(comment){
                             return utils.sendSuccessResponse(req, res, {});
                         }).catch(function(err) {
-                            return utils.sendErrorResponse(req, res, 500, "Unknown server error");
+                            return utils.sendErrorResponse(req, res, 500, "Error, did you enter the term and year?");
                         });
                 })
     };

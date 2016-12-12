@@ -58,8 +58,11 @@ $(function(){
                         window.location.href = '/profile';
                     }
                 }).fail(function(err){
-                    alert('Failed to post review, have you alredy tried to review this class?');
-                    window.location.href = '/profile';
+                    var errMessage = err['responseJSON']['error']
+                    alert(errMessage);
+                    if (errMessage == 'Error, you already reviewed this course.'){
+                        window.location.href = '/profile';
+                    }
                 });
             }
         });
