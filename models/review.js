@@ -63,8 +63,8 @@ reviewSchema.statics.getSatisfactionPerTerm = function(course_id) {
                         count[review.year] += 1;
                     });
 
-                    reviews.forEach(function(review) {
-                        stats[review.year] = stats[review.year] / count[review.year];
+                    Object.keys(stats).forEach(function(year) {
+                        stats[year] = stats[year] / count[year];
                     });
 
                     return stats;
