@@ -17,17 +17,18 @@ var CoursesController = function () {
 
     /**
      * searches courses with matching query paramters
-     * @param {Object} req with req.body being what query we search with
+     * @param {Object} req with req.query being what query we search with
      * @param {Object} res
      *
      * @return {Object} courses list of courses matching query parameters
      */
     that.search = function (req, res) {
         var query = {};
-        Object.keys(req.body).forEach(function (key, index) {
-            if (req.body[key] != 'any')//don't include 'null' values in query (match any"
-                query[key] = req.body[key];
+        Object.keys(req.query).forEach(function (key, index) {
+            if (req.query[key] != 'any')//don't include 'null' values in query (match any"
+                query[key] = req.query[key];
         });
+
 
         Courses.find(query)
             .exec(function (err, courses) {
@@ -41,7 +42,7 @@ var CoursesController = function () {
                             return courseObj;
                         });
                     })).then(function (coursesWithStats) {
-                            return utils.sendSuccessResponse(res, coursesWithStats);
+                            return utils.sendSuccessResponse(req, res, coursesWithStats);
 
                         }
                     );
@@ -58,9 +59,9 @@ var CoursesController = function () {
         Courses.findOne({course_numbers: req.params.course_number})
             .then(function (course) {
                 if (!course)
-                    return utils.sendErrorResponse(res, 404, "Course not found");
+                    return utils.sendErrorResponse(req, res, 404, "Course not found");
                 else
-                    return utils.sendSuccessResponse(res, course)
+                    return utils.sendSuccessResponse(req, res, course)
             }).catch(function (err) {
             return utils.errorRes(res, err);
         });
@@ -70,13 +71,13 @@ var CoursesController = function () {
         Courses.findOne({ course_numbers: req.params.course_number })
             .then(function(course) {
                 if (!course)
-                    return utils.sendErrorResponse(res, 404, "Course not found");
+                    return utils.sendErrorResponse(req, res, 404, "Course not found");
                 else
                     return Reviews.getStatsForCourse(course._id);
             }).then(function(stats) {
-                    return utils.sendSuccessResponse(res, stats);
+                    return utils.sendSuccessResponse(req, res, stats);
             }).catch(function(err) {
-                    return utils.sendErrorResponse(res, 500, "Unknown server error");
+                    return utils.sendErrorResponse(req, res, 500, "Unknown server error");
             });
     }
 
@@ -84,14 +85,14 @@ var CoursesController = function () {
         Courses.findOne({ course_numbers: req.params.course_number })
             .then(function(course) {
                 if (!course)
-                    return utils.sendErrorResponse(res, 404, "Course not found");
+                    return utils.sendErrorResponse(req, res, 404, "Course not found");
                 else
                     return Reviews.getSatisfactionPerTerm(course._id);
             }).then(function(stats) {
-                    return utils.sendSuccessResponse(res, stats);
+                    return utils.sendSuccessResponse(req, res, stats);
             }).catch(function(err) {
                     console.log(err);
-                    return utils.sendErrorResponse(res, 500, "Unknown server error");
+                    return utils.sendErrorResponse(req, res, 500, "Unknown server error");
             });
     }
 
@@ -100,13 +101,13 @@ var CoursesController = function () {
         Courses.findOne({ course_numbers: req.params.course_number })
             .then(function(course) {
                 if (!course)
-                    return utils.sendErrorResponse(res, 404, "Course not found");
+                    return utils.sendErrorResponse(req, res, 404, "Course not found");
                 else
                     return Comments.find({course: course._id});
             }).then(function(comments) {
-                    return utils.sendSuccessResponse(res, comments);
+                    return utils.sendSuccessResponse(req, res, comments);
             }).catch(function(err) {
-                    return utils.sendErrorResponse(res, 500, "Unknown server error");
+                    return utils.sendErrorResponse(req, res, 500, "Unknown server error");
             });
     }
 
