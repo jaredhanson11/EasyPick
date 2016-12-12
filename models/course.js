@@ -11,6 +11,4 @@ courseSchema = mongoose.Schema({
     tags: [{type: String}]
 });
 
-// TODO: add a check to guarantee course numbers are unique.
-
 module.exports = mongoose.model('Course', courseSchema);

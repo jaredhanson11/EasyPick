@@ -7,7 +7,7 @@ var Review = require("../models/review");
 var User = require("../models/user");
 var Course = require("../models/course");
 
-descrinodeme("App", function() {
+describe("Course model", function() {
     // The mongoose connection object.
     var con;
     var usertest;
@@ -26,11 +26,14 @@ descrinodeme("App", function() {
 
             Course.create(
                 {
-                    course_number: ["6.170"],
+                    course_numbers: ["6.170"],
                     name: "Software Studio",
-                    department: "6",
+                    department: ["6"],
                     units: "12",
                     description: "Design and build cool web apps"
+                })
+                .then(function(course){
+                    done();
                 });
 
         });
@@ -38,15 +41,13 @@ descrinodeme("App", function() {
 
     describe("Course", function() {
         it("should return a the proper info for a course", function(done) {
-            Course.getCourseInformation(['6.170']).then(function(courses){
-                assert.equal(courses.length, 1);
-                var course = courses[0];
-                assert.equal(course.name, 'Software Studio');
-                assert.equal(course.department, ['6']);
-                assert.equal(course.units, '12');
-                assert.equal(course.description, 'Design and build cool web apps');
+            Course.findOne({course_numbers: ["6.170"]}).then(function(course){
+                assert.deepEqual(course.name, 'Software Studio', "Wrong name");
+                assert.deepEqual(course.units, '12');
+                assert.deepEqual(course.description, 'Design and build cool web apps');
                 done();
             }).catch(function(err) {
+                console.log('err',err);
                 assert(false);
                 done();
             });
