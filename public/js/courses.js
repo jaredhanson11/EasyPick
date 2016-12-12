@@ -23,6 +23,8 @@ $(function() {
       var res = JSON.parse(xmlhttp.responseText);
       var html = Handlebars.templates.error_box(res);
       $(insertSelector).html(html);
+      $(statsDiv).empty();
+      $(commentsDiv).empty();
     }
   });
 
@@ -117,7 +119,7 @@ $(function() {
     showGeneralStats();
   });
 
-  /** gets course stats and populates stats section */
+  /** gets course comments and populates comments section */
   $.get("/courses/" + course_number + "/comments",
     function(res, textStatus, jqXHR) {
       var html = Handlebars.templates.course_comments({ comments: res.content });
