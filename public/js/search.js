@@ -1,8 +1,6 @@
 /**
- * Created by Famien Koko updated 11/22/2016.
- */
-/**
- * Handles form submission for search page
+ * Handles form submission for search page.
+ * Created by Famien Koko
  */
 
 $(function () {
@@ -19,7 +17,7 @@ $(function () {
 
     var allCourses;
 
-    //Populate dropdown with courses
+    /** populate dropdown with courses */
     $.get('/courses/',
         {}, // search with empty params to get all classes
         function (res, textStatus, jqXHR) {
@@ -38,17 +36,20 @@ $(function () {
         $(error_box).html(html);
     });
 
+    /** listener for department dropdown  */
     $('#department-number-select').change(function () {
         if ($('#department-number-select').val() != 'any') {
+            // remove old courses
+            $('#course-number-select').find('option:gt(0)').remove();
 
-            $('#course-number-select').find('option:gt(0)').remove();// remove old courses
-
+            // populates courses dropdown with only courses from the selected department
             var depCourses = allCourses.filter(function(course) {
                 return course.department == $('#department-number-select').val();
             }).sort(function(course1, course2) {
                 return course1.course_numbers - course2.course_numbers;
             });;
 
+            // add courses to dropdown
             $.each(depCourses, function (i, course) {
                 $('#course-number-select').append($('<option>').text(course.course_numbers).attr('value', course.course_numbers))
             });
@@ -56,13 +57,13 @@ $(function () {
             $('#course-number-div').css('display', 'inline-block');
 
         } else {
-
-            $('#course-number-select').val('any'); // set course to 'any' if department is 'any'
+            // set course to 'any' if department is 'any'
+            $('#course-number-select').val('any');
             $('#course-number-div').hide();
         }
     });
 
-    //Search button
+    /** search submit button listener */
     $('#search-form').submit(function (e) {
         e.preventDefault();
 
@@ -70,12 +71,10 @@ $(function () {
             return value['value'];
         });
 
-        if (tags == []) tags = 'any';//Query parameters with 'any' will match all records for that field in the database api
+        if (tags == []) tags = 'any'; // query parameters with 'any' will match all records for that field in the database api
 
         var course_numbers = $('#course-number-select').val();
-
         var total_units = $('#units-select').val();
-
         var department = $('#department-number-select').val();
 
         $.get('/courses/search',
@@ -90,6 +89,7 @@ $(function () {
 
                 var courses = res.content;
 
+                // apply stats filters
                 var filtered_courses =  courses.filter(function (course) {
                     if ($('#min-class-hours-select').val()) {
                         if (course.stats.class_hrs < $('#min-class-hours-select').val()) {
@@ -147,18 +147,17 @@ $(function () {
                 html = Handlebars.templates.courses_table_items({courses:filtered_courses});
 
                 $(html).filter('tr').each(function (index) {
-                    coursesTable.row.add(this);//add new data to datatable
+                    coursesTable.row.add(this); // add new data to datatable
                 });
 
                 $(courseInsertSelector).prepend(html);
 
-                coursesTable.draw();//refresh datatable
+                coursesTable.draw(); // refresh datatable
             }
         ).fail(function(xmlhttp) {
             var res = JSON.parse(xmlhttp.responseText);
             var html = Handlebars.templates.error_box(res);
             $(error_box).html(html);
         });
-
     });
 });
