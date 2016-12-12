@@ -7,7 +7,7 @@
 }
 
 .header.profile_header {
-    height: 240px;
+    height: 180px;
     background-image: url("/resources/banner.jpg");
     background-size: cover;
     background-position: center;
@@ -19,7 +19,7 @@
     height: 200px;
     margin: auto;
     position: relative;
-    bottom: -54px;
+    bottom: 6px;
     background-image: url("/resources/profile.jpg");
     background-size: cover;
     background-position: center;
@@ -138,11 +138,11 @@
 
 .review_thumbnail .sign {
     cursor: pointer;
-    font-size: 40px;
-    padding: 5px;
+    font-size: 28px;
+    padding: 6px 4px;
     background-color: #44a6f2;
     color: white;
-    border-radius: 11px;
+    border-radius: 14px;
 }
 
 .review_thumbnail .sign:after {
@@ -154,7 +154,7 @@
 }
 
 .review_thumbnail.expand .sign:after {
-  content: "-";
+  content: "\2212";
   display: inline-block;
   text-align: center;
   margin: 10px;
