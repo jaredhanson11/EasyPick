@@ -81,7 +81,6 @@ describe("Course model", function() {
 
         it("should search by tags", function(done) {
             Course.find({tags: ["web-dev"]}).then(function(courses){
-                console.log("courses", courses);
                 assert.equal(courses.length, 1);
                 assert.equal(courses[0].name, "Software Studio","Incorrect course");
                 done();
