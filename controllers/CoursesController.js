@@ -17,17 +17,18 @@ var CoursesController = function () {
 
     /**
      * searches courses with matching query paramters
-     * @param {Object} req with req.body being what query we search with
+     * @param {Object} req with req.query being what query we search with
      * @param {Object} res
      *
      * @return {Object} courses list of courses matching query parameters
      */
     that.search = function (req, res) {
         var query = {};
-        Object.keys(req.body).forEach(function (key, index) {
-            if (req.body[key] != 'any')//don't include 'null' values in query (match any"
-                query[key] = req.body[key];
+        Object.keys(req.query).forEach(function (key, index) {
+            if (req.query[key] != 'any')//don't include 'null' values in query (match any"
+                query[key] = req.query[key];
         });
+
 
         Courses.find(query)
             .exec(function (err, courses) {
