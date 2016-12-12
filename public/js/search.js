@@ -133,7 +133,6 @@ $(function () {
                         }
                     }
 
-                    console.log($('#max-class-satisfaction-select').val())
                     if ($('#max-class-satisfaction-select').val()) {
                         if (course.stats.overall_satisfaction > $('#max-class-satisfaction-select').val()) {
                             return false;
