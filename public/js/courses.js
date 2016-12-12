@@ -141,7 +141,7 @@ $(function() {
             function(res, textStatus, jqXHR){
                 alert("Successfully added to wishlist");
             }).fail(function(err){
-                alert("error adding to wishlist");
+                alert("Class already in your wishlist");
             });
     });
 });
