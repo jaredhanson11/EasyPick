@@ -66,7 +66,7 @@ $(function() {
                     $(this).hide();
                     $('#submit-profile').css("display", "block");
                 })
-                
+
                 $('#submit-profile').click(function(){
                     var updatedData = {
                         major1: $("input#major1").val(),

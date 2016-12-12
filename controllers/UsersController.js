@@ -100,7 +100,7 @@ var UsersController = function() {
                 }
             }).then(function(reviews){
                 ret.course_reviews = reviews;
-                return utils.sendSuccessResponse(req, res, ret);
+                return utils.sendSuccessResponse(req, res, ret, req.csrfToken());
             }).catch(function(err){
                 return utils.sendErrorResponse(req, res, 500, err.message);
             }).done();
