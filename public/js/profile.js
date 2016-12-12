@@ -1,24 +1,23 @@
 $(function() {
-    Handlebars.partials = Handlebars.templates;
     checkLogin();
+    Handlebars.partials = Handlebars.templates;
 
-    var populate_profile = function(){
+    var populateProfile = function(){
         $.get('/users', function(resp) {
             if (resp.success) {
-                var html = Handlebars.templates['profile'](resp.msg);
+                var html = Handlebars.templates['profile']({ profile: resp.content });
                 $('.profile').html(html);
-                populateWishlist(resp.msg.profile.wishlist);
-
+                populateWishlist(resp.content.wishlist);
 
                 $('.wishlist .del-button').click(function(){
                     var courseNumber = $(this).attr('id');
                     $.ajax({
                         url: '/users/wishlist',
                         type: 'DELETE',
-                        data: {'courseNumber': courseNumber},
+                        data: {'courseNumber': courseNumber, _csrf: $("#_csrf").val()},
                         success: function(data){
                             alert('Successfully deleted item!');
-                            populate_profile();
+                            populateProfile();
                         }
                     });
                 })
@@ -31,6 +30,7 @@ $(function() {
                         graduation_year: $("input#graduation_year").val(),
                         first_name: $("input#first_name").val(),
                         last_name: $("input#last_name").val(),
+                        _csrf: $("#_csrf").val()
                     };
 
                     $.ajax({
@@ -41,7 +41,7 @@ $(function() {
                         success: function(data) {
                         //or refresh
                             alert('Successfully updated profile!');
-                            populate_profile();
+                            populateProfile();
                         }
                     });
                 })
@@ -52,7 +52,6 @@ $(function() {
             }
         })
     };
-    populate_profile();
-    populateNavbar();
+    populateProfile();
 });
 

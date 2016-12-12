@@ -84,20 +84,16 @@ var UsersController = function() {
     Users.get_profile(user_id)
       .then(function(msg){
         if (!msg) {
-          utils.errorRes(res, 'User profile does not exist, or you do not have access to it.')
+          utils.sendErrorResponse(req, res, 400, 'User profile does not exist, or you do not have access to it.')
         } else {
             ret = msg;
             return Reviews.get_reviews(user_id);
         }
       }).then(function(reviews){
           ret.course_reviews = reviews;
-          res.json({
-              success: true,
-              msg: {profile: ret}
-          });
+          return utils.sendSuccessResponse(req, res, ret);
     }).catch(function(err){
-          console.log(err);
-          utils.errorRes(res, err);
+          return utils.sendErrorResponse(req, res, 500, err.message);
     }).done();
   };
 
