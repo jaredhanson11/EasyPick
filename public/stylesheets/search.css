@@ -1,16 +1,56 @@
-#search-submit {
-    margin: 20px;
+#main-div {
+	margin-bottom: 36px;
 }
 
-#course-number-div {
-    margin-left: 20px;
-}
-
-#course-stats-filters label {
-    width: 200px;
+table {
+	margin-top: 25px;
 }
 
 #courses-table {
     cellspacing: "0";
     width: "100%";
+}
+
+.search-options {
+	margin: auto;
+}
+
+.search-options td {
+	padding: 10px 25px;
+	width: 220px;
+}
+
+.slider-range {
+	display:block;
+	border:0;
+	color:#f6931f;
+	font-weight:bold;
+	background-color: #44a6f2;
+}
+
+.slider-display {
+	text-align:center;
+}
+
+.left {
+	float: left;
+}
+
+.right {
+	float: right;
+}
+
+.search-select {
+    border: 0px;
+    border-bottom: 2px solid #a5d0f2;
+    padding: 8px;
+}
+
+.search-select:focus {
+    outline: none;
+    border-bottom: 0px;
+}
+
+.text-input {
+	text-align: center;
 }

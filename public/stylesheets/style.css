@@ -44,11 +44,13 @@ li#search a:hover, li#home a:hover, li#recommendations a:hover {
 .navbar a {
     color: white;
     text-shadow: 2px 2px black;
+    background-color: transparent;
 }
 
-.navbar a:hover {
+.navbar li a:hover, .navbar li a:focus, .navbar-brand:hover, .navbar-brand:focus {
     color: #22547a;
     text-shadow: 0px 0px;
+    background-color: transparent;
 }
 
 .navbar, .navbar-brand {
@@ -254,4 +256,23 @@ li#search a:hover, li#home a:hover, li#recommendations a:hover {
     outline: none;
     font-weight: bold;
     font-size: 20px;
+}
+
+.search-btn {
+    background-color: transparent;
+    border: 0px;
+    font-size: 18px;
+    font-weight: normal;
+    line-height: 18px;
+}
+
+.search-btn:hover {
+    color: #44a6f2;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 20px;
+}
+
+.search-btn:focus {
+    outline: none;
 }
