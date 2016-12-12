@@ -63,20 +63,10 @@ userSchema.statics.get_profile = function(user_id) {
 };
 
 userSchema.statics.edit_profile = function(user_id, modified){
-	return this.findOneAndUpdate({'_id': user_id}, modified)
+	return this.findOneAndUpdate({'_id': user_id}, {$set: modified})
 			.execQ();
 };
 
-userSchema.statics.post_review = function(review_form, cb){
-	var new_review = new Review(review_form);
-	var that = this;
-	return new_review.save(function(err, result){
-		if (err){
-			return false;
-		}
-		return result;
-	});
-};
 
 /**
  * generates a random token
